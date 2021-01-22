@@ -12,9 +12,10 @@ const ExternalSlide = {
             return fetch(url)
                 .then((response) => response.text())
                 .then((data) => {
-                    //section.innerHTML = data;
+                    //section.innerHTML = '';
                     html = (new DOMParser).parseFromString(data, 'text/html');
                     nodes = html.querySelector('body').childNodes
+                    // Add sections
                     var promiseArray = new Array();
                     for (var i = 0, c = nodes.length; i < c; i++) {
                         node = document.importNode(nodes[i], true);
@@ -35,6 +36,29 @@ const ExternalSlide = {
                         section.parentNode.removeChild(section);
                     }
 
+                    // Add headers
+                    headers = html.querySelectorAll('head link')
+                    for (var i = 0, c = headers.length; i < c; i++) {
+                        header = document.importNode(headers[i], true);
+                        document.head.appendChild(header);
+                    }
+
+                    // Add scripts (after Reveal is ready)
+                    scripts = html.querySelectorAll('head script')
+                    for (var i = 0, c = scripts.length; i < c; i++) {
+                        var spt = scripts[i];
+                        ((type, src, text) => {
+                            Reveal.addEventListener('ready', function (event) {
+                                var injectScript = document.createElement("script");
+                                injectScript.type = type;
+                                injectScript.text = text;
+                                if (src) {
+                                    injectScript.src = src;
+                                }
+                                document.body.appendChild(injectScript);
+                            })
+                        })(spt.type, spt.src, spt.text);
+                    }
                     return Promise.all(promiseArray);
                 });
         }

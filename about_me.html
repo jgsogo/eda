@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="css/about_me.css">
+<link rel="stylesheet" href="css/text-animation.css">
+
+<script src="js/text-animation.js"></script>
+<script type='text/javascript'>
+    Reveal.addEventListener('slidechanged', function(event) {
+        if (event.currentSlide.classList.contains("text-animation")) {
+            setTimeout(render, timeout);
+        }
+    });
+</script>
+
+<section class="no-footer text-animation" data-slide-type="author" data-background-color="#414141">
+    <h3>About me</h3>
+    <img data-src="images/me.png" class="avatar" />
+    <p>Javier G. Sogo</p>
+    <p>
+        Software |
+        <span class="blue"><b>Conan.io</b></span> |
+        <span class="green"><b>JFrog</b>&trade;</span>
+    </p>
+    <p>
+        <small>
+            <img data-src="images/github-logo.svg" class="brand-icon" />jgsogo
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <img data-src="images/twitter-logo.svg" class="brand-icon" />@jgsogo
+        </small>
+    </p>
+    <div class="text-animation-wrapper">
+        <p class="text-animation"></p>
+    </div>
+</section>

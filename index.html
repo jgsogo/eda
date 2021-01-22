@@ -16,18 +16,17 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
-                    Slidesadffasfdas 1
-                    <a href="01.intro.html"></a>
-                </section>
-				<section>Slide 2</section>
+                <section>Title</section>
+                <section data-external-slide-replace="about_me.html"> </section>
 			</div>
 		</div>
 
 		<script src="reveal.js/dist/reveal.js"></script>
 		<script src="reveal.js/plugin/notes/notes.js"></script>
 		<script src="reveal.js/plugin/markdown/markdown.js"></script>
-		<script src="reveal.js/plugin/highlight/highlight.js"></script>
+        <script src="reveal.js/plugin/highlight/highlight.js"></script>
+        
+        <script src="plugins/external_slide.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
@@ -36,8 +35,8 @@
 				hash: true,
 
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, ExternalSlide ]
+            });
 		</script>
 	</body>
 </html>
