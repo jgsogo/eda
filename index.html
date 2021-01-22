@@ -29,15 +29,26 @@
     <script src="reveal.js/plugin/highlight/highlight.js"></script>
 
     <script src="plugins/external_slide.js"></script>
+    <script src="plugins/reveal.js-menu/menu.js"></script>
     <script>
-        // More info about initialization & config:
-        // - https://revealjs.com/initialization/
-        // - https://revealjs.com/config/
         Reveal.initialize({
             hash: true,
 
-            // Learn about plugins: https://revealjs.com/plugins/
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, ExternalSlide]
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, ExternalSlide, RevealMenu],
+
+            menu: {
+                side: 'left',
+                width: 'third',
+                custom: [{
+                    title: 'Temario',
+                    icon: '<i class="fa fa-book">',
+                    src: 'toc.html'
+                }, {
+                    title: 'About',
+                    icon: '<i class="fa fa-info">',
+                    content: '<p>Find everything related to this slides at my <a href="https://github.com/jgsogo/eda">GitHub</a>.</p>'
+                }]
+            }
         });
     </script>
 </body>
