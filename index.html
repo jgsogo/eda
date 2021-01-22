@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
+    <title>EDA | Introducción</title>
 
     <link rel="stylesheet" href="reveal.js/dist/reset.css">
     <link rel="stylesheet" href="reveal.js/dist/reveal.css">
@@ -13,6 +13,7 @@
 
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="reveal.js/plugin/highlight/monokai.css" id="highlight-theme">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -30,11 +31,12 @@
 
     <script src="plugins/external_slide.js"></script>
     <script src="plugins/reveal.js-menu/menu.js"></script>
+    <script src="plugins/chalkboard/plugin.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
 
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, ExternalSlide, RevealMenu],
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, ExternalSlide, RevealMenu, RevealChalkboard],
 
             menu: {
                 side: 'left',
@@ -46,8 +48,18 @@
                 }, {
                     title: 'About',
                     icon: '<i class="fa fa-info">',
-                    content: '<p>Find everything related to this slides at my <a href="https://github.com/jgsogo/eda">GitHub</a>.</p>'
+                    src: 'about.html'
                 }]
+            },
+            chalkboard: {
+                readOnly: false,
+                theme: "chalkboard",
+                toggleChalkboardButton: {
+                    left: "80px"
+                },
+                toggleNotesButton: {
+                    left: "130px"
+                },
             }
         });
     </script>
