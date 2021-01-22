@@ -21,6 +21,36 @@
         <div class="slides">
             <section>Title</section>
             <section data-external-slide-replace="slides/about_me.html"> </section>
+            <section>
+                <pre><code data-trim data-noescape>
+                    ///external
+                    ///output=Hello CE!
+                    ///execute
+                    #include <iostream>
+                    int main() {
+                      std::cout << "Hello CE!";
+                    }
+                </code></pre>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                Ctrl-click* on code to go to compiler explorer
+                
+                ```cpp []
+                ///external
+                ///output=Hello CE!
+                ///execute
+                #include <iostream>
+                int main() {
+                  std::cout << "Hello CE!";
+                }
+                ```
+                
+                \* ⌘-click on MacOS, double tap on mobile <!-- .element: style="font-size: 0.7em" -->
+                
+                </script>
+            </section>
         </div>
     </div>
 
@@ -32,11 +62,12 @@
     <script src="plugins/external_slide.js"></script>
     <script src="plugins/reveal.js-menu/menu.js"></script>
     <script src="plugins/chalkboard/plugin.js"></script>
+    <script src="plugins/reveal-compiler-explorer.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
 
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, ExternalSlide, RevealMenu, RevealChalkboard],
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, ExternalSlide, RevealMenu, RevealChalkboard, RevealCompilerExplorer],
 
             menu: {
                 side: 'left',
@@ -60,6 +91,10 @@
                 toggleNotesButton: {
                     left: "130px"
                 },
+            },
+            compilerExplorer: {
+                compiler: "g83",
+                runMain: true
             }
         });
     </script>
