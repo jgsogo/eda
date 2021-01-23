@@ -1,0 +1,62 @@
+title: Estructuras de datos y algoritmos
+toc:
+  - url: index.html
+    content_main: slides/00.abstract.html
+    title: "Estructuras de datos y algoritmos"
+    subtitle: "Universidad Nebrija"
+  - content_main: slides/01.introduction.html
+    title: "Introducción"
+    subtitle: "Estructuras de datos y algoritmos"
+
+  - section: Algoritmos iterativos y recursivos
+  - content_main: slides/02.iterative-recursive-algorithms.html
+    title: "Algoritmos iterativos y recursivos"
+    subtitle: "Estructuras de datos y algoritmos"
+  - content_main: slides/03.sorting-algorithms.html
+    title: "Algoritmos de ordenación"
+    subtitle: "Estructuras de datos y algoritmos"
+
+  - section: Complejidad algorítmica
+  - content_main: slides/04.computational-complexity.html
+    title: "Complejidad algorítmica"
+    subtitle: "Estructuras de datos y algoritmos"
+
+  - section: Repaso C++
+  - content_main: slides/05.abstract-data-types.html
+    title: "Concepto de tipos abstractos de datos"
+    subtitle: "Estructuras de datos y algoritmos"
+  - content_main: slides/06.pointers.html
+    title: "Punteros"
+    subtitle: "Estructuras de datos y algoritmos"
+
+  - section: TAD lineales
+  - content_main: slides/07.lists.html
+    title: "Listas"
+    subtitle: "Estructuras de datos y algoritmos"
+  - content_main: slides/08.stacks.html
+    title: "Pilas"
+    subtitle: "Estructuras de datos y algoritmos"
+  - content_main: slides/09.queues.html
+    title: "Colas"
+    subtitle: "Estructuras de datos y algoritmos"
+
+  - section: TAD no lineales
+  - content_main: slides/10.binary-tree.html
+    title: "Árboles binarios"
+    subtitle: "Estructuras de datos y algoritmos"
+  - content_main: slides/11.binary-search-tree.html
+    title: "Árboles binarios de búsqueda"
+    subtitle: "Estructuras de datos y algoritmos"
+  - content_main: slides/12.avl-tree.html
+    title: "Árboles balanceados"
+    subtitle: "Estructuras de datos y algoritmos"
+  - content_main: slides/13.heaps.html
+    title: "Montículos"
+    subtitle: "Estructuras de datos y algoritmos"
+
+  - section: Grafos
+  - content_main: slides/14.graphs.html
+    title: "Grafos"
+    subtitle: "Estructuras de datos y algoritmos"
+
+  - section: Esquemas algorítmicos

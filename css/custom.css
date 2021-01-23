@@ -1,0 +1,161 @@
+img.img-inline {
+    height: 1.3em;
+}
+
+.is-transparent {
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    background: rgba(0, 0, 0, 0);
+}
+
+.box-shadow {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5), 0 5px 25px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.box {
+    position: absolute;
+    width: 40%;
+    right: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5), 0 5px 25px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 5px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.left {
+    margin: 0px;
+    width: 40%;
+    position: absolute;
+    left: 1%;
+}
+
+.right {
+    width: 40%;
+    position: absolute;
+    right: 1%;
+}
+
+
+/** Speaker title slide */
+
+div.speaker-conference img {
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    background: rgba(0, 0, 0, 0);
+}
+
+div.speaker-conference {
+    font-size: 0.6em;
+    line-height: 80%;
+}
+
+div.speaker-conference p {
+    margin: 0;
+}
+
+div.speaker {
+    margin: 0px;
+    width: 40%;
+    position: absolute;
+    left: 1%;
+    text-align: left;
+}
+
+div.conference {
+    width: 40%;
+    position: absolute;
+    right: 1%;
+    text-align: right;
+}
+
+
+/** Header and footer */
+
+.credit {
+    font-size: 0.6em;
+    bottom: -1%;
+    display: block;
+    position: fixed;
+    right: 0%;
+    z-index: 30;
+    width: 30%;
+    /*height: 5%;*/
+    text-align: right;
+    font-size: 0.3em;
+}
+
+div.my-header {
+    font-size: 0.6em;
+    top: 1%;
+    display: block;
+    position: absolute;
+    left: 1%;
+    z-index: 30;
+    width: 98%;
+    /*height: 5%;*/
+}
+
+div.my-foot {
+    opacity: 0.9;
+    font-size: 0.4em;
+    bottom: 1%;
+    /*display: block;*/
+    position: absolute;
+    left: 1%;
+    z-index: 30;
+    width: 90%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.my-foot img {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.my-foot span {
+    height: 1em;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+/** Little things */
+
+.red {
+    color: #ED3A32 !important;
+}
+
+.green {
+    color: #40be46 !important;
+}
+
+.blue {
+    color: #007bff !important;
+}
+
+.black {
+    color: #000000 !important;
+}
+
+.bold {
+    font-weight: 700 !important;
+}
+
+.italic {
+    font-style: italic !important;
+}
+
+.caps {
+    text-transform: uppercase !important;
+}
+
+.small-caps {
+    text-transform: lowercase !important;
+}

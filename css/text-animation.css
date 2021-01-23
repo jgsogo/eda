@@ -1,0 +1,10 @@
+.reveal div.text-animation-wrapper {
+    float: left;
+    margin-left: 42%;
+    text-align: center;
+}
+
+.reveal p.text-animation {
+    display: inline-block;
+    font-size: 0.5em;
+}

@@ -1,0 +1,16 @@
+.reveal img.avatar {
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+    border: 0;
+}
+
+.reveal img.brand-icon {
+    background: none;
+    margin: 0 0.3em 0 0.3em;
+    width: 45px;
+    height: 45px;
+    border: 0 none;
+    box-shadow: none;
+    vertical-align: middle;
+}
