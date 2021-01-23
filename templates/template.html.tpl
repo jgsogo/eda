@@ -41,7 +41,7 @@
         Reveal.initialize({
             hash: true,
 
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, ExternalSlide, RevealMenu, RevealChalkboard, RevealCompilerExplorer],
+            plugins: [ExternalSlide, RevealMarkdown, RevealHighlight, RevealNotes, RevealMenu, RevealChalkboard, RevealCompilerExplorer],
 
             menu: {
                 side: 'left',
