@@ -49,6 +49,7 @@
             menu: {
                 side: 'left',
                 width: 'third',
+                hideMissingTitles: true,
                 custom: [{
                     title: 'Temario',
                     icon: '<i class="fa fa-book">',
