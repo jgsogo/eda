@@ -30,7 +30,6 @@ if __name__ == '__main__':
         with open(os.path.join(me, url), 'w') as f:
             f.write(outputText)
 
-    print(toc)
     with open(os.path.join(me, toc_file), 'w') as f:
         f.write('<h1>{}</h1>\n\n'.format(content['title']))
         
