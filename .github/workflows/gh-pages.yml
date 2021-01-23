@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Generate GitHub pages
+
+jobs:
+  github-pages:
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: pip install jinja2 PyYAML
+      - run: python template.py
