@@ -26,7 +26,7 @@ if __name__ == '__main__':
         url = item.pop('url', item.get('content_main').replace('slides/', ''))
         section_content.append((url, item['title']))
 
-        outputText = template.render(**item, url=url, toc_file=toc_file)
+        outputText = template.render(url=url, toc_file=toc_file, **item)
         with open(os.path.join(me, url), 'w') as f:
             f.write(outputText)
 
