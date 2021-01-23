@@ -23,6 +23,8 @@ jobs:
     - name: Generate files
       run: |
         python template.py
+        rm -fr .gitignore
+        rm -fr .gitmodules
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@3.7.1
