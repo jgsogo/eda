@@ -1,8 +1,8 @@
 title: Estructuras de datos y algoritmos
 toc:
   - url: index.html
-    content_main: slides/00.abstract.html
-    title: "Estructuras de datos y algoritmos"
+    content_main: slides/00.hello.html
+    title: "Presentación"
     subtitle: "Universidad Nebrija"
   - content_main: slides/01.introduction.html
     title: "Introducción"
