@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
@@ -22,6 +24,9 @@ jobs:
       run: |
         python template.py
         rm .gitignore
+        rm .gitmodules
+        rm -fr .git
+        rm -fr .github
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@3.7.1
