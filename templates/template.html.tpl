@@ -43,7 +43,7 @@
     <script>
         Reveal.initialize({
             hash: true,
-
+            slideNumber: true,
             plugins: [ExternalSlide, RevealMarkdown, RevealHighlight, RevealNotes, RevealMenu, RevealChalkboard, RevealCompilerExplorer, RevealEmbedTweet],
 
             menu: {
