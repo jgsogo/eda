@@ -75,6 +75,17 @@ div.conference {
 
 
 /** Header and footer */
+.footnote {
+    font-size: 0.6em;
+    bottom: -3%;
+    display: block;
+    right: 0%;
+    z-index: 30;
+    width: 90%;
+    /*height: 5%;*/
+    text-align: right;
+    font-size: 0.3em;
+}
 
 .credit {
     font-size: 0.6em;

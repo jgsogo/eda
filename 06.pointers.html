@@ -14,6 +14,8 @@
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="reveal.js/plugin/highlight/monokai.css" id="highlight-theme">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 
 <body>
@@ -36,16 +38,18 @@
     <script src="plugins/external_slide.js"></script>
     <script src="plugins/reveal.js-menu/menu.js"></script>
     <script src="plugins/chalkboard/plugin.js"></script>
+    <script src="plugins/embed-tweet/plugin.js"></script>
     <script src="plugins/reveal-compiler-explorer.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
-
-            plugins: [ExternalSlide, RevealMarkdown, RevealHighlight, RevealNotes, RevealMenu, RevealChalkboard, RevealCompilerExplorer],
+            slideNumber: true,
+            plugins: [ExternalSlide, RevealMarkdown, RevealHighlight, RevealNotes, RevealMenu, RevealChalkboard, RevealCompilerExplorer, RevealEmbedTweet],
 
             menu: {
                 side: 'left',
                 width: 'third',
+                hideMissingTitles: true,
                 custom: [{
                     title: 'Temario',
                     icon: '<i class="fa fa-book">',
