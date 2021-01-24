@@ -9,9 +9,14 @@ img.img-inline {
     background: rgba(0, 0, 0, 0);
 }
 
-.box-shadow {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5), 0 5px 25px rgba(0, 0, 0, 0.2);
+.box-shadow-black {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2);
     background-color: rgba(0, 0, 0, 0.9);
+}
+
+.box-shadow-white {
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.178), 0 5px 25px rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.384);
 }
 
 .box {
