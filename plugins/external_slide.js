@@ -16,7 +16,6 @@ const ExternalSlide = {
                     html = (new DOMParser).parseFromString(data, 'text/html');
                     nodes = html.querySelector('body').childNodes
                     // Add sections
-                    console.log(html)
                     var promiseArray = new Array();
                     for (var i = 0, c = nodes.length; i < c; i++) {
                         node = document.importNode(nodes[i], true);
@@ -27,9 +26,7 @@ const ExternalSlide = {
                         // Recurse nested slides
                         if (node instanceof Element) {
                             var nested_sections = node.querySelectorAll("[data-external-slide], [data-external-slide-replace]");
-                            console.log(`nested_sections.length ${nested_sections.length}`)
                             for (var ii = 0, len = nested_sections.length; ii < len; ii++) {
-                                console.log(`go for nested ${ii} with nesting ${nesting_level}`)
                                 promiseArray.push(fetchContent(nested_sections[ii], nesting_level + 1))
                             }
                             /*
