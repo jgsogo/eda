@@ -160,6 +160,10 @@ div.my-foot {
     color: #000000 !important;
 }
 
+.grey {
+    color: #888888 !important;
+}
+
 .bold {
     font-weight: 700 !important;
 }
