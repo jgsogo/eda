@@ -25,10 +25,23 @@ const ExternalSlide = {
 
                         // Recurse nested slides
                         if (node instanceof Element) {
+                            var nested_sections = node.querySelectorAll("[data-external-slide], [data-external-slide-replace]");
+                            for (var ii = 0, len = nested_sections.length; ii < len; ii++) {
+                                promiseArray.push(fetchContent(nested_sections[ii], nesting_level + 1))
+                            }
+                            /*
+                            var promiseArray = new Array(nested_sections.length);
+
+                            for (var i = 0, len = nested_sections.length; i < len; i++) {
+                                //promiseArray.push(fetchContent(nested_sections[i], nesting_level))
+                            }
+                            
+                            console.log(`Fetch more for ${nested_sections.length}`)
                             v = fetchContent(node, nesting_level)
                             if (v) {
                                 promiseArray.push(v);
                             }
+                            */
                         }
                     }
 

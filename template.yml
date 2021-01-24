@@ -9,8 +9,11 @@ toc:
     subtitle: "Estructuras de datos y algoritmos"
 
   - section: Algoritmos iterativos y recursivos
-  - content_main: slides/02.iterative-recursive-algorithms.html
-    title: "Algoritmos iterativos y recursivos"
+  - content_main: slides/02.iterative-algorithms.html
+    title: "Algoritmos iterativos"
+    subtitle: "Estructuras de datos y algoritmos"
+  - content_main: slides/02.recursive-algorithms.html
+    title: "Algoritmos recursivos"
     subtitle: "Estructuras de datos y algoritmos"
   - content_main: slides/03.sorting-algorithms.html
     title: "Algoritmos de ordenación"

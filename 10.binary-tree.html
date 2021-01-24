@@ -40,6 +40,7 @@
     <script src="plugins/chalkboard/plugin.js"></script>
     <script src="plugins/embed-tweet/plugin.js"></script>
     <script src="plugins/reveal-compiler-explorer.js"></script>
+
     <script>
         Reveal.initialize({
             hash: true,
