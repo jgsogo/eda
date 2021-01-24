@@ -2,3 +2,4 @@ _virtualenv/
 /[0-9][0-9].*.html
 toc.html
 index.html
+/slides/**/*.png

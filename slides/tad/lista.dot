@@ -1,0 +1,14 @@
+digraph structs {
+    nodesep=.05;
+    rankdir=LR;
+    
+    node [shape=record, width = 1.5];
+    node1 [label="{<n> 1 |<p> next }"];
+    node2 [label="{<n> 2 |<p> next }"];
+    node3 [label="{<n> 3 |<p> next }"];
+    node4 [label="{<n> 4 |<p> next }"];
+
+    node1:p -> node2:n;
+    node2:p -> node3:n;
+    node3:p -> node4:n;
+}
