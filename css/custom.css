@@ -175,3 +175,7 @@ div.my-foot {
 .small-caps {
     text-transform: lowercase !important;
 }
+
+.caps-preserve {
+    text-transform: none !important;
+}
