@@ -6,6 +6,16 @@ me = os.path.dirname(__file__)
 toc_file = 'toc.html'
 
 
+def generate_graphviz(base_folder):
+    for root, subdirs, files in os.walk(base_folder):
+        for file in files:
+            if file.endswith('.dot'):
+                input_file = os.path.join(root, file)
+                output_file = os.path.join(root, file + '.png')
+                print(f"{input_file} -> {output_file}")
+                os.system(f"dot -Tpng {input_file} > {output_file}")
+
+
 if __name__ == '__main__':
     with open(os.path.join(me, 'template.yml')) as f:
         content = yaml.safe_load(f.read())
@@ -43,3 +53,6 @@ if __name__ == '__main__':
                 f.write('\t\t<a href="{}">{}</a>\n'.format(url, ctitle))
                 f.write('\t</li>\n')
             f.write('</ul>\n\n')
+
+    # Generate all the graphs
+    generate_graphviz(me)
