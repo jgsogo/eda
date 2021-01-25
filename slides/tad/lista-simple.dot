@@ -2,13 +2,17 @@ digraph structs {
     nodesep=.05;
     rankdir=LR;
     
-    node [shape=record, width = 1.5];
-    node1 [label="{<n> 1 |<p> next }"];
-    node2 [label="{<n> 2 |<p> next }"];
-    node3 [label="{<n> 3 |<p> next }"];
-    node4 [label="{<n> 4 |<p> next }"];
+    node [shape=record, width = .5];
+    node1 [label="{<m> |{<d> 1 |<n> next }}"];
+    node2 [label="{<m> |{<d> 2 |<n> next }}"];
+    node3 [label="{<m> |{<d> 3 |<n> next }}"];
+    node4 [label="{<m> |{<d> 4 |<n> next }}"];
 
-    node1:p -> node2:n;
-    node2:p -> node3:n;
-    node3:p -> node4:n;
+    node1 -> node2 [ style = invis, weight= 10 ];
+    node2 -> node3 [ style = invis, weight= 10 ];
+    node3 -> node4 [ style = invis, weight= 10 ];
+
+    node1:n -> node2:m;
+    node2:n -> node3:m;
+    node3:n -> node4:m;
 }
