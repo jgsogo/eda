@@ -20,6 +20,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install jinja2 PyYAML
+        sudo apt-get install graphviz
     - name: Generate files
       run: |
         python template.py
