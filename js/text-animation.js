@@ -6,8 +6,9 @@ const skills = [
   "C++",
   "Python",
   "Jenkins",
-  "C#",
-  "Java",
+  "Groovy",
+  "DevOps",
+  "Community",
   "💚"
 ].map(s => s + "  ");
 const delay = 2;
