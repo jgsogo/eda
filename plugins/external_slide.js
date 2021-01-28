@@ -9,6 +9,7 @@ const ExternalSlide = {
     init: (reveal) => {
         function fetchDataExternalSlideSection(section, attribute, replace, nesting_level) {
             url = section.getAttribute(attribute);
+            console.log(`Lazy load '${url}'`)
             return fetch(url)
                 .then((response) => response.text())
                 .then((data) => {
@@ -19,29 +20,21 @@ const ExternalSlide = {
                     var promiseArray = new Array();
                     for (var i = 0, c = nodes.length; i < c; i++) {
                         node = document.importNode(nodes[i], true);
-                        replace || nesting_level > 1
-                            ? section.parentNode.insertBefore(node, section)
-                            : section.appendChild(node);
-
-                        // Recurse nested slides
                         if (node instanceof Element) {
-                            var nested_sections = node.querySelectorAll("[data-external-slide], [data-external-slide-replace]");
-                            for (var ii = 0, len = nested_sections.length; ii < len; ii++) {
-                                promiseArray.push(fetchContent(nested_sections[ii], nesting_level + 1))
-                            }
-                            /*
-                            var promiseArray = new Array(nested_sections.length);
+                            replace || nesting_level > 1
+                                ? section.parentNode.insertBefore(node, section)
+                                : section.appendChild(node);
 
-                            for (var i = 0, len = nested_sections.length; i < len; i++) {
-                                //promiseArray.push(fetchContent(nested_sections[i], nesting_level))
+                            // Maybe itself contains a 'data-external-slide[-replace]
+                            if (node.getAttribute('data-external-slide-replace') || node.getAttribute('data-external-slide')) {
+                                promiseArray.push(fetchContent(node, nesting_level + 1))
                             }
-                            
-                            console.log(`Fetch more for ${nested_sections.length}`)
-                            v = fetchContent(node, nesting_level)
-                            if (v) {
-                                promiseArray.push(v);
+                            else {
+                                var nested_sections = node.querySelectorAll("[data-external-slide], [data-external-slide-replace]");
+                                for (var ii = 0, len = nested_sections.length; ii < len; ii++) {
+                                    promiseArray.push(fetchContent(nested_sections[ii], nesting_level + 1))
+                                }
                             }
-                            */
                         }
                     }
 
