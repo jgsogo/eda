@@ -8,11 +8,11 @@
 }
 
 .darken .backgrounds {
-    -webkit-filter: brightness(0.5);
-    -moz-filter: brightness(0.5);
-    -o-filter: brightness(0.5);
-    -ms-filter: brightness(0.5);
-    filter: brightness(0.5);
+    -webkit-filter: brightness(0.2);
+    -moz-filter: brightness(0.2);
+    -o-filter: brightness(0.2);
+    -ms-filter: brightness(0.2);
+    filter: brightness(0.2);
 }
 
 img.img-inline {

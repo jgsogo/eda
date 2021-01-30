@@ -1,0 +1,27 @@
+digraph {
+    graph [splines=ortho]
+    rankdir=LR
+
+    inicio [label="" shape=ellipse]
+    A [shape=rectangle]
+    B [shape=diamond]
+    C [shape=rectangle]
+    D [shape=rectangle]
+    final [label="" shape=ellipse]
+
+    Dleft [style = invis,fixedsize=true,width=0,height=0]
+    Dright [style = invis,fixedsize=true,width=0,height=0]
+    {rank = same; D; Dleft; Dright;}
+
+    inicio -> A [ weight= 10 ];
+    A -> B [ weight= 10 ];
+    B -> D [ weight= 10, xlabel="true" ];
+    D -> C [ weight= 10 ];
+    C -> Dleft [arrowhead=none];
+    Dleft -> B
+    B -> Dright [arrowhead=none, xlabel="false"];
+    Dright -> final
+
+    C -> final [style = invis, weight= 10 ];
+    Dleft -> D -> Dright [style=invis]
+}

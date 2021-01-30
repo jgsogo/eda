@@ -1,0 +1,177 @@
+<section data-transition="convex">
+    <section>
+        <h2>Definición</h2>
+    </section>
+
+    <section data-state="darken" data-background="images/algorithm-background.jpg">
+        <p>Diccionario de la RAE:</p>
+        <blockquote>
+            <p>"Conjunto ordenado y finito de operaciones que permite hallar la solución de un problema."</p>
+        </blockquote>
+    </section>
+
+    <section data-state="darken" data-background="images/algorithm-background.jpg">
+        <p>Wikipedia:</p>
+        <blockquote>
+            <p>"En matemáticas, lógica, ciencias de la computación y disciplinas relacionadas, un algoritmo [...]​ es un
+                conjunto de instrucciones o reglas definidas y no-ambiguas, ordenadas y finitas que permite,
+                típicamente, solucionar un problema, realizar un cómputo, procesar datos y llevar a cabo otras tareas o
+                actividades."</p>
+        </blockquote>
+    </section>
+
+    <section data-markdown data-menu-title="Ej.: Bucle `for`">
+        <script type="text/template">
+            ### Ejemplo: Bucle &nbsp;&nbsp;<code>for</code>
+            
+            ```cpp
+            ///compiler=g102
+            #include <iostream>
+    
+            int main() {
+                for (int i=0; i<10; i++) {
+                    std::cout << i << std::endl;
+                }
+            }
+            ``` 
+        </script>
+    </section>
+
+    <section>
+        <h3>Diagrama de flujo</h3>
+        <img src="slides/algoritmos/ejemplo-for-loop.dot.png" />
+        <pre data-id="code"><code data-line-numbers class="cpp" data-trim>
+            for (A; B; C) {
+                D;
+            }
+        </code></pre>
+        <pre class="fragment" data-id="code"><code data-line-numbers class="cpp" data-trim>
+            for (int i=0; i<10; i++) {
+                std::cout << i << std::endl;
+            }
+        </code></pre>
+    </section>
+
+    <section data-markdown data-menu-title="Ej.: Bucle `for`">
+        <script type="text/template">
+            ### Ejemplo: Bucle &nbsp;&nbsp;<code>for</code>
+
+            ```cpp
+            ///compiler=g102
+            #include <iostream>
+            #include <functional>
+            
+            using _t_void = std::function<void ()>;
+            using _t_bool = std::function<bool ()>;
+            
+            void for_algorithm(_t_void A, _t_bool B, _t_void C, _t_void D);
+            
+            int main() {
+                int i = -1000; // Let's start with a very wrong value
+            
+                auto A = [&](){i = 0;};
+                auto B = [&](){ return i<10;};
+                auto C = [&](){ i++;};
+                auto D = [&](){ std::cout << i << std::endl;};
+            
+                for_algorithm(A, B, C, D);
+            }
+
+            void for_algorithm(_t_void A, _t_bool B, _t_void C, _t_void D) {
+                for (A(); B(); C()) {
+                    D();
+                }
+            }
+            ``` 
+
+            <sub class="right"><sup>Note.- Only for demo purposes</sup></sub>
+        </script>
+    </section>
+
+    <section data-menu-title="Ej.: Laberinto" data-background="images/laberinto-villapresente.jpg">
+        <div class="credit white">Imagen: Laberinto de Villapresente (Cantabria)</div>
+    </section>
+
+    <section data-menu-title="Ej.: Laberinto">
+        <h3>Laberinto</h3>
+        <ul>
+            <li>¿Queremos salir al exterior...</li>
+            <li>...o queremos encontrar una estancia?</li>
+            <li class="fragment">¿Y si el laberinto es espacial?</li>
+        </ul>
+    </section>
+
+    <section data-menu-title="Ej.: Tres en raya">
+        <img class="r-stretch" src="images/tictactoe.gif" />
+    </section>
+
+    <section>
+        <h3>Tres en raya</h3>
+        <ul>
+            <li>Calcular el árbol de poisibilidades</li>
+            <li>Elegir la alternativa que maximice las posibilidades de victoria</li>
+        </ul>
+        <img class="r-stretch" src="images/tictactoe-tree.png" />
+    </section>
+
+    <section data-state="darken" data-background="images/algorithm-background.jpg">
+        <h3>Take aways</h3>
+        <p class="fragment"><strong>Algoritmo:</strong> <span class="red">instrucciones</span> para resolver un
+            problema.</p>
+        <p class="fragment"><strong>Dificultad:</strong> definir las <span class="green">condiciones de contorno</span>
+            (entradas, salidas, reglas).</p>
+        <p class="fragment"><strong>Dificultad:</strong> expresar el problema en términos del algoritmo (<span
+                class="blue">estructuras de datos</span>).</p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>No free lunch theorem</h2>
+    </section>
+
+    <section data-background-video-muted>
+        <div class="credit">Link: <a href="https://www.youtube.com/watch?v=ZZuD6iUe3Pc">Youtube</a></div>
+        <iframe class="r-stretch" src="https://www.youtube.com/embed/ZZuD6iUe3Pc" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+    </section>
+
+    <section>
+        <h3>Trade-offs</h3>
+        <ul>
+            <li>Memoria</li>
+            <li>Tiempo (notación Θ)</li>
+            <hr/>
+            <li class="fragment">Complejidad/mantenimiento</li>
+            <li class="fragment">Tiempo de desarrollo</li>
+            <li class="fragment">Tiempo de compilación</li>
+            <li class="fragment">Tamaño del programa</li>
+        </ul>
+    </section>
+
+</section>
+
+<section data-transition="convex">
+    <section data-menu-title="Ejercicios">
+        <h2>Ejercicios</h2>
+    </section>
+
+    <section data-markdown data-menu-title="Ej.: Bucle `for`">
+        <script type="text/template">
+            ### Imprimir vector de palabras <!-- .element: class="no-caps" data-fragment-index="2" -->
+
+            ```cpp
+            ///compiler=g102
+            #include <iostream>
+            
+            ``` 
+
+            <sub class="right"><sup>Note.- Only for demo purposes</sup></sub>
+        </script>
+    </section>
+
+    <section>
+        <h4>Algoritmo: buscar palabras que empiecen por vocal</h4>
+    </section>
+</section>
