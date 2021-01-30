@@ -181,6 +181,10 @@ div.my-foot {
     color: #888888 !important;
 }
 
+.white {
+    color: #ffffff !important;
+}
+
 .bold {
     font-weight: 700 !important;
 }
