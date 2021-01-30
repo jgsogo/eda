@@ -1,3 +1,20 @@
+/** Backgrounds */
+.blur .backgrounds {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(50px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+.darken .backgrounds {
+    -webkit-filter: brightness(0.2);
+    -moz-filter: brightness(0.2);
+    -o-filter: brightness(0.2);
+    -ms-filter: brightness(0.2);
+    filter: brightness(0.2);
+}
+
 img.img-inline {
     height: 1.3em;
 }
