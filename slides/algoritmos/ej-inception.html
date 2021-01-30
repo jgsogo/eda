@@ -1,0 +1,251 @@
+<section data-transition="convex">
+    <section data-menu-title="Ej.: Inception" data-background="images/inception-peonza.gif">
+        <div class="credit white">Imagen: Inception (Christopher Nolan, 2010)</div>
+        <h2>Inception</h2>
+        <h4>Ejercicio</h4>
+    </section>
+
+    <section>
+        <h4>Spoiler alert!</h4>
+        <p class="fragment">En la película <strong>Inception</strong> en cada nivel del sueño el tiempo se multiplica.
+        </p>
+        <hr />
+        <p class="fragment">🤔 Si yo grito en la realidad, ¿por cuánto tiempo me escuchan en el sueño?</p>
+    </section>
+
+    <section data-state='darken' data-markdown data-background="images/inception-peonza.gif">
+        <div class="credit white">Imagen: <a href"https://www.flickr.com/photos/aidan_jones/3102434950">Aidan Jones</a>
+        </div>
+        <script type="text/template">
+## 1. Dilatación temporal
+|          | x2  |
+| -------: | :-- |
+| Realidad | 1 h |
+| Nivel 1  | 2 h |
+| Nivel 2  | 4 h |
+| Nivel 3  | 8 h |
+| ...      |     |
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+
+Devuelve el número de horas dentro del sueño
+
+<small>(suponiendo que cada nivel multiplica x2)</small>
+
+```
+int time_dream(int hours, int level);
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve el número de horas dentro del sueño
+
+<small>(suponiendo que cada nivel multiplica x2)</small>
+
+```cpp[4-6, 10-13]
+#include <iostream>
+#include <string>
+///hide
+#include <math.h>
+///unhide
+
+int time_dream(int hours, int level) {
+    // TODO: Here it goes the algorithm
+    ///hide
+    return hours * pow(2, level);
+    ///unhide
+}
+
+int main() {
+    int hours = 1;
+    std::cout << "Realidad: " << time_dream(hours, 0) << " horas" << std::endl; // Reality is level 0
+    std::cout << "Nivel 1 : " << time_dream(hours, 1) << " horas" << std::endl;
+    std::cout << "Nivel 2 : " << time_dream(hours, 2) << " horas" << std::endl;
+    std::cout << "Nivel 3 : " << time_dream(hours, 3) << " horas" << std::endl;
+}
+``` 
+        </script>
+    </section>
+
+    <section data-state='darken' data-markdown data-background="images/inception-peonza.gif">
+        <div class="credit white">Imagen: <a href"https://www.flickr.com/photos/aidan_jones/3102434950">Aidan Jones</a>
+        </div>
+        <script type="text/template">
+## 2. Dilatación de una letra
+|          | x2        |
+| -------: | --------- |
+| Realidad | A         |
+| Nivel 1  | AA        |
+| Nivel 2  | AAAA      |
+| Nivel 3  | AAAAAAAA  |
+| ...      |           |
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+Expande la cadena según el nivel del sueño
+
+<small>(suponiendo que cada nivel multiplica x2)</small>
+
+```
+std::string message_dream(std::string word, int level);
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Expande la cadena según el nivel del sueño
+
+<small>(suponiendo que cada nivel multiplica x2)</small>
+
+```cpp[4-6, 10-13]
+#include <iostream>
+#include <string>
+///hide
+int time_dream(int hours, int level) {
+    if (level == 0) return hours;
+    return 2 * time_dream(hours, level-1);
+}
+///unhide
+
+std::string message_dream(std::string word, int level) {
+    // TODO: Here it goes the algorithm
+    ///hide
+    int n_times = time_dream(1, level);
+    std::string ret;
+    for (int i=0; i<n_times; i++) {
+        ret.push_back(word.at(0));
+    }
+    return ret;
+    ///unhide
+}
+
+int main() {
+    int hours = 1;
+    std::cout << "Realidad: " << message_dream("A", 0) << std::endl; // Reality is level 0
+    std::cout << "Nivel 1 : " << message_dream("A", 1) << std::endl;
+    std::cout << "Nivel 2 : " << message_dream("A", 2) << std::endl;
+    std::cout << "Nivel 3 : " << message_dream("A", 3) << std::endl;
+}
+``` 
+        </script>
+    </section>
+
+    <section data-state='darken' data-markdown data-background="images/inception-peonza.gif">
+        <script type="text/template">
+## 3. Modificar el factor temporal
+
+|          | x2  | x3   | xN   |
+| -------: | :-- | ---- | ---- |
+| Realidad | 1 h | 1 h  | N^0  <!-- .element: class="fragment" --> |
+| Nivel 1  | 2 h | 3 h  | N^1  <!-- .element: class="fragment" --> |
+| Nivel 2  | 4 h | 9 h  | N^2  <!-- .element: class="fragment" --> |
+| Nivel 3  | 9 h | 27 h | N^3  <!-- .element: class="fragment" --> |
+| ...      |     |      |
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve el número de horas dentro del sueño
+
+<small>(factor temporal configurable)</small>
+
+```cpp[4, 6-8, 12-15]
+#include <iostream>
+#include <string>
+///hide
+#include <math.h>
+///unhide
+
+constexpr int factor_temporal = 3;
+
+int time_dream(int hours, int level) {
+    // TODO: Here it goes the algorithm
+    ///hide
+    return hours * pow(factor_temporal, level);
+    ///unhide
+}
+
+int main() {
+    int hours = 1;
+    std::cout << "Realidad: " << time_dream(hours, 0) << " horas" << std::endl; // Reality is level 0
+    std::cout << "Nivel 1 : " << time_dream(hours, 1) << " horas" << std::endl;
+    std::cout << "Nivel 2 : " << time_dream(hours, 2) << " horas" << std::endl;
+    std::cout << "Nivel 3 : " << time_dream(hours, 3) << " horas" << std::endl;
+}
+``` 
+        </script>
+    </section>
+
+
+    <section data-state='darken' data-markdown data-background="images/inception-peonza.gif">
+        <script type="text/template">
+## 4. Expandir palabras
+
+|          | x3 |            |
+| -------: | -- | ---------- |
+| Realidad | 1  | hi!        |
+| Nivel 1  | 3  | hhhiii!!! <!-- .element: class="fragment" --> |
+| Nivel 2  | 9  | hhhhhhhhhiiiiiiiii!!!!!!!!! <!-- .element: class="fragment" --> |
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Expandir palabras
+
+<small>(factor temporal configurable)</small>
+
+```cpp[4, 6-8, 11-13]
+#include <iostream>
+#include <string>
+
+constexpr int factor_temporal = 3;
+
+std::string message_dream(std::string word, int level) {
+    // TODO: Here it goes the algorithm
+    ///hide
+    if (level == 0) { return word; }
+    else {
+        // Every level the letters are repeated N times
+        std::string ret;
+        for (auto c: word) {
+            for (auto i=0; i<factor_temporal; i++) {
+                ret.push_back(c);
+            }
+        }
+        // And pass the message to the next level
+        return message_dream(ret, level - 1);
+    }
+    ///unhide
+}
+
+int main() {
+    std::cout << "Realidad: " << message_dream("hi!", 0) << std::endl; // Reality is level 0
+    std::cout << "Nivel 1 : " << message_dream("hi!", 1) << std::endl;
+    std::cout << "Nivel 2 : " << message_dream("hi!", 2) << std::endl;
+}
+``` 
+        </script>
+    </section>
+
+    <section>
+        <h2>Entregable</h2>
+        <p>Escribir un programa (<code>main.cpp</code>) que expanda una frase conforme a las reglas que se han visto en
+            el ejemplo anterior</p>
+        <pre><code class="cpp" data-trim data-line-numbers>
+            Hola! --- (factor x2, nivel 2) --> HHHHoooollllaaaa!!!! 
+            Soy Ana --- (factor x3, nivel 1) --> SSSoooyyy AAAnnnaaa
+        </code></pre>
+        <small><p>💡 Los espacios no deben expandirse.<br/>💡 Utiliza únicamente caracteres ASCII (ni 'ñ', ni acentos, ni signos ¡¿)</p></small>
+    </section>
+</section>

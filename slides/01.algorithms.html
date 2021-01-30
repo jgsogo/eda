@@ -64,23 +64,24 @@
             using _t_void = std::function<void ()>;
             using _t_bool = std::function<bool ()>;
             
-            void for_algorithm(_t_void A, _t_bool B, _t_void C, _t_void D);
+            // for (A; B; C) {
+            //     D;
+            // }
+            void for_algorithm(_t_void A, _t_bool B, _t_void C, _t_void D) {
+                for (A(); B(); C()) {
+                    D();
+                }
+            }
             
             int main() {
                 int i = -1000; // Let's start with a very wrong value
             
-                auto A = [&](){i = 0;};
+                auto A = [&](){ i = 0;};
                 auto B = [&](){ return i<10;};
                 auto C = [&](){ i++;};
                 auto D = [&](){ std::cout << i << std::endl;};
             
                 for_algorithm(A, B, C, D);
-            }
-
-            void for_algorithm(_t_void A, _t_bool B, _t_void C, _t_void D) {
-                for (A(); B(); C()) {
-                    D();
-                }
             }
             ``` 
 
@@ -142,7 +143,7 @@
         <ul>
             <li>Memoria</li>
             <li>Tiempo (notación Θ)</li>
-            <hr/>
+            <hr />
             <li class="fragment">Complejidad/mantenimiento</li>
             <li class="fragment">Tiempo de desarrollo</li>
             <li class="fragment">Tiempo de compilación</li>
@@ -152,26 +153,36 @@
 
 </section>
 
+<section data-external-slide-replace="slides/algoritmos/ej-inception.html"></section>
+
 <section data-transition="convex">
-    <section data-menu-title="Ejercicios">
-        <h2>Ejercicios</h2>
-    </section>
-
-    <section data-markdown data-menu-title="Ej.: Bucle `for`">
-        <script type="text/template">
-            ### Imprimir vector de palabras <!-- .element: class="no-caps" data-fragment-index="2" -->
-
-            ```cpp
-            ///compiler=g102
-            #include <iostream>
-            
-            ``` 
-
-            <sub class="right"><sup>Note.- Only for demo purposes</sup></sub>
-        </script>
-    </section>
-
     <section>
-        <h4>Algoritmo: buscar palabras que empiecen por vocal</h4>
+        <h2>Conclusiones</h2>
+
+        <aside class="notes">
+            Todo es un algoritmo: desde una receta de cocina hasta un reconocimiento facial
+            Hay muchos algoritmos que resuelven el mismo problema
+            NO existe un algoritmo que sea el mejor para todos los problemas
+            Hay algoritmos con nombre propio que te harán famoso
+            Investigación: ordenación, generación de números aleatorios,...
+        </aside>
+    </section>
+
+    <section data-background-color="rgb(243, 243, 243)" data-background-size="contain"
+        data-background="images/algorithm-seldom-cooper.png">
+        <p class="box-shadow-black white">Todo es un algoritmo</p>
+    </section>
+
+    <section data-background="images/algorithm-creative-cooding.jpg">
+        <div class="credit white">Imagen: University of the Arts (London)</div>
+        <p class="box-shadow-black white">Creative coding</p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-background="images/algorithm-mandelbrot-julia.gif">
+        <div class="credit white">Imagen: <a
+                href="https://christopherolah.wordpress.com/2010/03/10/why-are-there-mini-sets-in-the-mandelbrot-set/">Christopher
+                Olah</a></div>
     </section>
 </section>
