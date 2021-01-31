@@ -25,51 +25,51 @@
 
     <section>
         <h2>Cálculo del factorial</h2>
-        <p>5!
+        <p>4!
             <span class="fragment" data-fragment-index="1">
-                <span class="fragment fade-out" data-fragment-index="15">= 5 * 4!</span>
+                <span class="fragment fade-out" data-fragment-index="15">= 4 * 3!</span>
             </span>
             <span class="fragment" data-fragment-index="13">
-                <span class="fragment fade-out" data-fragment-index="15"> = 5 * 24</span>
+                <span class="fragment fade-out" data-fragment-index="15"> = 4 * 6</span>
             </span>
-            <span class="fragment" data-fragment-index="14"> = 120</span>
+            <span class="fragment" data-fragment-index="14"> = 24</span>
         </p>
         <p>
             <span class="fragment" data-fragment-index="2">
-                <span class="fragment fade-out" data-fragment-index="13">4! = 4 * 3!</span>
+                <span class="fragment fade-out" data-fragment-index="13">3! = 3 * 2!</span>
             </span>
             <span class="fragment" data-fragment-index="11">
-                <span class="fragment fade-out" data-fragment-index="13"> = 4 * 6</span>
+                <span class="fragment fade-out" data-fragment-index="13"> = 3 * 2</span>
             </span>
             <span class="fragment" data-fragment-index="12">
-                <span class="fragment fade-out" data-fragment-index="13"> = 24</span>
+                <span class="fragment fade-out" data-fragment-index="13"> = 6</span>
             </span>
         </p>
         <p>
             <span class="fragment" data-fragment-index="3">
-                <span class="fragment fade-out" data-fragment-index="11">3! = 3 * 2!</span>
+                <span class="fragment fade-out" data-fragment-index="11">2! = 2 * 1!</span>
             </span>
             <span class="fragment" data-fragment-index="9">
-                <span class="fragment fade-out" data-fragment-index="11"> = 3 * 2</span>
+                <span class="fragment fade-out" data-fragment-index="11"> = 2 * 1</span>
             </span>
             <span class="fragment" data-fragment-index="10">
-                <span class="fragment fade-out" data-fragment-index="11"> = 6</span>
+                <span class="fragment fade-out" data-fragment-index="11"> = 2</span>
             </span>
         </p>
         <p>
             <span class="fragment" data-fragment-index="4">
-                <span class="fragment fade-out" data-fragment-index="9">2! = 2 * 1!</span>
+                <span class="fragment fade-out" data-fragment-index="9">1! = 1 * 0!</span>
             </span>
             <span class="fragment" data-fragment-index="7">
-                <span class="fragment fade-out" data-fragment-index="9"> = 2 * 1</span>
+                <span class="fragment fade-out" data-fragment-index="9"> = 1 * 1</span>
             </span>
             <span class="fragment" data-fragment-index="8">
-                <span class="fragment fade-out" data-fragment-index="9"> = 2</span>
+                <span class="fragment fade-out" data-fragment-index="9"> = 1</span>
             </span>
         </p>
         <p>
             <span class="fragment fade-in" data-fragment-index="5">
-                <span class="fragment fade-out" data-fragment-index="7">1!</span>
+                <span class="fragment fade-out" data-fragment-index="7">0!</span>
             </span>
             <span class="fragment fade-in" data-fragment-index="6">
                 <span class="fragment fade-out" data-fragment-index="7">= 1</span>
@@ -95,10 +95,237 @@
     <section>
         <h2>Ejemplos</h2>
     </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Multiplicación como suma <!-- .element: class="caps-preserve" -->
+
+```text
+2 * 3 = 6
+```
+
+```text
+2 * 3 = 2 + 2 + 2
+```
+<!-- .element: class="fragment" -->
+
+a * n = (sumar 'n' veces 'a')
+<!-- .element: class="fragment" -->
+
+        </script>
+    </section>
+
+<section data-markdown>
+    <script type="text/template">
+Multiplicación como suma (iterativo)
+
+```cpp
+#include <iostream>
+
+int main() {
+    int a = 2;
+    int n = 3;
+
+    int result = 0;
+    for (int i = 0; i<n; i++) {
+        result = a + result;
+    }
+    std::cout << "a + n = " << result << std::endl;
+}
+```
+    </script>
 </section>
+
+<section data-markdown>
+    <script type="text/template">
+Multiplicación como suma (recursivo)
+
+```text
+a * n = (sumar 'n' veces 'a')
+```
+<!-- .element: class="fragment" -->
+
+```text
+a * n = a + (sumar 'n-1' veces 'a')
+```
+<!-- .element: class="fragment" -->
+
+
+y
+
+```text
+a * (n-1) = (sumar 'n-1' veces 'a')
+```
+<!-- .element: class="fragment" -->
+
+💃💃💃
+
+```text
+a * n = a + (a * (n-1))
+```
+<!-- .element: class="fragment" -->
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Multiplicación como suma (recursivo)
+
+```text
+a * n = (sumar 'n' veces 'a')
+```
+
+```text
+a * n = a + (sumar 'n-1' veces 'a')
+```
+
+```cpp
+#include <iostream>
+
+int sum_n_times(int a, int n) {
+    // TODO: Stop condition: base/trivial case
+    ///hide
+    if (n == 1) { return a; }
+    ///unhide
+    return a + sum_n_times(a, n-1);
+}
+
+int main() {
+    int a = 2;
+    int n = 3;
+    int result = sum_n_times(2, 3);
+    std::cout << "a * n = " << result << std::endl;
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Potencia como multiplicación  <!-- .element: class="caps-preserve" -->
+
+```text
+aˆn = (multiplicar 'n' veces 'a')
+```
+```text
+aˆn = a * (multiplicar 'n-1' veces 'a')
+```
+
+
+```cpp
+#include <iostream>
+
+int prod_n_times(int a, int n) {
+    // Recursive algoritm to multiple 'n' times a number 'a'
+    ///hide
+    if (n == 1) { return a; }  // Stop condition: base/trivial case
+    return a * prod_n_times(a, n-1);
+    ///unhide
+}
+
+int main() {
+    int a = 2;
+    int n = 3;
+    int result = prod_n_times(2, 3);
+    std::cout << "a^n = " << result << std::endl;
+}
+```
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+### Factorial como método recursivo  <!-- .element: class="caps-preserve" -->
+
+```text
+n! = n * (n-1)!
+```
+
+
+```cpp
+#include <iostream>
+
+int factorial(int n) {
+    // Compute factorial of 'n' as 'n * (n-1)!'
+    ///hide
+    if (n == 0) { return 1; } // Stop condition: base/trivial case
+    return n * factorial(n-1);
+    ///unhide
+}
+
+int main() {
+    int n = 4;
+    int result = factorial(4);
+    std::cout << "n! = " << result << std::endl;
+}
+```
+        </script>
+    </section>
+</section>
+
 
 <section data-transition="convex">
     <section>
         <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementar la función `'print'` como método recursivo
+
+```cpp
+#include <iostream>
+
+void print(std::string word) {
+    // Hint: 'hello' = 'h' + 'ello'
+    ///hide
+    if (word.size() == 0) { } // Stop condition: base/trivial case
+    else {
+        std::cout << word.at(0) << word.substr(1, word.size());
+    }
+    ///unhide
+}
+
+int main() {
+    print("Recursion!");
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementar la serie de Fibonacci con recursión: la función devuelve el valor del elemento que ocupa la posición `'index'`.
+
+```txt
+1, 1, 2, 3, 5, 8, 13, 21,...
+```
+
+```cpp
+#include <iostream>
+
+int fibonacci(int index) {
+    // TODO: Implement fibonacci as a recursive algorithm
+    //  fibonacci(0) --> 0
+    //  fibonacci(4) --> 5
+    //  fibonacci(7) --> 21
+    ///hide
+    if (index == 0 || index == 1) { return 1; }
+    else {
+        return fibonacci(index-2) + fibonacci(index-1);
+    }
+    ///unhide
+}
+
+int main() {
+    int n_terms = 8;
+    for (int i=0; i<n_terms; i++) {
+        std::cout << fibonacci(i) << ", ";
+    }
+}
+```
+        </script>
     </section>
 </section>
