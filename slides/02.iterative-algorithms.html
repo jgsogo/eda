@@ -1,9 +1,366 @@
-<section>
-    <section>
-        <h2>Concepto</h2>
+<section data-transition="convex">
+
+    <section data-state="darken" data-background="images/iterative2.gif">
+        <div class="credit white">Imagen: Modern Times (Charles Chaplin, 1936)</div>
+        <div>
+            <h2 class="box-shadow-black">Características</h2>
+            <p class="box-shadow-white black">Repetición explícita: <code>for</code>, <code>while</code></p>
+            <p class="box-shadow-white black">Condición de parada: fallo en la condición del bucle</p>
+        </div>
     </section>
 
-    <section data-external-slide-replace="slides/algoritmos/iterative-intro.html"></section>
+    <section data-markdown>
+        <script type="text/template">
+### Repetición con range-based for loop <!-- .element: class="caps-preserve" -->
+
+```cpp
+std::vector<int> values{1, 2, 3, 4, 5};
+for (auto v: values) {
+    //
+}
+``` 
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+
+```cpp
+std::vector<int> values{1, 2, 3, 4, 5};
+for (auto v: values) {
+    //
+}
+``` 
+
+* Muy práctico, legible y cómodo
+* Condición de parada: el `'iterator'` consume todos los valores
+* No se sabe el índice del elemento
+
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+### Repetición con bucle for <!-- .element: class="caps-preserve" -->
+
+```cpp
+std::vector<int> values;
+for (std::size_t i=0; i<values.size(); i++) {
+    // values[i] ...
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+std::vector<int> values;
+for (std::size_t i=0; i<values.size(); i++) {
+    // values[i] ...
+}
+``` 
+
+* Vieja escuela
+* El acceso `'values[i]'` puede penalizar (*)
+* Condición de parada: `'i<values.size()'`
+* Se conoce la posición/índice `'i'` del elemento
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Condición de parada: `'i<values.size()'`
+
+```cpp
+std::vector<int> values;
+for (std::size_t i=0; i<values.size(); i++) {
+    // values[i] ...
+}
+
+// for (A; B; C) {
+//     D;
+// }
+``` 
+
+![Diagrama de flujo para un bucle for](slides/algoritmos/ejemplo-for-loop.dot.png)
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Repetición con bucle while <!-- .element: class="caps-preserve" -->
+
+```cpp
+std::vector<int> values{1,2,3};
+int i=0;
+while (i<values.size()) {
+    // values[i]
+    i++;
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+std::vector<int> values{1,2,3};
+int i=0;
+while (i<values.size()) {
+    // values[i]
+    i++;
+}
+``` 
+
+* Menos común (*)
+* El acceso `'values[i]'` puede penalizar (*)
+* Condición de parada: `'i<values.size()'`
+* Se conoce la posición/índice `'i'` del elemento
+* ...volveremos a verlo!
+
+        </script>
+    </section>
+
 </section>
 
 
+<section data-transition="convex">
+    <section>
+        <h2>Ejemplos</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Imprimir los valores de un vector <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+
+void print_values(std::vector<int> values) {
+    for (auto v: values) {
+        std::cout << "Valor: " << v << "\n";
+    }
+}
+
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    print_values(values);
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Sumar elementos <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int sum_values(std::vector<int> values) {
+    int sum = 0;
+    for (auto v: values) {
+        sum = sum + v;
+    }
+    return sum;
+}
+
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    int sum = sum_values(values);
+    std::cout << "Sum: " << sum << std::endl;
+}
+``` 
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+### Detectar elemento <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+
+bool any_of(std::vector<int> values, int value_to_find) {
+    bool found = false;
+    // To be implemented
+    /// hide
+    for (auto v: values) {
+        found = found || (v == value_to_find);
+    }
+    /// unhide
+    return found;
+}
+
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    bool found = any_of(values, 8);
+    std::cout << "Value " << (found ? "found" : "not found");
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Buscar elemento <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+
+// Returns the (first) position of the element if found, otherwise returns -1
+int find(std::vector<int> values, int value_to_find) {
+    int position = -1;
+    // To be implemented
+    ///hide
+    for (std::size_t i=0; i<values.size() && position == -1; i++) {
+        if (values[i] == value_to_find) {
+            position = i;
+        }
+    }
+    ///unhide
+    return position;
+}
+
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    int position = find(values, 8);
+    if (position == -1) {
+        std::cout << "Value not found" << std::endl;
+    }
+    else {
+        std::cout << "Value found at position " << position << std::endl;
+    }
+}
+``` 
+        </script>
+    </section>
+</section>
+
+<section>
+
+    <section data-background="images/aronofski-pi.jpg">
+        <div class="credit white">Imagen: Pi (Darren Aronofsky, 1998)</div>
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Comprobar si todos los elementos del vector son iguales a un valor dado (`'all_of'`).
+```cpp
+#include <iostream>
+#include <vector>
+
+bool all_of(std::vector<int> values, int value_to_check) {
+    // To be implemented
+    return false;
+}
+
+int main() {
+    std::vector<int> values{2, 2, 2, 2, 2, 2};
+    bool all_equal = all_of(values, 2);
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Comprobar que ningún elemento es igual a un valor dado (`'none_of'`).
+```cpp
+#include <iostream>
+#include <vector>
+
+bool none_of(std::vector<int> values, int value_to_check) {
+    // To be implemented
+    return false;
+}
+
+int main() {
+    std::vector<int> values{1, 3, 5, 8, 13};
+    bool all_equal = none_of(values, 4);
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devolver un vector cuyos elementos sean el resultado de aplicar un función lambda a cada elemento del vector de entrada (`'for_each'`).
+```cpp
+#include <iostream>
+#include <vector>
+#include <functional>
+
+std::vector<int> for_each(std::vector<int> values, std::function<int (int)> f) {
+    std::vector<int> ret;
+    // To be implemented
+    return ret;
+}
+
+int main() {
+    std::vector<int> values{1, 3, 5, 8, 13};
+    auto output = for_each(values, [](int v){ return v*v;});
+    // Try with different lambda functions
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Desafíos
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementar todos los ejercicios utilizando <span class="red">diferentes tipos de bucles</span>: `'range-for'`, `'for'`, `'while'`.
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementar todos los ejercicios y ejemplos utilizando <span class="red">funciones lambda</span>.
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <functional>
+
+void for_each(std::vector<int> values, std::function<void (int)> f) {
+    for (auto v: values) {
+        f(v);
+    }
+}
+
+int main() {
+    // Function to use to print values
+    auto print_value = [](int v) { std::cout << v << std::endl;};
+
+    // Compute the sum
+    int sum = 0;
+    auto sum_values = [&sum](int v) { sum = sum + v;};
+
+    // ...
+
+    std::vector<int> values{1, 3, 5, 8, 13};
+    for_each(values, print_value);
+    for_each(values, sum_values);
+    std::cout << "Total sum: " << sum << std::endl;
+}
+```
+        </script>
+    </section>
+
+</section>
