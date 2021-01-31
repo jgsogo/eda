@@ -1,9 +1,210 @@
-<section>
-    <section>
-        <h2>Concepto</h2>
+<section data-transition="convex">
+
+    <section data-state="darken" data-background="images/iterative2.gif">
+        <div class="credit white">Imagen: Modern Times (Charles Chaplin, 1936)</a>
+        </div>
+        <div>
+            <h2 class="box-shadow-black">Características</h2>
+            <p class="box-shadow-white black">Repetición explícita: <code>for</code>, <code>while</code></p>
+            <p class="box-shadow-white black">Condición de parada: fallo en la condición del bucle</p>
+        </div>
     </section>
 
-    <section data-external-slide-replace="slides/algoritmos/iterative-intro.html"></section>
+    <section data-markdown>
+        <script type="text/template">
+### Repetición con range-based for loop <!-- .element: class="caps-preserve" -->
+
+```cpp
+std::vector<int> values{1, 2, 3, 4, 5};
+for (auto v: values) {
+    //
+}
+``` 
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+
+```cpp
+std::vector<int> values{1, 2, 3, 4, 5};
+for (auto v: values) {
+    //
+}
+``` 
+
+* Muy práctico, legible y cómodo
+* Condición de parada: el `'iterator'` consume todos los valores
+* No se sabe el índice del elemento
+
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+### Repetición con bucle for <!-- .element: class="caps-preserve" -->
+
+```cpp
+std::vector<int> values;
+for (std::size_t i=0; i<values.size(); i++) {
+    // values[i] ...
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+std::vector<int> values;
+for (std::size_t i=0; i<values.size(); i++) {
+    // values[i] ...
+}
+``` 
+
+* Vieja escuela
+* El acceso `'values[i]'` puede penalizar (*)
+* Condición de parada: `'i<values.size()'`
+* Se conoce la posición/índice `'i'` del elemento
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Condición de parada: `'i<values.size()'`
+
+```cpp
+std::vector<int> values;
+for (std::size_t i=0; i<values.size(); i++) {
+    // values[i] ...
+}
+
+// for (A; B; C) {
+//     D;
+// }
+``` 
+
+![Img](slides/algoritmos/ejemplo-for-loop.dot.png)
+
+        </script>
+    </section>
+
+
+ 
 </section>
 
 
+<section data-transition="convex">
+    <section>
+        <h2>Ejemplos</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Imprimir los valores de un vector <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+
+void print_values(std::vector<int> values) {
+    for (auto v: values) {
+        std::cout << "Valor: " << v << "\n";
+    }
+}
+
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    print_values(values);
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Sumar elementos <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int sum_values(std::vector<int> values) {
+    int sum = 0;
+    for (auto v: values) {
+        sum = sum + v;
+    }
+    return sum;
+}
+
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    int sum = sum_values(values);
+    std::cout << "Sum: " << sum << std::endl;
+}
+``` 
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+### Detectar elemento <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+
+bool any(std::vector<int> values, int value_to_find) {
+    for (auto v: values) {
+        if (v == value_to_find) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    bool found = any(values, 8);
+    std::cout << "Value " << (found ? "found" : "not found");
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Buscar elemento <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int find(std::vector<int> values, int value_to_find) {
+    // Returns the position of the element if found, otherwise returns -1
+    for (std::size_t i=0; i<values.size(); i++) {
+        if (values[i] == value_to_find) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    int position = find(values, 8);
+    if (position == -1) {
+        std::cout << "Value not found" << std::endl;
+    }
+    else {
+        std::cout << "Value found" << std::endl;
+    }
+}
+``` 
+        </script>
+    </section>
+</section>
