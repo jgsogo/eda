@@ -1,7 +1,104 @@
-<section>
-    <section>
-        <h2>Concepto</h2>
+<section data-transition="convex">
+    <section data-background="images/recursion-hombrecillo.jpeg">
+        <div class="credit black">Imagen: <a
+                href="https://medium.com/inspiredbrilliance/aws-lambda-long-running-functions-using-tail-recursion-6f5b59133a94">inspiredbrilliance</a>
+        </div>
+        <h2 class="box-shadow-black">Características</h2>
+        <p class="box-shadow-white black">Repetición implícita: llamada a una (misma) función</p>
+        <p class="box-shadow-white black">Condición de parada: caso base/trivial</p>
     </section>
 
-    <section data-external-slide-replace="slides/algoritmos/recursive-intro.html"></section>
+    <section data-background-color="#ffffff">
+        <h4>Triángulo de Sierpinski</h4>
+        <img class="stretch" src="images/sierpinski-full.png"></img>
+    </section>
+
+    <section data-background-color="#ffffff">
+        <h4>Triángulo de Sierpinski</h4>
+        <img class="stretch" src="images/sierpinski-states.png"></img>
+        <p class="fragment">1) Dibujar el triángulo inscrito en cada triángulo</p>
+        <p class="fragment"><small>2) Dibujar el triángulo inscrito en cada triángulo</small></p>
+        <p class="fragment"><small><small>3) Dibujar el triángulo inscrito en cada triángulo</small></small></p>
+        <p class="fragment"><small><small><small>4) Dibujar el triángulo inscrito en cada
+                        triángulo</small></small></small></p>
+    </section>
+
+    <section>
+        <h2>Cálculo del factorial</h2>
+        <p>5!
+            <span class="fragment" data-fragment-index="1">
+                <span class="fragment fade-out" data-fragment-index="15">= 5 * 4!</span>
+            </span>
+            <span class="fragment" data-fragment-index="13">
+                <span class="fragment fade-out" data-fragment-index="15"> = 5 * 24</span>
+            </span>
+            <span class="fragment" data-fragment-index="14"> = 120</span>
+        </p>
+        <p>
+            <span class="fragment" data-fragment-index="2">
+                <span class="fragment fade-out" data-fragment-index="13">4! = 4 * 3!</span>
+            </span>
+            <span class="fragment" data-fragment-index="11">
+                <span class="fragment fade-out" data-fragment-index="13"> = 4 * 6</span>
+            </span>
+            <span class="fragment" data-fragment-index="12">
+                <span class="fragment fade-out" data-fragment-index="13"> = 24</span>
+            </span>
+        </p>
+        <p>
+            <span class="fragment" data-fragment-index="3">
+                <span class="fragment fade-out" data-fragment-index="11">3! = 3 * 2!</span>
+            </span>
+            <span class="fragment" data-fragment-index="9">
+                <span class="fragment fade-out" data-fragment-index="11"> = 3 * 2</span>
+            </span>
+            <span class="fragment" data-fragment-index="10">
+                <span class="fragment fade-out" data-fragment-index="11"> = 6</span>
+            </span>
+        </p>
+        <p>
+            <span class="fragment" data-fragment-index="4">
+                <span class="fragment fade-out" data-fragment-index="9">2! = 2 * 1!</span>
+            </span>
+            <span class="fragment" data-fragment-index="7">
+                <span class="fragment fade-out" data-fragment-index="9"> = 2 * 1</span>
+            </span>
+            <span class="fragment" data-fragment-index="8">
+                <span class="fragment fade-out" data-fragment-index="9"> = 2</span>
+            </span>
+        </p>
+        <p>
+            <span class="fragment fade-in" data-fragment-index="5">
+                <span class="fragment fade-out" data-fragment-index="7">1!</span>
+            </span>
+            <span class="fragment fade-in" data-fragment-index="6">
+                <span class="fragment fade-out" data-fragment-index="7">= 1</span>
+            </span>
+        </p>
+    </section>
+
+    <section data-background="images/recursive.jpg">
+        <div class="credit white">Imagen: <a href="https://rootear.com/desarrollo/funciones-recursivas">Rootear.com</a>
+        </div>
+        <div class="box-shadow-black">
+            <h3>Recursión</h3>
+            <ul>
+                <li>Existe un <span class="green">caso base</span> (trivial)</li>
+                <li>El resto de <span class="green">casos (recursivos)</span> se pueden descomponer en una operación
+                    simple y un caso más próximo al caso base</li>
+            </ul>
+        </div>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejemplos</h2>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejercicios propuestos</h2>
+    </section>
 </section>
