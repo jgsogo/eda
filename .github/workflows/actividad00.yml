@@ -12,3 +12,5 @@ jobs:
     - name: Compile
       run: |
         cmake --version
+        python --version
+        
