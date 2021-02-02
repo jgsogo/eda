@@ -12,9 +12,9 @@ jobs:
     - name: Install tools
       run: |
         cmake --version
-        python --version
-        python -m pip install --upgrade pip
-        python -m pip install conan
+        python3 --version
+        python3 -m pip install --upgrade pip
+        python3 -m pip install conan
         conan --version
         conan profile show default
 
