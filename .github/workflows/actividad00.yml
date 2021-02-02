@@ -13,7 +13,7 @@ jobs:
       run: |
         cmake --version
         python --version
-        pip install --user -U conan
+        python -m pip install --user -U conan
         conan --version
         conan profile show default
 
