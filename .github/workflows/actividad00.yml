@@ -22,11 +22,14 @@ jobs:
         python -m pip install conan
         conan --version
         conan config init
+        conan profile update settings.compiler.libcxx=libstdc++11 default
         conan profile show default
 
     - name: Compile
       run: |
+        ls -la
         mkdir _build && cd _build
+        ls -la ..
         conan install ../conanfile.txt -s build_type=Release
         cmake .. -DCMAKE_MODULE_PATH=$(pwd)
         cmake --build .
