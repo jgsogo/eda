@@ -1,8 +1,5 @@
 
 #include "message_dream.h"
-#include <iostream>
-
-constexpr int factor_temporal = 3;
 
 constexpr int factor_temporal = 3;
 
