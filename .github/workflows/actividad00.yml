@@ -1,0 +1,14 @@
+name: Validate Actividad 00
+
+on: [pull_request, push]
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+
+    - name: Compile
+      run: |
+        cmake --version
