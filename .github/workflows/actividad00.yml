@@ -21,6 +21,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install conan
         conan --version
+        conan config init
         conan profile show default
 
     - name: Compile
