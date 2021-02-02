@@ -9,12 +9,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2.0.0
 
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
     - name: Install tools
       run: |
         cmake --version
-        python3 --version
-        python3 -m pip install --upgrade pip
-        python3 -m pip install conan
+        python --version
+        python -m pip install --upgrade pip
+        python -m pip install conan
         conan --version
         conan profile show default
 
