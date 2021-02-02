@@ -9,8 +9,22 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2.0.0
 
-    - name: Compile
+    - name: Install tools
       run: |
         cmake --version
         python --version
-        
+        pip install -U conan
+        conan --version
+        conan profile show default
+
+    - name: Compile
+      run: |
+        mkdir _build && cd _build
+        conan install ../conanfile.txt -s build_type=Release
+        cmake .. -DCMAKE_MODULE_PATH=$(pwd)
+        cmake --build .
+
+    - name: Run tests
+      working-directory: _build
+      run: |
+        ./unit_tests
