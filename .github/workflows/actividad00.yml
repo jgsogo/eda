@@ -27,11 +27,9 @@ jobs:
 
     - name: Compile
       run: |
-        ls -la
         mkdir _build && cd _build
-        ls -la ..
-        conan install ../conanfile.txt -s build_type=Release
-        cmake .. -DCMAKE_MODULE_PATH=$(pwd)
+        conan install ../actividad00/conanfile.txt -s build_type=Release
+        cmake ../actividad00 -DCMAKE_MODULE_PATH=$(pwd)
         cmake --build .
 
     - name: Run tests
