@@ -245,6 +245,50 @@ int main() {
 ``` 
         </script>
     </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Buscar todos los elementos <!-- .element: class="caps-preserve" -->
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <iterator>
+
+// There is a lot of C++ to learn (do not worry about this function)
+template <typename T> void print_vector(const std::vector<T>& values);
+
+// Returns the position of all the elements equal to a given value
+std::vector<int> find(std::vector<int> values, int value_to_find) {
+    std::vector<int> ret;
+    // To be implemented
+    ///hide
+    for (std::size_t i=0; i<values.size(); i++) {
+        if (values[i] == value_to_find) {
+            ret.push_back(i);
+        }
+    }
+    ///unhide
+    return ret;
+}
+
+int main() {
+    std::vector<int> values{1, 2, 8, 5, 8, 13};
+    auto positions = find(values, 8);
+    print_vector(positions);
+    std::cout << "Found " << positions.size() << " elements\n"; 
+}
+
+// Implementation of forward declared function
+template <typename T>
+void print_vector(const std::vector<T>& values) {
+    std::copy(values.begin(), values.end(), std::ostream_iterator<T>(std::cout, "\n"));
+}
+    
+``` 
+        </script>
+    </section>
+
 </section>
 
 <section data-transition="convex">
