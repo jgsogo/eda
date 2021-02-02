@@ -4,6 +4,8 @@
 
 constexpr int factor_temporal = 3;
 
+constexpr int factor_temporal = 3;
+
 std::string message_dream(std::string word, int level) {
     if (level == 0) { return word; }
     else {

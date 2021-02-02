@@ -19,3 +19,14 @@ iterar la solución hasta que los tests pasen satisfactoriamente.
 Existen cientos de páginas web en las que puedes encontrar información sobre cómo 
 crear un pull-request ([ejemplo](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork)).
 
+Cuando abras el pull-request pon mucha atención y asegúrate de que la rama de 
+destino es la rama `actividades`:
+
+![pr0](images/pr0.png)
+
+Una vez creado el pull-request el CI se lanzará automáticamente y podrás ver el
+resultado de los tests. Trabaja en ellos, arréglalos, haz tantos commits como
+necesites hasta que consigas que todos los tests pasen en verde:
+
+![pr1](images/pr1.png)
+
