@@ -17,3 +17,9 @@ SCENARIO( "Check a word", "[test_message_dream.cpp]" )
     REQUIRE( message_dream("hi!", 1) == "hhii!!" );
     REQUIRE( message_dream("hi!", 2) == "hhhhiiii!!!!" );
 }
+
+SCENARIO( "Check a phrase", "[test_message_dream.cpp]" )
+{
+    REQUIRE( message_dream("Soy Ana", 0) == "Soy Ana" );
+    REQUIRE( message_dream("Soy Ana", 1) == "SSooyy AAnnaa" );
+}
