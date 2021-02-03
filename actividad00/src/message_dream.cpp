@@ -1,4 +1,4 @@
-
+#include <iostream>
 #include "message_dream.h"
 
 constexpr int factor_temporal = 3;
