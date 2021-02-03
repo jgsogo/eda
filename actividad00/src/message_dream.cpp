@@ -29,5 +29,4 @@ string message_dream(string word, int level, int factor_temporal)
 int main()
 {
     cout<<message_dream("Hola!", 2, 2)<<"\n"; // HHHHoooollllaaaa!!!!
-    cout<<message_dream("Soy Ana", 1, 3)<<"\n"; // SSSoooyyy AAAnnnaaa
 }
