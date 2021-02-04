@@ -1,8 +1,9 @@
 
 #include "message_dream.h"
+#include "math.h"
 
-
-std:    // TODO: Here it goes the algorithm
+std::string message_dream(std::string word, int level, int factor_temporal) {
+    // TODO: Here it goes the algorithm
     int veces= pow(factor_temporal,level);
     std::string rep;
     if(level==0){return word;}
@@ -15,6 +16,6 @@ std:    // TODO: Here it goes the algorithm
       return rep;
     }
 
-
-    return "Not implemented";
+    return "Not implemented!";
 }
+
