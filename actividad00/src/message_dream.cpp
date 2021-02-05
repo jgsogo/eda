@@ -1,3 +1,4 @@
+#include "message_dream.h"
 #include <iostream>
 #include <string>
 
@@ -17,9 +18,4 @@ std::string message_dream(std::string word, int level, int factor_temporal) {
         }
         return message_dream(new_word, level - 1, factor_temporal);
     }
-}
-
-int main() {
-    std::cout << message_dream("Hola!", 2, 2) << std::endl; // HHHHoooollllaaaa!!!!
-    std::cout << message_dream("Soy Ana", 1, 3) << std::endl; // SSSoooyyy AAAnnnaaa
 }
