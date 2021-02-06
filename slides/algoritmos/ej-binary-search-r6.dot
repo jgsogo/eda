@@ -1,0 +1,35 @@
+digraph {
+    graph [bgcolor=transparent]
+    graph [pad="0.5"];
+    rankdir=LR
+
+    1 [shape=rectangle]
+    2 [shape=rectangle]
+    3 [shape=rectangle]
+    5 [shape=rectangle]
+    8 [shape=rectangle]
+    13 [shape=rectangle]
+
+    1 -> 2 -> 3 -> 5 -> 8 -> 13 [style = invis, weight= 10 ];
+
+    inicio [shape=plaintext]
+    fin [shape=plaintext]
+    middle_3 [label="middle == 8?" shape=plaintext style=invis]
+    middle_3_inicio [label="inicio" shape=plaintext style=invis]
+    middle_5 [label="middle == 8?" shape=plaintext style=invis]
+    middle_5_inicio [label="inicio" shape=plaintext style=invis]
+    middle_8 [label="middle == 8?" shape=plaintext style=invis]
+    {rank = same; 1; inicio; }
+    {rank = same; 13; fin; }
+    {rank = same; 3; middle_3; middle_3_inicio; }
+    {rank = same; 5; middle_5; middle_5_inicio; }
+    {rank = same; 8; middle_8; }
+
+    inicio -> 1
+    fin -> 13
+    3 -> middle_3 [dir="back" style=invis]
+    middle_3_inicio -> 3 [style=invis]
+    5 -> middle_5 [dir="back" style=invis]
+    middle_5_inicio -> 5 [style=invis]
+    8 -> middle_8 [dir="back" style=invis]
+}

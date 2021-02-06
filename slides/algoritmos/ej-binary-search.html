@@ -1,0 +1,170 @@
+<section data-transition="convex">
+    <section data-menu-title="Ej.: Búsqueda binaria">
+        <h2>Búsqueda binaria</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Búsqueda lineal (iterativa) <!-- .element: class="caps-preserve" -->
+
+```cpp
+///hide
+#include <iostream>
+///unhide
+#include <vector>
+
+// Returns if the element is found in the vector
+bool find(std::vector<int> values, int value_to_find) {
+    for (std::size_t i=0; i<values.size(); i++) {
+        if (values[i] == value_to_find) {
+            return true;
+        }
+    }
+    return false;
+}
+
+///hide
+int main() {
+    std::vector<int> values{1, 2, 3, 5, 8, 13};
+    auto found = find(values, 8);
+    if (found) {
+        std::cout << "Value found" << std::endl;
+    }
+    else {
+        std::cout << "Value not found" << std::endl;
+    }
+}
+///unhide
+``` 
+
+¿Cuál es el peor caso?
+
+¿Importa que el vector esté ordenado?
+        </script>
+    </section>
+
+    <section data-background="images/cat-binary-search.jpg" data-background-size="contain">
+    </section>
+
+    <section data-transition="fade-in fade-out" data-background-color="rgb(255, 255, 255)">
+        <h3 class="caps-preserve">Búsqueda binaria (recursivo)</h3>
+        <p>Dado un vector ordenado</p>
+        <img src="slides/algoritmos/ej-binary-search-r6.dot.png">
+    </section>
+
+    <section data-transition="fade-in fade-out" data-background-color="rgb(255, 255, 255)">
+        <h3 class="caps-preserve">Búsqueda binaria (recursivo)</h3>
+        <p>Compruebo el elemento central</p>
+        <img src="slides/algoritmos/ej-binary-search-r5.dot.png">
+    </section>
+
+    <section data-transition="fade-in fade-out" data-background-color="rgb(255, 255, 255)">
+        <h3 class="caps-preserve">Búsqueda binaria (recursivo)</h3>
+        <p>Me quedo con la mitad donde sé que está (recursivo!)</p>
+        <img src="slides/algoritmos/ej-binary-search-r4.dot.png">
+    </section>
+
+    <section data-transition="fade-in fade-out" data-background-color="rgb(255, 255, 255)">
+        <h3 class="caps-preserve">Búsqueda binaria (recursivo)</h3>
+        <p>Compruebo el elemento central</p>
+        <img src="slides/algoritmos/ej-binary-search-r3.dot.png">
+    </section>
+
+    <section data-transition="fade-in fade-out" data-background-color="rgb(255, 255, 255)">
+        <h3 class="caps-preserve">Búsqueda binaria (recursivo)</h3>
+        <p>Me quedo con la mitad donde sé que está (recursivo!)</p>
+        <img src="slides/algoritmos/ej-binary-search-r2.dot.png">
+    </section>
+
+    <section data-transition="fade-in slide-out" data-background-color="rgb(255, 255, 255)">
+        <h3 class="caps-preserve">Búsqueda binaria (recursivo)</h3>
+        <p>Lo encuentro o me quedo sin vector</p>
+        <img src="slides/algoritmos/ej-binary-search-r1.dot.png">
+    </section>
+
+    <section>
+        <h3 class="caps-preserve">Búsqueda binaria (recursivo)</h3>
+        <p><strong>Ventaja:</strong> <span class="fragment">mucho más rápida</span>.</p>
+        <p><strong>Inconveniente:</strong> <span class="fragment">tengo que ordenar el vector</span>.</p>
+    </section>
+
+    <section>
+        <h3 class="caps-preserve">Búsqueda iterativa vs binaria</h3>
+    </section>
+
+    <section>
+        <h2>💻 Actividad 02 🌶🌶🌶</h2>
+        <p>Escribir un algoritmo <u>recursivo</u> que ejecute una búsqueda binaria</p>
+        <p><small>(Utiliza un algoritmo recursivo)</small></p>
+        <pre><code class="cpp" data-trim data-line-numbers>
+            {1, 2, 3, 5, 8, 13} -- (buscar 8) --> true
+            {1, 2, 3, 5, 8, 13} -- (buscar 31) --> false
+        </code></pre>
+        <small>
+            <p>💡 No hay elementos repetidos.<br />💡 El vector está ordenado</p>
+        </small>
+        <hr />
+        <p><small><a href="https://github.com/jgsogo/eda/tree/actividades">😈 Modo difícil 😈</a></small></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Plantilla solución
+
+
+```cpp[10-14]
+#include <iostream>
+#include <vector>
+
+///hide
+// It is always useful to have a function to print a vector at hand
+void print_vector(std::vector<int> values) {
+    for (auto v: values) {
+        std::cout << v << ", ";
+    }
+    std::cout << std::endl;
+}
+///unhide
+// This function takes a portion/slice of the given vector
+std::vector<int> slice(std::vector<int> values, int begin, int end) {
+    if (begin >= end) { return std::vector<int>{}; }
+    return std::vector<int>(values.begin() + begin, values.begin() + end);
+}
+
+bool binary_search(std::vector<int> values, int value_to_find) {
+    ///hide
+    print_vector(values); // Visual debugging: see the vector arriving to the function in each iteration
+    ///unhide
+    if (values.empty()) { return false; } // If the vector is empty, the value is not there
+    int middle = values.size() / 2;
+    // TODO: Implement algorithm here
+    ///hide
+    if (value_to_find < values.at(middle)) {
+        auto new_vector = slice(values, 0, middle);
+        return binary_search(new_vector, value_to_find);
+    }
+    else if (value_to_find > values.at(middle)) {
+        auto new_vector = slice(values, middle+1, values.size());
+        return binary_search(new_vector, value_to_find);
+    }
+    else {
+        return true;
+    }
+    ///unhide
+}
+
+int main() {
+    std::vector<int> values{1, 3, 5, 8, 13};
+    int found = binary_search(values, 8);
+    if (found) {
+        std::cout << "Element found" << std::endl;
+    }
+    else {
+        std::cout << "Element not found" << std::endl;
+    }
+}
+``` 
+        </script>
+    </section>
+
+</section>

@@ -1,0 +1,57 @@
+<section data-transition="convex">
+    <section data-menu-title="Ej.: Palíndromos">
+        <h2>Palíndromos</h2>
+        <h4>Ejercicio</h4>
+    </section>
+
+    <section data-background="images/tacocat.png" data-background-size="contain">
+    </section>
+
+    <section>
+        <h2>💻 Actividad 01 🌶</h2>
+        <p>Escribir un algoritmo <u>recursivo</u> que compruebe si una cadena de texto es un palíndromo</p>
+        <pre><code class="cpp" data-trim data-line-numbers>
+            ana --> true
+            soy yo --> true
+            isaac no ronca asi --> true
+        </code></pre>
+        <small>
+            <p>💡 Borra todos los espacios.<br />💡 No mezcles letras mayúsculas y minúsculas</p>
+        </small>
+        <hr />
+        <p><small><a href="https://github.com/jgsogo/eda/tree/actividades">😈 Modo difícil 😈</a></small></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Plantilla solución
+
+
+```cpp[8-11]
+#include <iostream>
+#include <vector>
+
+std::string remove_blanks(std::string word) {
+    return word; // TODO: Return the string without blanks
+}
+
+bool is_palindrome(std::string word) {
+    // TODO: Here it goes the RECURSIVE algorithm
+    ///hide
+    // Recursion: 'word' will be a palindrome if 'word[1, len-1]' is a palindrome
+    ///unhide
+    return false;
+}
+
+int main() {
+    std::vector<std::string> phrases{{"ana", "yo soy", "isaac no ronca asi"}};
+    for (auto word: phrases) {
+        word = remove_blanks(word);
+        std::cout << word << "? " << is_palindrome(word) << std::endl;
+    }
+}
+``` 
+        </script>
+    </section>
+
+</section>
