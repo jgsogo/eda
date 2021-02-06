@@ -25,8 +25,3 @@ string message_dream(string word, int level, int factor_temporal)
         return message_dream(ret, level -1, factor_temporal);
     }
 }
-
-int main()
-{
-    cout<<message_dream("Hola!", 2, 2)<<"\n"; // HHHHoooollllaaaa!!!!
-}
