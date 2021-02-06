@@ -16,10 +16,10 @@
     <section data-background-color="#ffffff">
         <h4>Triángulo de Sierpinski</h4>
         <img class="stretch" src="images/sierpinski-states.png"></img>
-        <p class="fragment">1) Dibujar el triángulo inscrito en cada triángulo</p>
-        <p class="fragment"><small>2) Dibujar el triángulo inscrito en cada triángulo</small></p>
-        <p class="fragment"><small><small>3) Dibujar el triángulo inscrito en cada triángulo</small></small></p>
-        <p class="fragment"><small><small><small>4) Dibujar el triángulo inscrito en cada
+        <p class="fragment">1) Eliminar el triángulo inscrito en cada triángulo</p>
+        <p class="fragment"><small>2) Eliminar el triángulo inscrito en cada triángulo</small></p>
+        <p class="fragment"><small><small>3) Eliminar el triángulo inscrito en cada triángulo</small></small></p>
+        <p class="fragment"><small><small><small>4) Eliminar el triángulo inscrito en cada
                         triángulo</small></small></small></p>
     </section>
 
@@ -297,7 +297,8 @@ int main() {
 
     <section data-markdown>
         <script type="text/template">
-Implementar la serie de Fibonacci con recursión: la función devuelve el valor del elemento que ocupa la posición `'index'`.
+Implementar la serie de Fibonacci con recursión
+<small>La función devuelve el valor del elemento que ocupa la posición `'index'`.</small>
 
 ```txt
 1, 1, 2, 3, 5, 8, 13, 21,...
@@ -328,7 +329,34 @@ int main() {
 ```
         </script>
     </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Sumar los elementos de un vector
+
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int accumulate(int sum, std::vector<int> values) {
+    if (values.empty()) { return sum; }
+    return sum + values.at(0) + accumulate(std::vector<int>(values.begin()+1, values.end()));
+}
+
+int main() {
+    std::vector<int> values{1, 3, 5, 8, 13};
+    int sum = accumulate(0, values);
+    std::cout << "suma: " << sum << std::endl;
+}
+```
+        </script>
+    </section>
+
 </section>
+
+<section data-external-slide-replace="slides/algoritmos/ej-palindrome.html"></section>
+<section data-external-slide-replace="slides/algoritmos/ej-binary-search.html"></section>
 
 <section data-transition="convex">
     <section>
