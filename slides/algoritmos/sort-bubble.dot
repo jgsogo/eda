@@ -1,0 +1,65 @@
+digraph structs {
+    rankdir=LR;
+    nodesep=.3;
+    node [shape=rectangle]
+
+    node01 [label=5];
+    node02 [label=1];
+    node03 [label=4];
+    node04 [label=2];
+    node05 [label=8];
+    node06 [shape=plaintext label="Inicio iteración i=0"];
+    node01 -> node02 -> node03 -> node04 -> node05 [weight=10 arrowhead=none]
+    node05 -> node06  [weight=10 style=invis]
+
+    node11 [label=5 fillcolor=lightblue style=filled];
+    node12 [label=1 fillcolor=lightblue style=filled];
+    node13 [label=4];
+    node14 [label=2];
+    node15 [label=8];
+    node16 [shape=plaintext label="i=0; k=0"];
+    node11 -> node12 -> node13 -> node14 -> node15 [weight=10 arrowtail=none]
+    node11 -> node12 [label=swap constraint=false dir=both]
+    node15 -> node16  [weight=10 style=invis]
+
+    node21 [label=1];
+    node22 [label=5 fillcolor=lightblue style=filled];
+    node23 [label=4 fillcolor=lightblue style=filled];
+    node24 [label=2];
+    node25 [label=8];
+    node26 [shape=plaintext label="i=0; k=1"];
+    node21 -> node22 -> node23 -> node24 -> node25 [weight=10 arrowhead=none]
+    node22 -> node23 [label=swap constraint=false dir=both]
+    node25 -> node26  [weight=10 style=invis]
+
+    node31 [label=1];
+    node32 [label=4];
+    node33 [label=5 fillcolor=lightblue style=filled];
+    node34 [label=2 fillcolor=lightblue style=filled];
+    node35 [label=8];
+    node36 [shape=plaintext label="i=0; k=2"];
+    node31 -> node32 -> node33 -> node34 -> node35 [weight=10 arrowhead=none]
+    node33 -> node34 [label=swap constraint=false dir=both]
+    node35 -> node36  [weight=10 style=invis]
+
+    node41 [label=1];
+    node42 [label=4];
+    node43 [label=2];
+    node44 [label=5 fillcolor=lightblue style=filled];
+    node45 [label=8 fillcolor=lightblue style=filled];
+    node46 [shape=plaintext label="i=0; k=3"];
+    node41 -> node42 -> node43 -> node44 -> node45 [weight=10 arrowhead=none]
+    node44 -> node45 [label=ok constraint=false dir=both arrowhead=none arrowtail=none]
+    node45 -> node46  [weight=10 style=invis]
+
+    node51 [label=1];
+    node52 [label=4];
+    node53 [label=2];
+    node54 [label=5];
+    node55 [label=8];
+    node56 [shape=plaintext label="... repetir"];
+    node51 -> node52 -> node53 -> node54 -> node55 [weight=10 arrowhead=none]
+    node55 -> node56  [weight=10 style=invis]
+
+    node01 -> node11 -> node21 -> node31 -> node41 -> node51 [constraint=false style=invis]
+}
