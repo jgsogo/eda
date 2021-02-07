@@ -1,0 +1,150 @@
+<section>
+    <section data-transition="convex" class="no-footer" data-background="images/inception-peonza.gif">
+        <h1>Actividad 00</h1>
+        <h3>Inception</h3>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+ * 35 alumnos
+ * 6 MIA (un cambio de grupo)
+ * 12 ejercicios entregados
+ * 5 preguntando por Git/GitHub/pull-request
+ * [3 pull-requests](https://github.com/jgsogo/eda/pulls?q=is%3Apr+is%3Aopen+label%3A%22actividad+00%22)
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+**Importante**: mantener la firma/signatura de la función
+
+```cpp[1-3]
+std::string message_dream(std::string word, int level, int factor_temporal) {
+    // TODO: Here it goes the algorithm
+}
+ 
+int main() {
+    std::cout << message_dream("Hola!", 2, 2) << std::endl; // HHHHoooollllaaaa!!!!
+    std::cout << message_dream("Soy Ana", 1, 3) << std::endl; // SSSoooyyy AAAnnnaaa
+    // Try with different arguments
+}
+```
+
+En el método `main` se puede hacer _cualquier cosa_. 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Solución sencilla iterativa
+
+```cpp
+///hide
+#include <iostream>
+#include <string>
+///unhide
+#include <math.h>
+
+std::string message_dream(std::string word, int level, int factor_temporal) {
+    auto times = pow(factor_temporal, level);
+    std::string ret;
+    // Add each letter 'times' times to the string
+    for (auto c: word) {
+        if (c == ' ') {ret.push_back(c);}
+        else {
+            for (int i=0; i<times; i++) {
+                ret.push_back(c);
+            }    
+        }
+    }
+    return ret;
+}
+
+///hide
+int main() {
+    std::cout << message_dream("Hola!", 2, 2) << std::endl; // HHHHoooollllaaaa!!!!
+    std::cout << message_dream("Soy Ana", 1, 3) << std::endl; // SSSoooyyy AAAnnnaaa
+    // Try with different arguments
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Solución iterativa
+
+```cpp
+///hide
+#include <iostream>
+#include <string>
+///unhide
+std::string message_dream(std::string word, int level, int factor_temporal) {
+    std::string ret;
+    for (auto c: word) {
+        if (c == ' ') {ret.push_back(c);}
+        else {
+            for (int i=0; i<level; i++) {
+                for (int j=0; j<factor_temporal; j++) {
+                    ret.push_back(c);
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+///hide
+int main() {
+    std::cout << message_dream("Hola!", 2, 2) << std::endl; // HHHHoooollllaaaa!!!!
+    std::cout << message_dream("Soy Ana", 1, 3) << std::endl; // SSSoooyyy AAAnnnaaa
+    // Try with different arguments
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Solución recursiva
+
+```cpp
+///hide
+#include <iostream>
+#include <string>
+///unhide
+
+std::string message_dream(std::string word, int level, int factor_temporal) {
+    if (level == 0) {return word;}
+    else {
+        std::string ret;
+        for (auto c: word) {
+            if (c == ' ') {ret.push_back(c);}
+            else {
+                for (int j=0; j<factor_temporal; j++) {
+                    ret.push_back(c);
+                }    
+            }
+        }
+        return message_dream(ret, level-1, factor_temporal);
+    }
+}
+
+///hide
+int main() {
+    std::cout << message_dream("Hola!", 2, 2) << std::endl; // HHHHoooollllaaaa!!!!
+    std::cout << message_dream("Soy Ana", 1, 3) << std::endl; // SSSoooyyy AAAnnnaaa
+    // Try with different arguments
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section>
+        <div class="tweet" data-src="https://twitter.com/ProfFeynman/status/1357917389006860294"></div>
+        <div class="credit">Twitter: <a href="https://twitter.com/ProfFeynman/status/1357917389006860294">@ProfFeynman</a></div>
+    </section>
+</section>

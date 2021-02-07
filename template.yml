@@ -12,7 +12,7 @@ toc:
   - content_main: slides/02.recursive-algorithms.html
     title: "Algoritmos recursivos"
   - content_main: slides/03.sorting-algorithms.html
-    title: "Ej.: Algoritmos de ordenación"
+    title: "Algoritmos de ordenación"
 
   - section: Complejidad algorítmica
   - content_main: slides/04.computational-complexity.html
@@ -47,3 +47,7 @@ toc:
     title: "Grafos"
 
   - section: Esquemas algorítmicos
+
+  - section: Soluciones
+  - content_main: slides/2021.soluciones.html
+    title: "Soluciones"

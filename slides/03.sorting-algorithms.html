@@ -69,6 +69,8 @@ bool order_by_color(const Element& lhs, const Element& rhs) {
 
     <section data-markdown>
         <script type="text/template">
+## 💻 Actividad 03 🌶
+
 Implementa los algoritmos anteriores para que acepten vectores de `float` 
 
 ```cpp
@@ -104,17 +106,17 @@ void quick_sort(std::vector<std::string>& elements, int left_index, int right_in
 
     <section data-markdown>
         <script type="text/template">
-Generar un vector con un millón de números aleatorios y medir el tiempo que tarda cada 
+Generar un vector con un millón de números aleatorios `[0.0, 1.0)` y medir el tiempo que tarda cada 
 uno de los algoritmos. ¿Se corresponde con lo esperado?
 
 ```cpp
-void bubble_sort(std::vector<std::string>& elements);
+void bubble_sort(std::vector<float>& elements);
 
-void selection_sort(std::vector<std::string>& elements);
+void selection_sort(std::vector<float>& elements);
 
-std::vector<std::string> merge_sort(const std::vector<std::string>& elements);
+std::vector<float> merge_sort(const std::vector<float>& elements);
 
-void quick_sort(std::vector<std::string>& elements, int left_index, int right_index);
+void quick_sort(std::vector<float>& elements, int left_index, int right_index);
 
 ```
         </script>
