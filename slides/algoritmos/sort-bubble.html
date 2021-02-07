@@ -1,0 +1,182 @@
+<section data-transition="convex">
+
+    <section data-menu-title="Bubble sort" data-background="images/bubble-sort-background.jpg">
+        <div class="credit white">Imagen: <a
+                href="https://www.coindesk.com/bank-of-america-bitcoin-bubble-is-already-popping">Coinbase</a></div>
+        <h2>Bubble sort</h2>
+        <h4>Método de la burbuja</h4>
+    </section>
+
+    <section data-background-video-muted>
+        <div class="credit">Link: <a href="https://www.youtube.com/embed/lyZQPjUT5B4">Youtube</a></div>
+        <iframe class="r-stretch" src="https://www.youtube.com/embed/lyZQPjUT5B4" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+    </section>
+
+    <section>
+        <h3>Fundamento</h3>
+        <p>Dado un vector con <code>n</code> elementos, se realizan <code>n-1</code> pasadas comparando valores
+            adyacentes, si dos valores no están ordenados, se intercambian.</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Implementación
+
+
+```cpp[4-12]
+#include <iostream>
+#include <vector>
+
+void bubble_sort(std::vector<int>& elements) {
+  for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+    ///hide
+    std::cout << "Iteration " << i << std::endl;
+    ///unhide
+    for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+      ///hide
+      // Compare and swap if wrong order
+      std::cout << elements[k] << " > " << elements[k+1] << " ? " << (elements[k] > elements[k+1] ? "true": "false") << std::endl;
+      ///unhide
+      if (elements[k] > elements[k+1]) { // compare adyacent values
+        std::swap(elements[k], elements[k+1]);
+      }
+    }
+  }
+}
+
+int main() {
+  std::vector<int> elements{9, 8, 7, 6, 5, 4, 3, 2, 1};
+  ///hide
+  std::cout << "Initial vector!" << std::endl;
+  for (auto e: elements) {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n---\n";
+  ///unhide
+  bubble_sort(elements);
+  ///hide
+  std::cout << "\nFinal order:\n";
+  for (auto e: elements) {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n---\n";
+  ///unhide
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Optimización #1
+
+En la pasada `i`-ésima, todos los últimos `i` elementos ya están ordenados 🤔
+
+```cpp[6]
+#include <iostream>
+#include <vector>
+
+void bubble_sort(std::vector<int>& elements) {
+  for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+    ///hide
+    std::cout << "Iteration " << i << std::endl;
+    ///unhide
+    for (int k=0; k<elements.size()-1-i; k++) {  // 'n-1-i' iterations
+      ///hide
+      // Compare and swap if wrong order
+      std::cout << elements[k] << " > " << elements[k+1] << " ? " << (elements[k] > elements[k+1] ? "true": "false") << std::endl;
+      ///unhide
+      if (elements[k] > elements[k+1]) { // compare adyacent values
+        std::swap(elements[k], elements[k+1]);
+      }
+    }
+  }
+}
+
+int main() {
+  std::vector<int> elements{9, 8, 7, 6, 5, 4, 3, 2, 1};
+  ///hide
+  std::cout << "Initial vector!" << std::endl;
+  for (auto e: elements) {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n---\n";
+  ///unhide
+  bubble_sort(elements);
+  ///hide
+  std::cout << "\nFinal order:\n";
+  for (auto e: elements) {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n---\n";
+  ///unhide
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Optimización #2
+
+Si en una pasada no intercambio ningún elemento es que todos YA están ordenados 🤔🤔
+
+```cpp[6, 10, 13]
+#include <iostream>
+#include <vector>
+
+void bubble_sort(std::vector<int>& elements) {
+  for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+    bool any_swap = false;
+    ///hide
+    std::cout << "Iteration " << i << std::endl;
+    ///unhide
+    for (int k=0; k<elements.size()-1-i; k++) {  // 'n-1-i' iterations
+      ///hide
+      // Compare and swap if wrong order
+      std::cout << elements[k] << " > " << elements[k+1] << " ? " << (elements[k] > elements[k+1] ? "true": "false") << std::endl;
+      ///unhide
+      if (elements[k] > elements[k+1]) { // compare adyacent values
+        std::swap(elements[k], elements[k+1]);
+        any_swap = true;
+      }
+    }
+    if (!any_swap) { break;} // return early
+  }
+}
+
+int main() {
+  std::vector<int> elements{9, 8, 7, 6, 5, 4, 3, 2, 1};
+  ///hide
+  std::cout << "Initial vector!" << std::endl;
+  for (auto e: elements) {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n---\n";
+  ///unhide
+  bubble_sort(elements);
+  ///hide
+  std::cout << "\nFinal order:\n";
+  for (auto e: elements) {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n---\n";
+  ///unhide
+}
+``` 
+        </script>
+    </section>
+
+    <section>
+        <h3>Complejidad algorítmica</h3>
+        <p>Peor caso: <code>(n-1)(n-1)</code> comparaciones/swaps</p>
+        <p>Espacio: todo sobre el mismo vector</p>
+        <hr />
+        <div class="fragment">
+            <p>Tiempo: O(n<sup>2</sup>)</p>
+            <p>Espacio: O(1)</p>
+        </div>
+    </section>
+</section>
