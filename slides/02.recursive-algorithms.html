@@ -340,14 +340,42 @@ Sumar los elementos de un vector
 #include <vector>
 
 int accumulate(int sum, std::vector<int> values) {
+    // TODO: Add the first element, and call recursion with the rest
+    ///hide
     if (values.empty()) { return sum; }
     return sum + values.at(0) + accumulate(std::vector<int>(values.begin()+1, values.end()));
+    ///unhide
 }
 
 int main() {
     std::vector<int> values{1, 3, 5, 8, 13};
     int sum = accumulate(0, values);
-    std::cout << "suma: " << sum << std::endl;
+    std::cout << "sum: " << sum << std::endl;
+}
+```
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+Potencia con exponente negativo (recursivo)
+
+```
+x^(-n) = 1/x^n = 1/(x * x^(n-1)) = 1/x * x^(1-n)
+```
+
+
+```cpp
+#include <iostream>
+
+int pow(int x, int n) {
+    // TODO: Implement the generic algorithm
+}
+
+int main() {
+    std::cout << "2^-2 = " << pow(2, -2) << std::endl;  // 0.25
+    std::cout << "2^-3 = " << pow(2, -3) << std::endl;  // 0.125
 }
 ```
         </script>
@@ -362,4 +390,30 @@ int main() {
     <section>
         <h2>Iteración vs recursión</h2>
     </section>
+
+    <section>
+        <p>Ambas son estructuras de repetición</p>
+        <p>Ambas necesitan una condición de terminación</p>
+    </section>
+
+    <section>
+        <p>Cualquier algoritmo recursivo puede transformarse en un algoritmo iterativo</p>
+    </section>
+
+    <section>
+        <p>Un algoritmo recursivo ocupa más memoria y es más lento que su correspondiente iterativo (*)</p>
+        <div class="footnote"><sup>*</sup>Algunos compiladores de C++ tienen tail-call optimization.</div>
+    </section>
+
+    <section>
+        <p>Un algoritmo recursivo suele ser más sencillo: expresa la solución al problema de una manera más natural</p>
+    </section>
+
+    <section>
+        <h3>Corolario</h3>
+        <p>Eficiencia ==> Iterativo</p>
+        <p>Claridad ==> Recursivo</p>
+    </section>
+
+    
 </section>
