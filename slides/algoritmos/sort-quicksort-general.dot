@@ -1,0 +1,11 @@
+digraph structs {
+    rankdir=LR;
+    nodesep=.8;
+    node [shape=rectangle]
+
+    node11 [label="{3,5,1}"]
+    node12 [label="8" color=green]
+    node13 [label="{13,15}"]
+    
+    node11 -> node12 -> node13 [weight=10, arrowhead=none]
+}
