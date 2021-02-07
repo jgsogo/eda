@@ -20,7 +20,7 @@ toc:
 
   - section: Repaso C++
   - content_main: slides/05.abstract-data-types.html
-    title: "Concepto de tipos abstractos de datos"
+    title: "Tipos abstractos de datos"
   - content_main: slides/06.pointers.html
     title: "Punteros"
 
