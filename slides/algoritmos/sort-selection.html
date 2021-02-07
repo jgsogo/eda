@@ -1,0 +1,84 @@
+<section data-transition="convex">
+
+    <section data-state="darken" data-menu-title="Selection sort" data-background="images/selection-sort-background.jpg">
+        <div class="credit white">Imagen: <a
+                href="https://ctcgulf.com/product/recruitment-and-selection">CTC</a></div>
+        <h2>Selection sort</h2>
+        <h4>Método de selección</h4>
+    </section>
+
+    <section>
+        <h3>Fundamento</h3>
+        <p>Dado un vector con <code>n</code> elementos, se divide en una parte ordenada (izquierda) y una desordenada
+            (derecha), se realizan <code>n-1</code> pasadas en la parte derecha extrayendo el menor valor e insertándolo
+            en la parte izquierda.</p>
+        <div class="footnote">Ej.: <a href="https://www.youtube.com/watch?v=Ns4TPTC8whw">Select-sort with Gypsy folk dance</a>.</div>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Se busca el menor de la parte no ordenada para añadirlo a la parte ordenada</p>
+        <img class="stretch" src="slides/algoritmos/sort-selection.dot.png"></img>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Implementación
+
+
+```cpp[4-16]
+#include <iostream>
+#include <vector>
+
+void selection_sort(std::vector<int>& elements) {
+  for (int i=0; i<elements.size(); i++) {  // 'n' iterations
+    ///hide
+    std::cout << "Iteration " << i << std::endl;
+    ///unhide
+    // Search for the minimum element in the right (unordered) section
+    int indexMin = i;
+    for (int k=i+1; k<elements.size(); k++) {  // 'n-i' iterations
+      ///hide
+      std::cout << elements[k] << " < " << elements[indexMin] << " ? " << (elements[k] < elements[indexMin] ? "true": "false") << std::endl;
+      ///unhide
+      if (elements[k] < elements[indexMin]) { // keep index of min element
+        indexMin = k;
+      }
+    }
+    // Swap current element with the min
+    std::swap(elements[i], elements[indexMin]);
+  }
+}
+
+int main() {
+  std::vector<int> elements{9, 8, 7, 6, 5, 4, 3, 2, 1};
+  ///hide
+  std::cout << "Initial vector!" << std::endl;
+  for (auto e: elements) {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n---\n";
+  ///unhide
+  selection_sort(elements);
+  ///hide
+  std::cout << "\nFinal order:\n";
+  for (auto e: elements) {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n---\n";
+  ///unhide
+}
+``` 
+        </script>
+    </section>
+
+    <section>
+        <h3>Complejidad algorítmica</h3>
+        <p>Peor caso: <code>n(n-1)/2</code> comparaciones</p>
+        <p>Espacio: todo sobre el mismo vector</p>
+        <hr />
+        <div class="fragment">
+            <p>Tiempo: O(n<sup>2</sup>)</p>
+            <p>Espacio: O(1)</p>
+        </div>
+    </section>
+</section>
