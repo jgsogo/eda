@@ -90,6 +90,7 @@
             chalkboard: {
                 readOnly: false,
                 theme: "chalkboard",
+                chalkWidth: 3,
                 toggleChalkboardButton: {
                     left: "80px"
                 },
