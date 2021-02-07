@@ -1,0 +1,23 @@
+digraph structs {
+    rankdir=LR;
+    node [shape=rectangle]
+
+    node11 [label=< fujur<br/>2 >];
+    node12 [label=< milu<br/>1 >];
+    node13 [label=< gollum<br/>2 >];
+    node14 [label=< grumpycat<br/>3 >];
+
+    node21 [label=< milu<br/>1 >];
+    node22 [label=< gollum<br/>2 >];
+    node23 [label=< fujur<br/>2 >];
+    node24 [label=< grumpycat<br/>3 >];
+    
+    node11 -> node12 -> node13 -> node14 [weight=10]
+    node21 -> node22 -> node23 -> node24 [weight=10]
+    node11 -> node21 [style=invis constraint=false]
+
+    node11 -> node23 [constraint=false color=grey]
+    node12 -> node21 [constraint=false color=grey]
+    node13 -> node22 [constraint=false color=grey]
+    node14 -> node24 [constraint=false color=grey]
+}
