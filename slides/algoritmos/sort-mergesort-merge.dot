@@ -1,0 +1,39 @@
+digraph structs {
+    rankdir=LR;
+    nodesep=1.2;
+    node [shape=rectangle]
+    compound=true;
+
+    // row 1
+    subgraph cluster11 {
+        graph [color=invis];
+        a11 [label=2 color=brown]
+        a12 [label=8 color=brown]
+        a13 [label=11 color=brown]
+        a11 -> a12 -> a13 [weight=10 arrowhead=none]
+        label="sublist A";
+    }
+    subgraph cluster12 {
+        graph [color=invis];
+        b11 [label=1 color=darkblue]
+        b12 [label=3 color=darkblue]
+        b11 -> b12 [weight=10 arrowhead=none]
+        label="sublist B";
+    }
+    subgraph cluster13 {
+        graph [color=invis];
+        c11 [label=1 color=darkblue]
+        c12 [label=2 color=brown]
+        c13 [label=3 color=darkblue]
+        c14 [label=8 color=brown]
+        c15 [label=11 color=brown]
+        c11 -> c12 -> c13 -> c14 -> c15 [weight=10 arrowhead=none]
+        label="result";
+    }
+    a13 -> b11 [weight=10 arrowhead=none style=invis]
+
+    a12 -> c13 [ltail=cluster11,lhead=cluster13 constraint=false];
+    b11 -> c13 [ltail=cluster12,lhead=cluster13 constraint=false];
+
+
+}
