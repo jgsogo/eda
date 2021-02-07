@@ -47,3 +47,7 @@ toc:
     title: "Grafos"
 
   - section: Esquemas algorítmicos
+
+  - section: Soluciones
+  - content_main: slides/2021.soluciones.html
+    title: "Soluciones"
