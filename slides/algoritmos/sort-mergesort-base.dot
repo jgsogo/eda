@@ -1,0 +1,7 @@
+digraph structs {
+    rankdir=LR;
+    nodesep=.8;
+    node [shape=rectangle]
+
+    node11 [label="8" color=green];
+}

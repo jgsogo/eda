@@ -1,0 +1,205 @@
+<section data-transition="convex">
+
+    <section data-state="darken" data-menu-title="Mergesort" data-background="images/mergesort-background.jpg">
+        <div class="credit white">Imagen: <a href="https://www.cloudberries.co.uk/puzzle-tips-tricks/how-to-complete-a-jigsaw-puzzle-quickly/">Cloudberries</a></div>
+        <h2>Mergesort</h2>
+        <h4>Ordenamiento por mezcla (fusión)</h4>
+    </section>
+
+    <section>
+        <h3>Ideas</h3>
+        <p>1. Una lista más corta se ordena más rápidamente que una lista larga.</p>
+        <p>2. Es más sencillo construir una lista ordenada a partir de dos listas ordenadas que a partir de dos listas
+            desordenadas.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>1. Ordenar una <span class="blue">lista corta de 0 o 1 elementos</span> es trivial (ya está ordenada)</p>
+        <img width="200px" src="slides/algoritmos/sort-mergesort-base.dot.png"></img>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>2. Fusionar/mezclar listas ordenadas</p>
+        <img class="stretch" src="slides/algoritmos/sort-mergesort-merge.dot.png"></img>
+    </section>
+
+    <section>
+        <h3>Algoritmo recursivo</h3>
+        <p><code>merge_sort</code>: dado un vector con <code>n</code> elementos, lo divido en dos mitades y aplico
+            <code>merge_sort</code> sobre esas mitades. Después fusiono/mergeo las dos listas ordenadas.</p>
+        <div class="footnote">Ej.: <a href="https://www.youtube.com/watch?v=XaqR3G_NVoo">Merge-sort with
+                Transylvanian-saxon (German) folk dance</a>.</div>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Implementación
+
+
+```cpp[8-27]
+#include <iostream>
+#include <vector>
+///hide
+void print(const std::vector<int>& elements) {
+    for (auto e: elements) {
+        std::cout << e << ", ";
+    }
+    std::cout << std::endl;
+}
+///unhide
+
+// A function to merge two ordered lists
+std::vector<int> merge(const std::vector<int>& lhs, 
+                       const std::vector<int>& rhs)
+///hide
+{
+    std::vector<int> ret;
+    auto left_iterator = 0;
+    auto right_iterator = 0;
+
+    // Iterate the two vectors at the same time, adding the lowest element
+    while (left_iterator != lhs.size() && right_iterator != rhs.size()) {
+        if (lhs[left_iterator] < rhs[right_iterator]) {
+            ret.push_back(lhs[left_iterator]);
+            left_iterator++;
+        }
+        else {
+            ret.push_back(rhs[right_iterator]);
+            right_iterator++;
+        }
+    }
+
+    // Add remaining elements
+    for (int i=left_iterator; i<lhs.size(); i++) {
+        ret.push_back(lhs[i]);
+    }
+    for (int i=right_iterator; i<rhs.size(); i++) {
+        ret.push_back(rhs[i]);
+    }
+    return ret;
+}
+///unhide
+
+// Merge-sort algorithm
+std::vector<int> merge_sort(const std::vector<int>& elements) {
+    ///hide
+    std::cout << "merge_sort: ";
+    print(elements);
+    ///unhide
+    // Check for base/trivial case
+    if (elements.size() <= 1) {
+        return elements;
+    }
+    else {
+        // Split the vector in two
+        auto middle = elements.size()/2;
+        std::vector<int> left{elements.begin(), elements.begin() + middle};
+        std::vector<int> right{elements.begin() + middle, elements.end()};
+        
+        // Apply merge_sort to each of them
+        left = merge_sort(left);
+        right = merge_sort(right);
+
+        // Merge those two (already) ordered vectors
+        return merge(left, right);
+    }
+}
+
+int main() {
+  std::vector<int> elements{9, 8, 7, 6, 5, 4, 3, 2, 1};
+  ///hide
+  std::cout << "Initial vector!" << std::endl;
+  print(elements);
+  std::cout << "---\n";
+  ///unhide
+  elements = merge_sort(elements);
+  ///hide
+  std::cout << "\nFinal order:\n";
+  print(elements);
+  std::cout << "---\n";
+  ///unhide
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+La función para mergear dos listas ordenadas
+
+
+```cpp[5-32]
+#include <iostream>
+#include <vector>
+///hide
+void print(const std::vector<int>& elements) {
+    for (auto e: elements) {
+        std::cout << e << ", ";
+    }
+    std::cout << std::endl;
+}
+///unhide
+
+// A function to merge two ordered lists
+std::vector<int> merge(const std::vector<int>& lhs, 
+                       const std::vector<int>& rhs) 
+{
+    std::vector<int> ret;
+    auto left_iterator = 0;
+    auto right_iterator = 0;
+
+    // Iterate the two vectors at the same time, adding the lowest element
+    while (left_iterator != lhs.size() && right_iterator != rhs.size()) {
+        if (lhs[left_iterator] < rhs[right_iterator]) {
+            ret.push_back(lhs[left_iterator]);
+            left_iterator++;
+        }
+        else {
+            ret.push_back(rhs[right_iterator]);
+            right_iterator++;
+        }
+    }
+
+    // Add remaining elements
+    for (int i=left_iterator; i<lhs.size(); i++) {
+        ret.push_back(lhs[i]);
+    }
+    for (int i=right_iterator; i<rhs.size(); i++) {
+        ret.push_back(rhs[i]);
+    }
+    return ret;
+}
+
+int main() {
+  std::vector<int> lhs{2, 8, 11};
+  std::vector<int> rhs{1, 3};
+
+  ///hide
+  std::cout << "lhs: ";
+  print(lhs);
+  std::cout << "rhs: ";
+  print(rhs);
+  ///unhide
+  auto result = merge(lhs, rhs);
+  ///hide
+  std::cout << "\nResult: ";
+  print(result);
+  std::cout << "---\n";
+  ///unhide
+}
+``` 
+        </script>
+    </section>
+
+
+    <section>
+        <h3>Complejidad algorítmica</h3>
+        <p>Tiempo: Ordenar(n) = 2·ordernar(n/2) + mergear(n)</p>
+        <p>Espacio: utiliza un vector auxiliar</p>
+        <hr />
+        <div class="fragment">
+            <p>Tiempo: O(n log<sub>2</sub>n)</p>
+            <p>Espacio: O(n)</p>
+        </div>
+    </section>
+</section>

@@ -59,5 +59,80 @@ bool order_by_color(const Element& lhs, const Element& rhs) {
 
 <section data-external-slide-replace="slides/algoritmos/sort-bubble.html"></section>
 <section data-external-slide-replace="slides/algoritmos/sort-selection.html"></section>
-<section data-external-slide-replace="slides/algoritmos/sort-insertion.html"></section>
+<section data-external-slide-replace="slides/algoritmos/sort-mergesort.html"></section>
 <section data-external-slide-replace="slides/algoritmos/sort-quicksort.html"></section>
+
+<section>
+    <section>
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementa los algoritmos anteriores para que acepten vectores de `float` 
+
+```cpp
+void bubble_sort(std::vector<float>& elements);
+
+void selection_sort(std::vector<float>& elements);
+
+std::vector<float> merge_sort(const std::vector<float>& elements);
+
+void quick_sort(std::vector<float>& elements, int left_index, int right_index);
+
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementa los algoritmos anteriores para que ordenen vectores de `std::string` según
+el número de letras de cada palabra (a igualdad de letras, utilizar el orden lexicográfico). 
+
+```cpp
+void bubble_sort(std::vector<std::string>& elements);
+
+void selection_sort(std::vector<std::string>& elements);
+
+std::vector<std::string> merge_sort(const std::vector<std::string>& elements);
+
+void quick_sort(std::vector<std::string>& elements, int left_index, int right_index);
+
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Generar un vector con un millón de números aleatorios y medir el tiempo que tarda cada 
+uno de los algoritmos. ¿Se corresponde con lo esperado?
+
+```cpp
+void bubble_sort(std::vector<std::string>& elements);
+
+void selection_sort(std::vector<std::string>& elements);
+
+std::vector<std::string> merge_sort(const std::vector<std::string>& elements);
+
+void quick_sort(std::vector<std::string>& elements, int left_index, int right_index);
+
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+
+Comparar los tiempos de `quick_sort` para diferentes vectores con un millón de elementos:
+
+ * Números aleatorios.
+ * Un vector ya ordenado.
+ * Un vector ordenado en orden inverso.
+ * Un vector con todos sus elementos iguales.
+
+¿Cuál es el peor caso? ¿Hay mucha diferencia entre el mejor y el [peor caso](https://youtu.be/es2T6KY45cA?t=247)? 
+        </script>
+    </section>
+
+    
+</section>
