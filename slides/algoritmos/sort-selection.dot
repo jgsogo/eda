@@ -39,7 +39,7 @@ digraph structs {
     node35 [label=8 color=red];
     node36 [shape=plaintext label="iteracion i=2"];
     node31 -> node32 -> node33 -> node34 -> node35 [weight=10 arrowhead=none]
-    node33 -> node33 [label=swap constraint=false dir=both]
+    node33:s -> node33 [label=swap constraint=false dir=both]
     node35 -> node36  [weight=10 style=invis]
 
     node41 [label=1 color=green];
@@ -49,20 +49,18 @@ digraph structs {
     node45 [label=8 fillcolor=lightblue style=filled color=red];
     node46 [shape=plaintext label="iteración i=3"];
     node41 -> node42 -> node43 -> node44 -> node45 [weight=10 arrowhead=none]
-    node44 -> node44 [label=swap constraint=false dir=both]
+    node44:s -> node44 [label=swap constraint=false dir=both]
     node45 -> node46  [weight=10 style=invis]
 
-    /*
     node51 [label=1 color=green];
     node52 [label=2 color=green];
     node53 [label=4 color=green];
     node54 [label=5 color=green];
-    node55 [label=8 color=red];
+    node55 [label=8 color=red fillcolor=lightblue style=filled];
     node56 [shape=plaintext label="iteración i=4"];
     node51 -> node52 -> node53 -> node54 -> node55 [weight=10 arrowhead=none]
-    node55 -> node55 [label=swap constraint=false dir=both]
+    node55:s -> node55 [label=swap constraint=false dir=both]
     node55 -> node56  [weight=10 style=invis]
-    */
 
-    node01 -> node11 -> node21 -> node31 -> node41 [constraint=false style=invis]
+    node01 -> node11 -> node21 -> node31 -> node41 -> node51 [constraint=false style=invis]
 }
