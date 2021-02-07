@@ -1,0 +1,63 @@
+<section data-transition="convex">
+
+    <section data-background="images/marie-kondo.jpg">
+        <div class="credit black">Imagen: Marie Kondo, Does it spark joy?</div>
+        <h2 class="box-shadow-white black">Algoritmos de ordenación</h2>
+        <p class="box-shadow-white black">Fin en sí mismo o como paso previo</p>
+    </section>
+
+    <section data-menu-title="Relación de orden">
+        <p>Tiene que existir una relación de orden definida entre los elementos</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+
+// Declare some kind of element with different attributes
+enum class Color {red, blue, green };
+struct Element {
+    std::string name;
+    Color color;
+    int size;
+}
+
+// Define different ordering function
+bool order_by_name(const Element& lhs, const Element& rhs) {
+    return lhs.name < rhs.name;
+}
+
+bool order_by_color(const Element& lhs, const Element& rhs) {
+    return lhs.color < rhs.color;
+}
+```
+        </script>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h3>Orden estable</h3>
+        <img class="stretch" src="slides/algoritmos/sort-order-stable.dot.png"></img>
+        <p>Se conserva el <span class="red">orden relativo</span> entre elementos</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h3>Orden inestable</h3>
+        <img class="stretch" src="slides/algoritmos/sort-order-inestable.dot.png"></img>
+        <p><span class="red">NO garantizan</span> el orden relativo</p>
+    </section>
+
+
+    <section data-background-video-muted>
+        <p>Time -vs- Space</p>
+        <div class="credit">Link: <a href="https://www.youtube.com/watch?v=ZZuD6iUe3Pc">Youtube</a></div>
+        <iframe class="r-stretch" src="https://www.youtube.com/embed/ZZuD6iUe3Pc" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+    </section>
+
+</section>
+
+<section data-external-slide-replace="slides/algoritmos/sort-bubble.html"></section>
+<section data-external-slide-replace="slides/algoritmos/sort-selection.html"></section>
+<section data-external-slide-replace="slides/algoritmos/sort-insertion.html"></section>
+<section data-external-slide-replace="slides/algoritmos/sort-quicksort.html"></section>
