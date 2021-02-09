@@ -17,6 +17,6 @@ bool _is_palindrome(std::string word) {
 
 bool is_palindrome(std::string word) {
     // Remove the blanks and then delegate work to the actual algorithm
-    word.erase(std::remove_if(word.begin(), word.end(), std::isspace), word.end());
+    word.erase(std::remove_if(word.begin(), word.end(), ::isspace), word.end());
     return _is_palindrome(word);
 }
