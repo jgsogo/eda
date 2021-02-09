@@ -1,7 +1,10 @@
 
 #include "palindrome.h"
 
-bool is_palindrome(std::string word) {
+#include <algorithm>
+
+
+bool _is_palindrome(std::string word) {
     if (word.size() <= 1) { return true; }
     else {
         if (word.at(0) != word.at(word.size()-1)) { return false; }
@@ -10,4 +13,10 @@ bool is_palindrome(std::string word) {
         }
     }
     return false;
+}
+
+bool is_palindrome(std::string word) {
+    // Remove the blanks and then delegate work to the actual algorithm
+    word.erase(std::remove_if(word.begin(), word.end(), std::isspace), word.end());
+    return _is_palindrome(word);
 }
