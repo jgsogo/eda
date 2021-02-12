@@ -1,0 +1,19 @@
+digraph {
+    graph [bgcolor=transparent]
+    graph [pad="0.5", nodesep="0.05", ranksep="1"];
+    rankdir=LR
+    node [shape=record, width = .5];
+
+    p1 [label="{<p> p1 |<d> 0x2222222 }"]
+    p1_address [label="0x1111111" color=invis margin=0]
+    {rank = same; p1; p1_address; }
+    p1 -> p1_address [color=invis, constraint=false]
+
+    a [label="{<p> a |<d> 23 }" style = invis]
+    a_address [label="0x2222222" color=invis margin=0 style = invis]
+    {rank = same; a; a_address; }
+    a -> a_address [color=invis, constraint=false]
+
+    p1 -> a [weight=10 style = invis]
+}
+

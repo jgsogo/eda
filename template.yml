@@ -18,11 +18,11 @@ toc:
   - content_main: slides/04.computational-complexity.html
     title: "Complejidad algorítmica"
 
-  - section: Repaso C++
-  - content_main: slides/05.abstract-data-types.html
-    title: "Tipos abstractos de datos"
-  - content_main: slides/06.pointers.html
+  - section: Basics programación
+  - content_main: slides/05.pointers.html
     title: "Punteros"
+  - content_main: slides/06.abstract-data-types.html
+    title: "Tipos abstractos de datos"
 
   - section: TAD lineales
   - content_main: slides/07.lists.html
