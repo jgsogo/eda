@@ -15,9 +15,10 @@ std::string remove_blanks(std::string word) {
 
 // Recursion: 'word' will be a palindrome if 'word[1, len-1]' is a palindrome
 bool is_palindrome(std::string word) {
-    if(word.length() <= 1){return true;}
-    if(word.at(0) == word.at(word.length()-1)){
-        return is_palindrome(word.substr(1,word.length()-2));
+    std::string word_without_blanks = remove_blanks(word);
+    if(word_without_blanks.length() <= 1){return true;}
+    if(word_without_blanks.at(0) == word_without_blanks.at(word_without_blanks.length()-1)){
+        return is_palindrome(word_without_blanks.substr(1,word_without_blanks.length()-2));
     }
     return false;
 }
