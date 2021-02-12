@@ -1,7 +1,157 @@
+
+<section data-external-slide-replace="slides/no_free_lunch_theorem.html"></section>
+
 <section data-transition="convex">
 
-    <section data-background="images/big-o-cheatsheet.png" data-background-size="contain">
+    <section>
+        <h2>Big-O notation</h2>
+    </section>
+
+    <section>
+        <p>Aplica al <span class="blue">tiempo</span></p>
+        <p>Aplica al <span class="blue">espacio/memoria</span></p>
+    </section>
+
+    <section>
+        <p>Es una medida <span class="red">asintótica</span>:</p>
+        <p>
+            <ul>
+                <li>un número de elementos suficientemente grande</li>
+                <li>es genérico (todas las implementaciones)</li>
+            </ul>
+        </p>
+    </section>
+
+    <section>
+        <p>Es una <span class="green">cota superior</span> (peor caso)</p>
+    </section>
+
+    <section data-menu-title="Tabla complejidad algorítmica" data-background="images/big-o-cheatsheet.png" data-background-size="contain">
         <div class="credit black">Imagen: <a href="https://www.deviantart.com/assyrianic/art/Big-O-Notation-Cheat-Sheet-762169573">Devianart</a></div>
     </section>
 
 </section>
+
+
+<section data-transition="convex">
+    <section data-background="images/intuition.jpg">
+        <h2 class="box-shadow-black">Intuiciones</h2>
+        <div class="credit black">Imagen: <a href="https://synctuition.com/blog/five-traits-highly-intuitive-people/">Synctuition</a></div>
+    </section>
+
+    <section data-menu-title="Bucles" data-markdown>
+        <script type="text/template">
+### Un bucle (*)  <!-- .element: class="caps-preserve" -->
+
+O(n)
+
+```cpp
+
+void algorithm(const std::vector<std::string>& elements) {
+    auto n = elements.size();
+    for (int i = 0; i < n; i++) {
+        // Do something with each element
+    }
+}
+``` 
+
+<div class="footnote">(*) Exactamente lo mismo si el bucle utiliza `while`, `range-for`, `do-while`,...</div>
+        </script>
+    </section>
+
+    <section data-menu-title="Bucle for anidado" data-markdown>
+        <script type="text/template">
+### Dos bucles anidados:  <!-- .element: class="caps-preserve" -->
+
+O(n<sup>2</sup>) 
+
+```cpp
+
+void algorithm(const std::vector<std::string>& elements) {
+    auto n = elements.size();
+    for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
+            // Do something here
+        }
+    }
+}
+
+``` 
+        </script>
+    </section>
+
+    <section data-menu-title="Recursivo sobre una mitad" data-markdown>
+        <script type="text/template">
+### Recursión sobre una mitad:  <!-- .element: class="caps-preserve" -->
+
+O(log n) 
+
+```cpp
+
+void algorithm(const std::vector<std::string>& elements, int start_index, int end_index) {
+    // ...
+    int middle = (end_index - start_index)/2;
+    // Recurse only on one half
+    algorithm(elements, start_index, middle);
+}
+
+``` 
+        </script>
+    </section>
+
+    <section data-menu-title="Recursivo sobre una mitad" data-markdown>
+        <script type="text/template">
+### Recursión en las dos mitades y acción posterior:  <!-- .element: class="caps-preserve" -->
+
+O(n log n) 
+
+```cpp
+
+void algorithm(const std::vector<std::string>& elements, int start_index, int end_index) {
+    // ...
+    int middle = (end_index - start_index)/2
+    
+    // Recurse on both half vectors
+    algorithm(elements, start_index, middle);
+    algorithm(elements, middle, end_index);
+
+    // Do something
+    some_action(elements, start_index, end_index);
+}
+
+``` 
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+
+    <section>
+        <h2>En la práctica</h2>
+    </section>
+
+    <section>
+        <p>La teoría aplica a <span class="red">algoritmos puros</span> (investigación).</p>
+        <p>Generalmente en un programa encadenamos y/o componemos algoritmos.</p>
+        <p>Nos interesa la eficiencia de todo el proceso (*).</p>
+        <div class="footnote">(*) Es complicado, pero se puede calcular... en teoría.</div>
+    </section>
+
+    <section>
+        <h2>Benchmarking</h2>
+    </section>
+
+    <section>
+        <img src="images/benchmark1.png">
+    </section>
+
+    <section>
+        <img src="images/benchmark2.png">
+    </section>
+
+    <section>
+        <p>Hay muchos factores que pueden influir y <strong>el algoritmo es sólo uno de ellos</strong>.</p>
+    </section>
+</section>
+
