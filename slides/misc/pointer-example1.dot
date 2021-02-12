@@ -1,0 +1,15 @@
+digraph {
+    graph [bgcolor=transparent]
+    graph [pad="0.5", nodesep="1", ranksep="1"];
+    rankdir=TB
+    node [shape=record, width = .5];
+
+    p1 [label="{{<p> p1 |<d> 0x2222222 }}" xlabel="0x1111111"]
+    
+    p2 [label="{{<p> p2 |<d> 0x2222222 }}" xlabel="0x1111111"]
+    
+    a [label="{{<p> a |<d> 23 }}" xlabel="0x2222222"]
+    
+    p1 -> a [weight=10]
+    p2 -> a [weight=10]
+}

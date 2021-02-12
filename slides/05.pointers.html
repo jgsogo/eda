@@ -1,0 +1,267 @@
+<section data-transition="convex">
+
+    <section>
+        <h2>Punteros</h2>
+    </section>
+
+    <section>
+        <h4>¿Qué es un puntero?</h4>
+        <p>Un puntero es un tipo de dato que almacena una dirección de memoria</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+En C/C++, además, la **sintaxis** indica el tipo de dato:
+
+```cpp
+#include <iostream>
+
+int main() {
+    std::shared_ptr<int> p1 = std::make_shared<int>(23);
+    std::shared_ptr<std::string> p2 = std::make_shared<std::string>("hola");
+
+    std::cout << p1 << std::endl;
+    std::cout << p2 << std::endl;
+}
+```
+
+<small>El dato que se imprime son **direcciones de memoria**, el ordenador asigna esas direcciones <i>aleatoriamente</i> y por eso en cada ejecución aparecen valores diferentes.</small>
+        </script>
+    </section>
+
+    <section data-menu-title="Direcciones de memoria" data-background-color="rgb(255, 255, 255)">
+        <p>Todo dato está almacenado en una dirección de memoria</p>
+        <img class="r-stretch" src="slides/misc/pointer-definition1.dot.png">
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Un puntero es un tipo de dato (almacenado en una dirección de memoria) que almacena una dirección de memoria
+        </p>
+        <img class="r-stretch" src="slides/misc/pointer-definition2.dot.png">
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)" data-markdown>
+        <script type="text/template">
+
+```cpp
+int a = 23;
+int* p1 = a;
+```
+
+![pointers](slides/misc/pointer-definition3.dot.png) <!-- .element: class="stretch" -->
+
+<div class="footnote">Usamos aquí raw pointers sólo por conveniencia para la explicación.</div>
+        </script>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Varios punteros pueden apuntar al mismo elemento (no hay copia)</p>
+        <img class="r-stretch" src="slides/misc/pointer-example1.dot.png">
+    </section>
+</section>
+
+
+
+<section data-transition="convex">
+
+    <section>
+        <h2>Por qué punteros</h2>
+    </section>
+
+    <section>
+        <p>Implementar copias más baratas</p>
+        <p>Memoria dinámica</p>
+        <p>Polimorfismo dinámico (jerarquías de clases)</p>
+        <p>Almacenamiento compartido</p>
+        <p>...</p>
+    </section>
+
+    <section>
+        <h4>Riesgos</h4>
+    </section>
+
+    <section>
+        <p>Fugas de memoria (memory leaks)</p>
+        <p>Ownership: ¿quién es el dueño del dato?</p>
+        <p>...</p>
+    </section>
+</section>
+
+
+
+<section data-transition="convex">
+
+    <section>
+        <h2>Punteros raw</h2>
+        <h4>Vieja escuela (C-style)</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+
+Requiere gestión explicita de la memoria:
+ * `new` para reservar la memoria, y 
+
+   ```cpp
+   int* p1 = new int(23);
+   ```
+
+ * `delete` para liberar memoria
+
+   ```cpp
+   delete p1;
+   ```
+
+Todo `new` necesita su correspondiente `delete`.
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+
+Problemas de _ownership_
+
+```cpp
+int* data = run_some_algorithm();
+
+// Program keeps working...
+
+// Is the pointer still valid?
+std::cout << *data << std::endl;  // 💣 
+
+// Can I change the value?
+*data = 42; // 🤷
+
+// Should I remove it?
+delete data; // 💣 💣
+```
+
+Sólo el _developer_ lo sabe (y se le va a olvidar).
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Puntero nulo
+
+Utiliza `NULL` o `0` (es lo mismo)
+
+```cpp
+float* p1 = 0;  // Always initialize variables
+
+if (p1 == NULL) {
+    std::cout << "Es un puntero nulo" << std::endl;
+}
+```
+
+Efectivamente, es el número entero 0, con todas sus consecuencias.
+        </script>
+    </section>
+</section>
+
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Smart pointers</h2>
+        <h4>Punteros inteligentes (C++ moderno)</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Misma funcionalidad que los raw-pointers
+
+```cpp
+///hide
+#include <iostream>
+#include <memory>
+int main() {
+///unhide
+std::shared_ptr<int> p1 = std::make_shared<int>(23);
+std::cout << p1 << std::endl;  // prints the value of the pointer.
+std::cout << *p1 << std::endl;  // prints the value the pointer is pointing to.
+
+std::shared_ptr<int> p2 = p1;
+std::cout << *p2 << std::endl;  // prints the value the pointer is pointing to.
+///hide
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Sin problemas de _ownership_, no hay `new` y no hay `delete`
+
+```cpp
+std::shared<int> data = run_some_algorithm();
+
+// Program keeps working...
+
+// The pointer is valid
+std::cout << *data << std::endl;
+
+// Can I change the value?
+*data = 42; // 🤷
+
+// Nothing to delete
+// delete data;
+```
+        </script>
+    </section>
+
+    <section>
+        <p>La memoria reservada por el puntero es liberada <span class="red">**automágicamente**</span> cuando todos los
+            punteros (que apuntan a ella) desaparecen.</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Puntero nulo
+
+`nullptr` es una instancia del tipo de datos `std::nullptr_t`
+
+```cpp
+std::shared_ptr<float> p1 = nullptr;  // Always initialize variables
+
+if (p1 == nullptr) {
+    std::cout << "Es un puntero nulo" << std::endl;
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4>Smart pointers</h4>
+        <ul>
+            <li><code>std::shared_ptr</code></li>
+            <li><code>std::unique_ptr</code></li>
+            <li><code>std::weak_ptr</code></li>
+            <li><strike><code>std::auto_ptr</code></strike></li>
+        </ul>
+    </section>
+
+</section>
+
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Takeaways</h2>
+        <p>(para principiantes)</p>
+    </section>
+
+    <section>
+        <p>Utiliza siempre <code>std::shared_ptr</code></p>
+    </section>
+
+    <section>
+        <p>Destierra el <code>new</code> y el <code>delete</code></p>
+        <div class="footnote">De verdad, prometido, no los vas a necesitar nunca.</div>
+    </section>
+
+    <section>
+        <p>Utiliza <code>nullptr</code> para indicar los punteros <i>vacíos</i>.</p>
+    </section>
+</section>
