@@ -25,7 +25,7 @@ int main() {
 }
 ```
 
-<small>El dato que se imprime son **direcciones de memoria**, el ordenador asigna esas direcciones <i>aleatoriamente</i> y por eso en cada ejecución aparecen valores diferentes.</small>
+<small>El dato que se imprime son **direcciones de memoria**, el ordenador asigna esas direcciones <em>aleatoriamente</em> y por eso en cada ejecución aparecen valores diferentes.</small>
         </script>
     </section>
 
@@ -85,6 +85,7 @@ int* p1 = a;
         <p>Ownership: ¿quién es el dueño del dato?</p>
         <p>...</p>
     </section>
+
 </section>
 
 
@@ -199,7 +200,7 @@ std::shared<int> data = run_some_algorithm();
 
 // Program keeps working...
 
-// The pointer is valid
+// The pointer is valid, for sure
 std::cout << *data << std::endl;
 
 // Can I change the value?
@@ -220,7 +221,7 @@ std::cout << *data << std::endl;
         <script type="text/template">
 ### Puntero nulo
 
-`nullptr` es una instancia del tipo de datos `std::nullptr_t`
+`nullptr` es una instancia del tipo de datos `std::nullptr_t` (y esto tiene ventajas)
 
 ```cpp
 std::shared_ptr<float> p1 = nullptr;  // Always initialize variables
@@ -262,6 +263,6 @@ if (p1 == nullptr) {
     </section>
 
     <section>
-        <p>Utiliza <code>nullptr</code> para indicar los punteros <i>vacíos</i>.</p>
+        <p>Utiliza <code>nullptr</code> para indicar los punteros <em>vacíos/nulos</em>.</p>
     </section>
 </section>

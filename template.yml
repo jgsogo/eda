@@ -48,6 +48,8 @@ toc:
 
   - section: Esquemas algorítmicos
 
-  - section: Soluciones
+  - section: Random
   - content_main: slides/2021.soluciones.html
-    title: "Soluciones"
+    title: "Soluciones ejercicios"
+  - content_main: slides/hello_world.html
+    title: "C++ en el mundo"
