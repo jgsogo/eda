@@ -1,0 +1,153 @@
+<section data-transition="convex">
+    <section>
+        <h2>¿Qué es un TAD?</h2>
+    </section>
+
+    <section>
+        <p>Un Tipo Abstracto de Datos (TAD) es un <span class="red">conjunto de datos y de operaciones</span> definidos mediante una <span class="blue">especificación</span>.</p>
+    </section>
+
+    <section data-background-iframe="https://en.cppreference.com/w/cpp/container/vector" data-background-interactive>
+        <h4 class="box-shadow-black caps-preserve">std::vector&lt;int&gt;</h4>
+    </section>
+
+    <section data-background-iframe="https://en.cppreference.com/w/cpp/container/array" data-background-interactive>
+        <h4 class="box-shadow-black caps-preserve">std::array&lt;int&gt;</h4>
+    </section>
+
+    <section>
+        <p><strong>Conjunto de datos y operaciones</strong></p>
+        <p>El programador ha decidido qué datos/operaciones expone y los ha documentado</p>
+    </section>
+
+    <section>
+        <p>Se document el qué, pero no el cómo.</p>
+        <p>(Detalle de implementación, implementation details)</p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>TADs en C++</h2>
+        <h4>Reutilización</h4>
+    </section>
+
+    <section>
+        <h4>Tipos de datos primitivos</h4>
+        <p>Definen un <span class="red">conjunto de datos y de operaciones</span> válidos</p>
+        <ul>
+            <li><code>int</code></li>
+            <li><code>bool</code></li>
+            <li><code>float</code></li>
+            <li><code>char</code></li>
+        </ul>
+    </section>
+
+    <section>
+        <h4>Tipos de la librería standard</h4>
+        <p>Definen un <span class="red">conjunto de datos y de operaciones</span> válidos</p>
+        <ul>
+            <li><code>std::string</code></li>
+            <li><code>std::vector&lt;int&gt;</code></li>
+            <li><code>std::array&lt;int&gt;</code></li>
+            <li><code>std::map&lt;std::string, int&gt;</code></li>
+            <li>...</li>
+        </ul>
+    </section>
+
+    <section>
+        <h4>Tipos de otras librerías</h4>
+        <p>Definen un <span class="red">conjunto de datos y de operaciones</span> válidos</p>
+        <ul>
+            <li><a href="https://www.boost.org/doc/libs/1_75_0/libs/graph/doc/index.html"><code>boost::adjacency_list</code></a></li>
+            <li><a href="https://github.com/reo7sp/tgbot-cpp"><code>TgBot::Bot</code></a></li>
+            <li><a href="https://www.qt.io/"><code>QApplication</code></a></li>
+            <li>...</li>
+        </ul>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve">Define <u>TUS</u> propios tipos</h4>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>POO</h2>
+        <h4>Programación orientada a objetos</h4>
+    </section>
+
+    <section>
+        <p>Encapsulación</p>
+        <p>Herencia</p>
+        <p>Polimorfismo</p>
+        <div class="footnote"><a href="https://youtu.be/6SLSyK3_1qA">20141203 - La OOP debe morir</a></div>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Conjunto de datos y de operaciones válidos
+
+```cpp
+class Pet {
+protected:
+    std::string name;
+    float weight;
+    std::shared_ptr<Persona> owner;
+
+public:
+    Pet(const std::string& name, std::shared_ptr<Persona> owner);
+    ~Pet();
+
+    std::shared_ptr<Persona> get_owner() const;
+
+    void set_weight(float weight);
+    float get_weight() const;
+
+    void print() const;
+};
+```
+`Pet.h`
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+La implementación está oculta
+
+```cpp
+#include "Pet.h"
+#include <iostream>
+
+Pet::Pet(const std::string& name_, std::shared_ptr<Persona> owner_) :
+    name(name_), owner(owner_) {
+    weight = -1;  // -1 means unknown
+}
+
+Pet::~Pet() {}
+
+std::shared_ptr<Persona> Pet::get_owner() const {
+    return owner;
+}
+
+void set_weight(float weight_) {
+    weight = weight_;
+}
+    
+float Pet::get_weight() const {
+    return weight;
+}
+
+void Pet::print() const {
+    std::cout << "I'm a pet, my owner is ";
+    owner->print();
+    std::cout << " and my name is " << name << std::endl;
+}
+```
+`Pet.cpp`
+
+        </script>
+    </section>
+</section>
