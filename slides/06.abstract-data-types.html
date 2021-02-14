@@ -88,7 +88,7 @@
 
     <section>
         <h4>Proceso de abstracción</h4>
-        <p>Es la especificación, <em>NO</em> puede cambiarse</p>
+        <p>Como resultado se obtiene una <span class="blue">especificación</span>, es el contrato, <em>NO</em> puede cambiarse</p>
     </section>
 
     <section data-markdown>
@@ -115,6 +115,30 @@ public:
 };
 ```
 `Pet.h`
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Conjunto de datos y de operaciones válidos
+
+```cpp
+class Persona {
+protected:
+    std::vector<std::shared_ptr<Pet>> pets;
+
+public:
+    Persona();
+    ~Persona();
+
+    void add_pet(std::shared_ptr<Pet> pet);
+    
+    std::vector<std::shared_ptr<Pet>> pets_by_name() const;
+    std::vector<std::shared_ptr<Pet>> pets_by_weight() const;
+};
+```
+`Persona.h`
 
         </script>
     </section>
@@ -158,6 +182,39 @@ void Pet::print() const {
 }
 ```
 `Pet.cpp`
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Mañana puedo decidir cambiar una implementación por otra mejor
+
+```cpp
+#include "Persona.h"
+
+Persona::Persona() {}
+
+Persona::~Persona() {}
+
+void Persona::add_pet(std::shared_ptr<Pet> pet) {
+    pets.push_back(pet);
+}
+    
+std::vector<std::shared_ptr<Pet>> Persona::pets_by_name() const {
+    std::vector<std::shared_ptr<Pet>> ret = pets;
+    quicksort(ret, 0, ret.size());
+    return ret;
+}
+
+std::vector<std::shared_ptr<Pet>> Persona::pets_by_weight() const {
+    std::vector<std::shared_ptr<Pet>> ret = pets;
+    bubble_sort(ret);
+    return ret;    
+}
+
+```
+`Persona.cpp`
 
         </script>
     </section>
