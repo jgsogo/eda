@@ -4,16 +4,16 @@
 // A function to merge two ordered lists
 int partition(std::vector<float>& elements, int left_index, int right_index)
 {
-    auto pivot = elements[left_index];
+    auto pivot = elements.at(left_index);
     int i = left_index, j = right_index;
- 
+
     while(true) {
-        while( elements[i] <= pivot && i <= j ) ++i;
-        while( elements[j] > pivot ) --j;
+        while( elements.at(i) <= pivot && i < j ) ++i;
+        while( elements.at(j) > pivot ) --j;
         if( i >= j ) break;
-        std::swap(elements[i], elements[j]);
+        std::swap(elements.at(i), elements.at(j));
     }
-    std::swap(elements[left_index], elements[j]);
+    std::swap(elements.at(left_index), elements.at(j));
     return j;
 }
 
