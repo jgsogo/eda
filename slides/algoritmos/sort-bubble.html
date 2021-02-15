@@ -29,6 +29,9 @@
 #include <vector>
 
 void bubble_sort(std::vector<int>& elements) {
+  ///hide
+  if (elements.size() <= 1) { return; }
+  ///unhide
   for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
     ///hide
     std::cout << "Iteration " << i << std::endl;
@@ -78,6 +81,9 @@ En la pasada `i`-ésima, todos los últimos `i` elementos ya están ordenados �
 #include <vector>
 
 void bubble_sort(std::vector<int>& elements) {
+  ///hide
+  if (elements.size() <= 1) { return; }
+  ///unhide
   for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
     ///hide
     std::cout << "Iteration " << i << std::endl;
@@ -127,6 +133,9 @@ Si en una pasada no intercambio ningún elemento es que todos YA están ordenado
 #include <vector>
 
 void bubble_sort(std::vector<int>& elements) {
+  ///hide
+  if (elements.size() <= 1) { return; }
+  ///unhide
   for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
     bool any_swap = false;
     ///hide
