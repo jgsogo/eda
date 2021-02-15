@@ -50,16 +50,16 @@ void print(const std::vector<int>& elements) {
 int partition(std::vector<int>& elements, int left_index, int right_index)
 ///hide
 {
-    auto pivot = elements[left_index];
+    auto pivot = elements.at(left_index);
     int i = left_index, j = right_index;
 
     while(true) {
-        while( elements[i] <= pivot && i <= j ) ++i;
-        while( elements[j] > pivot ) --j;
+        while( elements.at(i) <= pivot && i < j ) ++i;
+        while( elements.at(j) > pivot ) --j;
         if( i >= j ) break;
-        std::swap(elements[i], elements[j]);
+        std::swap(elements.at(i), elements.at(j));
     }
-    std::swap(elements[left_index], elements[j]);
+    std::swap(elements.at(left_index), elements.at(j));
     return j;
 }
 ///unhide
@@ -122,16 +122,16 @@ void print(const std::vector<int>& elements) {
 // A function to compute the partition
 int partition(std::vector<int>& elements, int left_index, int right_index)
 {
-    auto pivot = elements[left_index];  // any element works
+    auto pivot = elements.at(left_index);
     int i = left_index, j = right_index;
 
     while(true) {
-        while( elements[i] <= pivot && i <= j ) ++i;
-        while( elements[j] > pivot ) --j;
+        while( elements.at(i) <= pivot && i < j ) ++i;
+        while( elements.at(j) > pivot ) --j;
         if( i >= j ) break;
-        std::swap(elements[i], elements[j]);
+        std::swap(elements.at(i), elements.at(j));
     }
-    std::swap(elements[left_index], elements[j]);
+    std::swap(elements.at(left_index), elements.at(j));
     return j;
 }
 
@@ -146,7 +146,7 @@ int main() {
   auto pivot_index = partition(elements, 0, elements.size()-1);
   ///hide
   std::cout << "Pivot index: " << pivot_index << std::endl;
-  std::cout << "paritition: ";
+  std::cout << "partition: ";
   print(elements);
   ///unhide
 }
