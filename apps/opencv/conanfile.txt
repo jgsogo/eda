@@ -1,0 +1,9 @@
+[requires]
+opencv/3.4.12
+
+[generators]
+cmake
+cmake_find_package
+
+[imports]
+share/OpenCV/haarcascades, haarcascade*.xml -> bin
