@@ -350,7 +350,7 @@ int size(std::shared_ptr<Element> lista) {
 Comprobar si una lista está vacía
 
 ```cpp
-int empty(std::shared_ptr<Element> lista) {
+bool empty(std::shared_ptr<Element> lista) {
     return (lista == nullptr);
 }
 ```
@@ -364,7 +364,7 @@ Comprobar si una lista está vacía...
 ...usando otras funciones 🤔
 
 ```cpp
-int empty(std::shared_ptr<Element> lista) {
+bool empty(std::shared_ptr<Element> lista) {
     return size(lista) == 0;
 }
 ```
@@ -385,7 +385,7 @@ int empty(std::shared_ptr<Element> lista) {
 
     <section data-markdown>
         <script type="text/template">
-Acceder al elemento que ocupa la posición `i`. Devuelve el elemenot en dicha posición o `nullptr`.
+Acceder al elemento que ocupa la posición `i`-ésima. Devuelve el elemento en dicha posición o `nullptr`.
 
 ```cpp
 // Returns the element from 'lista' at position 'pos'
@@ -405,6 +405,51 @@ std::shared_ptr<Element> at(std::shared_ptr<Element> lista,
 ```
         </script>
     </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>front</code></h4>
+        <p>Devuelve el primer elemento</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve el primer elemento de la lista (o `nullptr` si está vacía).
+
+```cpp
+// Returns first element from 'lista'
+std::shared_ptr<Element> front(std::shared_ptr<Element> lista) {
+    return at(lista, 0);
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>back</code></h4>
+        <p>Devuelve el último elemento de la lista</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve el último elemento de la lista (o `nullptr` si está vacía).
+
+```cpp
+// Returns last element from 'lista'
+std::shared_ptr<Element> back(std::shared_ptr<Element> lista) {
+    std::shared_ptr<Element> iterator = lista;
+    while (iterator != nullptr) {
+        if (iterator->next == nullptr) {
+            return iterator;
+        }
+        iterator = iterator->next;
+    }
+    return iterator;  // Note that we are returning the iterator instead of 'nullptr' value
+}
+```
+
+🤔 🤔  Podríamos implementarlo como 'return at(lista, size(lista)-1)', pero recorreríamos la lista dos veces.  <!-- .element: class="footnote" -->
+        </script>
+    </section>
 </section>
 
 <section data-transition="convex">
@@ -418,13 +463,124 @@ std::shared_ptr<Element> at(std::shared_ptr<Element> lista,
     </section>
 
     <section>
+        <p>Insertar elemento al final</p>
+        <img src="slides/tad/lista-push_back.dot.png"/>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Inserta un elemento al final de la lista.
+
+```cpp
+// Inserts element 'elem' as the last element of the list
+void push_back(std::shared_ptr<Element>& lista,  // Note the reference
+               std::shared_ptr<Element> elem) {
+    if (empty(lista)) {
+        lista = elem;  // Now it is the only element in the list
+    }
+    else {
+        std::shared_ptr<Element> latest = back(lista);
+        latest->next = elem;
+    }
+}
+```
+        </script>
+    </section>
+
+    <section>
         <h4 class="caps-preserve"><code>push_front</code></h4>
         <p>Insertar elemento al principio</p>
     </section>
 
     <section>
+        <p>Insertar elemento al principio</p>
+        <img src="slides/tad/lista-push_front.dot.png"/>
+        <img class="fragment" data-fragment-index="1" src="slides/tad/lista-push_front2.dot.png"/>
+        <p class="fragment" data-fragment-index="1">¡Necesitamos modificar el puntero de <code>lista</code>! 👀</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Inserta un elemento al principio de la lista (usando referencia).
+
+```cpp
+// Inserts element 'elem' as the first element of the list
+void push_front(std::shared_ptr<Element>& lista, // Note the reference
+                std::shared_ptr<Element> elem) {
+    if (empty(lista)) {
+        lista = elem;  // Now it is the only element in the list
+    }
+    else {
+        elem->next = lista;
+        lista = elem;
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Inserta un elemento al principio de la lista (usando valor de retorno).
+
+```cpp
+// Inserts element 'elem' as the first element of the list, and returns the new list
+std::shared_ptr<Element> push_front(std::shared_ptr<Element> lista,
+                                    std::shared_ptr<Element> elem) {
+    if (empty(lista)) {
+        lista = elem;  // Now it is the only element in the list
+    }
+    else {
+        elem->next = lista;
+        lista = elem;
+    }
+    return lista;
+}
+```
+        </script>
+    </section>
+
+    <section>
         <h4 class="caps-preserve"><code>insert</code></h4>
         <p>Insertar elemento intermedio</p>
+    </section>
+
+    <section>
+        <p>Insertar elemento intermedio</p>
+        <img src="slides/tad/lista-insert.dot.png"/>
+        <img class="fragment" data-fragment-index="1" src="slides/tad/lista-insert2.dot.png"/>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Inserta un elemento intermedio (paso por referencia*).
+
+```cpp
+// Inserts 'elem' in the position indicated by 'pos'.
+// Return value indicates whether the operation was completed
+// successfully or not
+bool insert(std::shared_ptr<Element>& lista, // Note the reference
+            std::shared_ptr<Element> elem,
+            int pos) {
+    if (pos == 0) {
+        push_front(lista, elem);
+        return true;
+    }
+    else if (pos > size(lista)) {
+        // List is not so long
+        return false;
+    }
+    else {
+        std::shared_ptr<Element> previous = at(lista, pos - 1);
+        elem->next = previous->next;
+        previous->next = elem;
+        return true;
+    }
+}
+```
+
+🤔 🤔  *Podrían pedirme insertarlo el primero, así que sigue pasando lista por referencia.  <!-- .element: class="footnote" -->
+        </script>
     </section>
 </section>
 
@@ -434,13 +590,36 @@ std::shared_ptr<Element> at(std::shared_ptr<Element> lista,
     </section>
 
     <section>
-        <h4 class="caps-preserve"><code>erase</code></h4>
-        <p>Borrar elemento en una posición</p>
-    </section>
-
-    <section>
         <h4 class="caps-preserve"><code>pop_back</code></h4>
         <p>Elimina (y devuelve) el último elemento</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Elimina (y devuelve) el último elemento.
+
+```cpp
+// Removes (and returns) the last element from the list
+std::shared_ptr<Element> pop_back(std::shared_ptr<Element>& lista) {
+    int lista_size = size(lista);
+    if (lista_size == 0) {
+        return nullptr;
+    }
+    else if (lista_size == 1) {
+        std::shared_ptr<Element> ret = lista;
+        lista = nullptr;
+        return ret;
+    }
+    else {
+        // Get the second-to-last element (penúltimo elemento)
+        std::shared_ptr<Element> previous = at(lista, lista_size - 2);
+        std::shared_ptr<Element> ret = previous->next;
+        previous->next = nullptr;
+        return ret;
+    }
+}
+```
+        </script>
     </section>
 
     <section>
@@ -448,9 +627,73 @@ std::shared_ptr<Element> at(std::shared_ptr<Element> lista,
         <p>Elimina (y devuelve) el primer elemento</p>
     </section>
 
+    <section data-markdown>
+        <script type="text/template">
+Elimina (y devuelve) el primer elemento.
+
+```cpp
+// Removes (and returns) the first element from the list
+std::shared_ptr<Element> pop_front(std::shared_ptr<Element>& lista) {
+    if (empty(lista)) {
+        return nullptr;
+    }
+    else {
+        std::shared_ptr<Element> ret = lista;
+        lista = lista->next;
+        return ret;
+    }
+}
+```
+        </script>
+    </section>
+
     <section>
         <h4 class="caps-preserve"><code>clear</code></h4>
         <p>Elimina todos los elementos</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Elimina todos los elementos.
+
+```cpp
+// Remove all elements from the list
+void clear(std::shared_ptr<Element>& lista) {
+    lista = nullptr;
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>erase</code></h4>
+        <p>Borrar elemento en una posición</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Elimina el elemento de la posición indicada. Devuelve si la operación ha tenido éxito o no.
+
+```cpp
+// Remove all elements from the list
+bool erase(std::shared_ptr<Element>& lista, int pos) {
+    int lista_size = size(lista);
+    if (pos >= lista_size) {
+        return false;
+    }
+
+    if (pos == 0) {
+        auto front_element = pop_front(lista);  // Removes and returns first element
+        return true;
+    }
+    else {
+        std::shared_ptr<Element> previous = at(lista, pos-1);
+        previous->next = previous->next->next;
+        return true;
+    }
+}
+```
+        </script>
     </section>
 
 </section>
@@ -461,13 +704,38 @@ std::shared_ptr<Element> at(std::shared_ptr<Element> lista,
     </section>
 
     <section>
-        <h4 class="caps-preserve"><code>search</code></h4>
-        <p>Búsqueda de un elemento</p>
-    </section>
-
-    <section>
         <h4 class="caps-preserve"><code>distance</code></h4>
         <p>Distancia entre dos elementos</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Dados dos elementos de la lista (sus punteros), indicar la distancia entre ellos. La distancia se mide como el número de saltos.
+
+```cpp
+// Returns the number of hops between two (pointers to) elements in the list
+int distance(std::shared_ptr<Element> lista, 
+             std::shared_ptr<Element> elem1, 
+             std::shared_ptr<Element> elem2) {
+    std::shared_ptr<Element> iterator = lista;
+    int distance = 0;
+    bool first_found = 0;
+    while (iterator != nullptr) {
+        if (!first_found && iterator == elem1) {
+            first_found = true;
+        }
+        if (first_found && iterator == elem2) {
+            return distance;
+        }
+        if (first_found) {
+            distance++;
+        }
+        iterator = iterator->next;
+    }
+    return -1; // Some of the elements was not found!
+}
+```
+        </script>
     </section>
 
     <section>
@@ -475,10 +743,72 @@ std::shared_ptr<Element> at(std::shared_ptr<Element> lista,
         <p>Intercambiar dos elementos</p>
     </section>
 
-    <section>
-        <h4 class="caps-preserve"><code>slice</code></h4>
-        <p>Devuelve un _trozo_ de una lista</p>
+    <section data-markdown>
+        <script type="text/template">
+Intercambiar dos elementos dados por sus índices.
+
+❗ Se trata de intercambiar los elementos (punteros), no de copiar los datos de uno en el otro.
+
+```cpp
+// Swap two elements inside the list. Assume pos2 > pos1
+void swap(std::shared_ptr<Element>& lista, 
+          int pos1, int pos2) {
+    std::shared_ptr<Element> element2_prev = at(lista, pos2 - 1);
+    std::shared_ptr<Element> element2 = element2_prev->next;
+    std::shared_ptr<Element> element2_post = element2->next;
+
+    if (pos1 == 0) {
+        std::shared_ptr<Element> element1 = lista;
+
+        lista = element2;
+        element2_prev->next = element1;
+
+        element2->next = element1->next;
+        element1->next = element2_post;
+    }
+    else {
+        std::shared_ptr<Element> element1_prev = at(lista, pos1 - 1);
+        std::shared_ptr<Element> element1 = element1_prev->next;
+
+        element1_prev->next = element2;
+        element2_prev->next = element1;
+
+        element2->next = element1->next;
+        element1->next = element2_post;
+    }
+}
+```
+        </script>
     </section>
+
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Operaciones con los datos</h2>
+    </section>
+
+    <section>
+        <p>❗❗❗ Hasta ahora sólo hemos utilizado los punteros, no hemos utilizado los datos para nada ❗❗❗</p>
+        <p class="fragment">¿Funcionarán así los contenedores genéricos <code>std::list&lt;T&gt;</code>? *</p>
+        <div class="footnote fragment"><sup>*</sup>Spoiler: sí, y lo verás en asignaturas de programación.</div>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>search</code></h4>
+        <p>Búsqueda de un elemento</p>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>sort</code></h4>
+        <p>Ordenación en base al valor de los elementos</p>
+    </section>
+</section>
+
+<section>
+    <h4 class="caps-preserve"><code>slice</code></h4>
+    <p>Devuelve un _trozo_ de una lista</p>
 </section>
 
 <section data-transition="convex">
