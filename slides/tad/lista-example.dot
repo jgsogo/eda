@@ -1,0 +1,8 @@
+digraph structs {
+    nodesep=.05;
+    rankdir=LR;
+    
+    e1 -> e2 -> e3 -> e4
+    nullptr [label=< <font color="#aaaaaa">nullptr</font> > color=invis]
+    e4 -> nullptr [color=lightgrey]
+}

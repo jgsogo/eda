@@ -3,14 +3,18 @@ digraph structs {
     rankdir=LR;
     
     node [shape=record, width = .5];
-    node1 [label="{<m> |{<d> 1 |<n> next |<p> prev}}"];
-    node2 [label="{<m> |{<d> 2 |<n> next |<p> prev}}"];
-    node3 [label="{<m> |{<d> 3 |<n> next |<p> prev}}"];
-    node4 [label="{<m> |{<d> 4 |<n> next |<p> prev}}"];
+    node1 [label="{<m> |{<d> datos |<n> next |<p> prev}}"];
+    node2 [label="{<m> |{<d> datos |<n> next |<p> prev}}"];
+    node3 [label="{<m> |{<d> datos |<n> next |<p> prev}}"];
+    node4 [label="{<m> |{<d> datos |<n> next |<p> prev}}"];
+    nullptr1 [label="nullptr" color=invis]
+    nullptr2 [label="nullptr" color=invis]
 
-    node1:n -> node2:m;
-    node2:n -> node3:m;
-    node3:n -> node4:m;
+    nullptr2 -> node1:p [dir=back weight= 10 ];
+    node1:n -> node2:m [weight= 10 ];
+    node2:n -> node3:m [weight= 10 ];
+    node3:n -> node4:m [weight= 10 ];
+    node4:n -> nullptr1 [weight= 10 ];
 
     node2:p -> node1:m [constraint=false];
     node3:p -> node2:m [constraint=false];
