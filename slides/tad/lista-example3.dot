@@ -1,0 +1,15 @@
+digraph structs {
+    graph [overlap = false]
+    nodesep=.05;
+    rankdir=LR;
+
+    nullptr1 [label=< <font color="#aaaaaa">nullptr</font> > color=invis]
+    nullptr2 [label=< <font color="#aaaaaa">nullptr</font> > color=invis]
+
+    nullptr2 -> e1 [color=lightgrey dir=back weight=10]
+    e1 -> e2 -> e3 -> e4 [weight=10]
+    e4 -> e3 -> e2 -> e1 [constraint=false]
+
+    e4 -> nullptr1 [color=lightgrey]
+
+}

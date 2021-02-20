@@ -7,7 +7,6 @@ digraph structs {
     node2 [label="{<m> |{<d> datos |<n> next }}"];
     node3 [label="{<m> |{<d> datos |<n> next }}"];
     node4 [label="{<m> |{<d> datos |<n> next }}"];
-    nullptr [color=invis]
 
     node1 -> node2 [ style = invis, weight= 10 ];
     node2 -> node3 [ style = invis, weight= 10 ];
@@ -16,5 +15,5 @@ digraph structs {
     node1:n -> node2:m;
     node2:n -> node3:m;
     node3:n -> node4:m;
-    node4:n -> nullptr;
+    node4:n -> node1:m;
 }
