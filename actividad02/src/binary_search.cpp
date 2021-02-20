@@ -3,14 +3,6 @@
 #include <iostream>
 #include <vector>
 
-//te muestra por pantalla el vector
-void print_vector(std::vector<int> values) {
-    for (auto v: values) {
-        std::cout << v << ", ";
-    }
-    std::cout << std::endl;
-}
-
 //Para obtener la mitad del vector que quiero
 std::vector<int> slice(std::vector<int> values, int begin, int end) {
     if (begin >= end) { return std::vector<int>{}; }
@@ -18,8 +10,6 @@ std::vector<int> slice(std::vector<int> values, int begin, int end) {
 }
 
 bool binary_search(std::vector<int> values, int value_to_find) {
-    //Muestra el vector como queda en cada iteración
-    print_vector(values);
     //caso trivial: valor no encontrado
     if (values.empty()) { return false; }
     //variable que contiene el valor medio
