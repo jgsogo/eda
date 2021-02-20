@@ -3,6 +3,8 @@
 #include <vector>
 #include "palindrome.h"
 
+using namespace std;
+
 string remove_blanks(string word) {
     string word_2;
     for(auto c:word){
