@@ -156,7 +156,7 @@ bool binary_search(std::vector<int> values, int value_to_find) {
 
 int main() {
     std::vector<int> values{1, 3, 5, 8, 13};
-    int found = binary_search(values, 8);
+    bool found = binary_search(values, 8);
     if (found) {
         std::cout << "Element found" << std::endl;
     }
