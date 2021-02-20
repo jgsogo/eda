@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "palindrome.h"
 
 using namespace std;
 
