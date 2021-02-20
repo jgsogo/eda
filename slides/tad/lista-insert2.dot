@@ -1,0 +1,12 @@
+digraph structs {
+    nodesep=.05;
+    rankdir=LR;
+    
+    e1 -> e2
+    e2 -> e3 [color=grey]
+    e3 -> e4
+    e5 [label=< <font color="#aaaaaa">e5</font> > color=grey]
+    e2 -> e5 [color=grey]
+    e5 -> e3 [color=grey]
+
+}
