@@ -17,115 +17,33 @@
     <section data-background-color="rgb(255, 255, 255)">
         <h4>Lista circular (simple)</h4>
         <img src="slides/tad/lista-circular.dot.png" />
+        <p>Cuando la recorra tengo que almacenar de alguna manera cuál es el primer o último elemento para parar en algún momento.</p>
     </section>
 
     <section data-markdown>
         <script type="text/template">
 Cada elemento de la lista almacena **un dato** y **un puntero** al elemento siguiente
 
-```cpp[7-8]
+```cpp[9-10]
 #include <memory>
 #include <iostream>
-    
-class Element {
+
+struct TipoDato {}; // Any datatype: int, std::string, float,...
+
+class Element { // Also known as Node sometimes
     public:
         // Members
-        std::string dato;
+        TipoDato dato;
         std::shared_ptr<Element> next = nullptr;
     public:
         // Constructor 
-        Element(const std::string& dato_) : dato{dato_} {};
+        Element(const TipoDato& dato_) : dato{dato_} {};
 
         // Other methods
         bool is_last_element() { 
             return next == nullptr; 
         }
 };
-``` 
-
-*Vamos a utilizar clases por uniformidad con otras asignaturas, pero igualmente podríamos usar 'struct'.  <!-- .element: class="footnote" -->
-
-        </script>
-    </section>
-
-    <section data-markdown>
-        <script type="text/template">
-Una lista es una colección de elementos...
-
-```cpp
-// A collection of elements
-std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{"lechugas"});
-std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{"tomates"});
-std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{"pescado"});
-// ... more elements
-``` 
-        </script>
-    </section>
-
-    <section data-markdown>
-        <script type="text/template">
-... en un orden determinado
-
-```cpp
-// e1 -> e2 -> e3 -> nullptr
-e1->next = e2;
-e2->next = e3;
-``` 
-        </script>
-    </section>
-
-    <section data-markdown>
-        <script type="text/template">
-La lista la referenciamos con el **puntero al primer elemento**
-
-```cpp
-// Pointer to the first element
-std::shared_ptr<Element> my_list = e1;
-``` 
-        </script>
-    </section>
-
-    <section data-markdown>
-        <script type="text/template">
-```cpp
-#include <memory>
-#include <iostream>
-    
-class Element {
-    public:
-        // Members
-        std::string dato;
-        std::shared_ptr<Element> next = nullptr;
-    public:
-        // Constructor
-        Element(const std::string& dato_) : dato{dato_} {};
-
-        // Other methods
-        bool is_last_element() { 
-            return next == nullptr; 
-        }
-};
-
-int main() {
-    // Tenemos elementos
-    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{"elem1"});
-    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{"elem2"});
-    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{"elem3"});
-
-    // Los podemos poner en "orden" (uno detrás de otro)
-    e1->next = e2;
-    e2->next = e3;
-
-    // La lista la representamos por el primer elemento
-    std::shared_ptr<Element> lista = e1;
-    
-    // Los podemos imprimir, del primero al último:
-    std::shared_ptr<Element> iterator = lista;  // primer elemento
-    while (iterator != nullptr) {
-        std::cout << iterator->dato << std::endl;
-        iterator = iterator->next;  // el iterador apunta al siguiente elemento
-    }
-}
 ```
         </script>
     </section>
@@ -147,22 +65,140 @@ int main() {
         <script type="text/template">
 Cada elemento contiene **un dato**, **un puntero** al elemento siguiente y **otro puntero** al anterior.
 
-```cpp[9]
+```cpp[11]
 #include <memory>
 #include <iostream>
-    
+
+struct TipoDato {};
+
 class Element {
     public:
         // Members
-        std::string dato;
+        TipoDato dato;
         std::shared_ptr<Element> next = nullptr;
         std::shared_ptr<Element> prev = nullptr;
     public:
         // Constructor 
-        Element(const std::string& dato_) : dato{dato_} {};
+        Element(const TipoDato& dato_) : dato{dato_} {};
 };
 ``` 
         </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejemplo en código</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Una lista es una colección de elementos...
+
+```cpp
+// Tenemos algunos datos
+TipoDato t1{"nicolás"};
+TipoDato t2{"marina"};
+TipoDato t3{"humberto"};
+
+// Tenemos elementos que almacenan los datos
+std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+// ... more elements
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+... en un orden determinado
+
+```cpp
+// e1 -> e2 -> e3 -> nullptr
+e1->next = e2;
+e2->next = e3;
+``` 
+
+... si fuera una lista doblemente enlazada, también
+
+
+```cpp
+// e1 -> e2 -> e3 -> nullptr
+e2->prev = e1;
+e3->prev = e2;
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+La lista la referenciamos con el **puntero al primer elemento**
+
+```cpp
+// Pointer to the first element
+std::shared_ptr<Element> my_list = e1;
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp[21-45]
+#include <memory>
+#include <iostream>
+
+struct TipoDato { std::string name; };
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor
+        Element(const TipoDato& dato_) : dato{dato_} {};
+
+        // Other methods
+        bool is_last_element() { 
+            return next == nullptr; 
+        }
+};
+
+int main() {
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+
+    // Los podemos poner en "orden" (uno detrás de otro)
+    e1->next = e2;
+    e2->next = e3;
+
+    // La lista la representamos por el primer elemento
+    std::shared_ptr<Element> lista = e1;
+    
+    // Los podemos imprimir, del primero al último:
+    std::shared_ptr<Element> iterator = lista;  // primer elemento
+    while (iterator != nullptr) {
+        std::cout << iterator->dato.name << std::endl;
+        iterator = iterator->next;  // el iterador apunta al siguiente elemento
+    }
+}
+```
+
+Representación en la siguiente slide
+        </script>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img src="slides/tad/lista-example-full.dot.png" />
+        <p>Ver código en la anterior slide</p>
     </section>
 </section>
 
@@ -185,8 +221,15 @@ class Element {
         <p>Ej.: lista doblemente enlazada.</p>
         <img src="slides/tad/lista-example3.dot.png" />
     </section>
-
 </section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Listas simples con funciones libres</h2>
+    </section>
+</section>
+
 
 <section data-transition="convex">
     <section>
@@ -202,29 +245,36 @@ Iterar una lista de elementos e imprimir sus datos
 #include <iostream>
 
 ///hide
+struct TipoDato { std::string name; };
+
 class Element {
     public:
         // Members
-        std::string dato;
+        TipoDato dato;
         std::shared_ptr<Element> next = nullptr;
     public:
         // Constructor 
-        Element(const std::string& dato_) : dato{dato_} {};
+        Element(const TipoDato& dato_) : dato{dato_} {};
 };
 ///unhide
 void print_list(std::shared_ptr<Element> lista) {
     std::shared_ptr<Element> iterator = lista;
     while (iterator != nullptr) {
-        std::cout << iterator->dato << std::endl;
+        std::cout << iterator->dato.name << std::endl;
         iterator = iterator->next;
     }
 }
 
 int main() {
-    // Tenemos elementos
-    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{"elem1"});
-    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{"elem2"});
-    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{"elem3"});
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
 
     // Los podemos poner en "orden" (uno detrás de otro)
     e1->next = e2;
@@ -247,14 +297,16 @@ int main() {
 #include <memory>
 #include <iostream>
 
+struct TipoDato { std::string name; };
+
 class Element {
     public:
         // Members
-        std::string dato;
+        TipoDato dato;
         std::shared_ptr<Element> next = nullptr;
     public:
         // Constructor 
-        Element(const std::string& dato_) : dato{dato_} {};
+        Element(const TipoDato& dato_) : dato{dato_} {};
 };
 ///unhide
 /* This function prints the index and the data of every
@@ -271,17 +323,22 @@ void print_list(std::shared_ptr<Element> lista) {
     std::shared_ptr<Element> iterator = lista;
     int idx = 0;
     while (iterator != nullptr) {
-        std::cout << idx << ": " << iterator->dato << std::endl;
+        std::cout << idx << ": " << iterator->dato.name << std::endl;
         iterator = iterator->next;
         idx++;
     }
 }
 
 int main() {
-    // Tenemos elementos
-    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{"elem1"});
-    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{"elem2"});
-    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{"elem3"});
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
 
     // Los podemos poner en "orden" (uno detrás de otro)
     e1->next = e2;
@@ -290,6 +347,138 @@ int main() {
     // La lista la representamos por el primer elemento
     std::shared_ptr<Element> lista = e1;
     print_list(lista);
+}
+///unhide
+``` 
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve">⭐  <code>for_each</code></h4>
+        <p>Ejecutar una acción sobre cada dato de la lista</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Ejecutar una acción sobre cada dato de la lista
+
+```cpp
+///hide
+#include <memory>
+#include <iostream>
+#include <functional>
+
+struct TipoDato { std::string name; };
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor 
+        Element(const TipoDato& dato_) : dato{dato_} {};
+};
+///unhide
+// Calls 'action' with the data of each element in the list
+void for_each(std::shared_ptr<Element> lista, 
+              std::function<void (TipoDato&)> action) {
+    // Iterate the list as usual
+    std::shared_ptr<Element> iterator = lista;
+    while (iterator != nullptr) {
+        action(iterator->dato); // Call the action
+        iterator = iterator->next;
+    }
+}
+
+///hide
+int main() {
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+
+    // Los podemos poner en "orden" (uno detrás de otro)
+    e1->next = e2;
+    e2->next = e3;
+
+    // La lista la representamos por el primer elemento
+    std::shared_ptr<Element> lista = e1;
+    for_each(lista, [](TipoDato& dato){
+        std::cout << dato.name << std::endl;
+    });
+}
+///unhide
+``` 
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>enumerate</code></h4>
+        <p>Ejecutar una acción sobre cada dato de la lista. La función recibe el dato y la posición en la lista.</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Ejecutar una acción sobre cada dato de la lista. La función recibe el dato y la posición en la lista.
+
+```cpp
+///hide
+#include <memory>
+#include <iostream>
+#include <functional>
+
+struct TipoDato { std::string name; };
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor 
+        Element(const TipoDato& dato_) : dato{dato_} {};
+};
+///unhide
+// Calls 'action' with the data of each element in the list
+void enumerate(std::shared_ptr<Element> lista, 
+              std::function<void (int, TipoDato&)> action) {
+    // Iterate the list as usual
+    std::shared_ptr<Element> iterator = lista;
+    int idx = 0;
+    while (iterator != nullptr) {
+        action(idx, iterator->dato); // Call the action
+        iterator = iterator->next;
+        idx++;
+    }
+}
+
+///hide
+int main() {
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+
+    // Los podemos poner en "orden" (uno detrás de otro)
+    e1->next = e2;
+    e2->next = e3;
+
+    // La lista la representamos por el primer elemento
+    std::shared_ptr<Element> lista = e1;
+    enumerate(lista, [](int pos, TipoDato& dato){
+        std::cout << pos << ": " << dato.name << std::endl;
+    });
 }
 ///unhide
 ``` 
@@ -379,6 +568,50 @@ bool empty(std::shared_ptr<Element> lista) {
     </section>
 
     <section>
+        <h4 class="caps-preserve"><code>front</code></h4>
+        <p>Devuelve el dato almacenado en el primer elemento</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve el dato almacenado en el primer elemento.
+
+```cpp
+// Returns data from the first element in 'lista'
+TipoDato& front(std::shared_ptr<Element> lista) {
+    return lista->dato;
+}
+```
+
+🚨 Si la lista está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>back</code></h4>
+        <p>Devuelve el dato almacenado en el último elemento de la lista</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve el dato almacenado en el último elemento de la lista.
+
+```cpp
+// Returns data from the last element in 'lista'
+TipoDato& back(std::shared_ptr<Element> lista) {
+    std::shared_ptr<Element> iterator = lista;
+    while (iterator->next != nullptr) {
+        iterator = iterator->next;
+    }
+    return iterator->dato;
+}
+```
+
+🚨 Si la lista está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section>
         <h4 class="caps-preserve"><code>at</code></h4>
         <p>Devuelve el elemento en una posición</p>
     </section>
@@ -406,50 +639,6 @@ std::shared_ptr<Element> at(std::shared_ptr<Element> lista,
         </script>
     </section>
 
-    <section>
-        <h4 class="caps-preserve"><code>front</code></h4>
-        <p>Devuelve el primer elemento</p>
-    </section>
-
-    <section data-markdown>
-        <script type="text/template">
-Devuelve el primer elemento de la lista (o `nullptr` si está vacía).
-
-```cpp
-// Returns first element from 'lista'
-std::shared_ptr<Element> front(std::shared_ptr<Element> lista) {
-    return at(lista, 0);
-}
-```
-        </script>
-    </section>
-
-    <section>
-        <h4 class="caps-preserve"><code>back</code></h4>
-        <p>Devuelve el último elemento de la lista</p>
-    </section>
-
-    <section data-markdown>
-        <script type="text/template">
-Devuelve el último elemento de la lista (o `nullptr` si está vacía).
-
-```cpp
-// Returns last element from 'lista'
-std::shared_ptr<Element> back(std::shared_ptr<Element> lista) {
-    std::shared_ptr<Element> iterator = lista;
-    while (iterator != nullptr) {
-        if (iterator->next == nullptr) {
-            return iterator;
-        }
-        iterator = iterator->next;
-    }
-    return iterator;  // Note that we are returning the iterator instead of 'nullptr' value
-}
-```
-
-🤔 🤔  Podríamos implementarlo como 'return at(lista, size(lista)-1)', pero recorreríamos la lista dos veces.  <!-- .element: class="footnote" -->
-        </script>
-    </section>
 </section>
 
 <section data-transition="convex">
@@ -797,13 +986,40 @@ void swap(std::shared_ptr<Element>& lista,
 
     <section>
         <h4 class="caps-preserve"><code>search</code></h4>
-        <p>Búsqueda de un elemento</p>
+        <p>Búsqueda de un dato</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Búsqueda lineal de un dato (devuelve el índice/posición).
+
+```cpp
+// Returns the index of the element
+int search(std::shared_ptr<Element> lista,
+           const std::string& dato) {
+    std::shared_ptr<Element> iterator = lista;
+    int found = -1; // If not found, it will return -1
+    int idx = 0;
+    while (iterator != nullptr) {
+        if (iterator->dato == dato) {
+            return idx;
+        }
+        iterator = iterator->next;
+        idx++;
+    }
+    return found;
+}
+```
+
+🤔 ¿Es posible la búsqueda binaria en una lista?
+        </script>
     </section>
 
     <section>
         <h4 class="caps-preserve"><code>sort</code></h4>
         <p>Ordenación en base al valor de los elementos</p>
     </section>
+
 </section>
 
 <section>
