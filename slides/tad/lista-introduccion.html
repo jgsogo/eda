@@ -1,0 +1,226 @@
+<section data-transition="convex">
+    <section data-background="images/list-shopping-list.jpeg">
+        <h2 class="box-shadow-black">¿Qué es?</h2>
+    </section>
+
+    <section>
+        <p>Colección de <span class="blue">elementos homogéneos</span></p>
+        <p>Los elementos tienen posisiciones asignadas (hay un orden)</p>
+        <p>Puede haber elementos repetidos</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Lista enlazada (simple)</h4>
+        <img src="slides/tad/lista-simple.dot.png" />
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Lista circular (simple)</h4>
+        <img src="slides/tad/lista-circular.dot.png" />
+        <p>Cuando la recorra tengo que almacenar de alguna manera cuál es el primer o último elemento para parar en algún momento.</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Cada elemento de la lista almacena **un dato** y **un puntero** al elemento siguiente
+
+```cpp[9-10]
+#include <memory>
+#include <iostream>
+
+struct TipoDato {}; // Any datatype: int, std::string, float,...
+
+class Element { // Also known as Node sometimes
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor 
+        Element(const TipoDato& dato_) : dato{dato_} {};
+
+        // Other methods
+        bool is_last_element() { 
+            return next == nullptr; 
+        }
+};
+```
+        </script>
+    </section>
+
+    <section>
+        <h4>Limitación de una lista simple</h4>
+        <ul>
+            <li>Sólo puedo ir hacia adelante (puntero a <code>next</code>)</li>
+        </ul>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Lista doblemente enlazada</h4>
+        <img src="slides/tad/lista-doble.dot.png" />
+        <div class="footnote"><sup>*</sup>Por supuesto, también puede hacerse circular.</div>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Cada elemento contiene **un dato**, **un puntero** al elemento siguiente y **otro puntero** al anterior.
+
+```cpp[11]
+#include <memory>
+#include <iostream>
+
+struct TipoDato {};
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+        std::shared_ptr<Element> prev = nullptr;
+    public:
+        // Constructor 
+        Element(const TipoDato& dato_) : dato{dato_} {};
+};
+``` 
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Representación</h2>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Por simplificar, representamos únicamente los datos en los elementos y las flechas representan los punteros.
+        </p>
+        <img src="slides/tad/lista-example.dot.png" />
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>El puntero a <code>nullptr</code> no se representa.</p>
+        <img src="slides/tad/lista-example2.dot.png" />
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Ej.: lista doblemente enlazada.</p>
+        <img src="slides/tad/lista-example3.dot.png" />
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejemplo en código</h2>
+        <h4>La lista como puntero</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Una lista es una colección de elementos...
+
+```cpp
+// Tenemos algunos datos
+TipoDato t1{"nicolás"};
+TipoDato t2{"marina"};
+TipoDato t3{"humberto"};
+
+// Tenemos elementos que almacenan los datos
+std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+// ... more elements
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+... en un orden determinado
+
+```cpp
+// e1 -> e2 -> e3 -> nullptr
+e1->next = e2;
+e2->next = e3;
+``` 
+
+... si fuera una lista doblemente enlazada, también
+
+
+```cpp
+// e1 -> e2 -> e3 -> nullptr
+e2->prev = e1;
+e3->prev = e2;
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+La lista la referenciamos con el **puntero al primer elemento**
+
+```cpp
+// Pointer to the first element
+std::shared_ptr<Element> my_list = e1;
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp[21-45]
+#include <memory>
+#include <iostream>
+
+struct TipoDato { std::string name; };
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor
+        Element(const TipoDato& dato_) : dato{dato_} {};
+
+        // Other methods
+        bool is_last_element() { 
+            return next == nullptr; 
+        }
+};
+
+int main() {
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+
+    // Los podemos poner en "orden" (uno detrás de otro)
+    e1->next = e2;
+    e2->next = e3;
+
+    // La lista la representamos por el primer elemento
+    std::shared_ptr<Element> lista = e1;
+    
+    // Los podemos imprimir, del primero al último:
+    std::shared_ptr<Element> iterator = lista;  // primer elemento
+    while (iterator != nullptr) {
+        std::cout << iterator->dato.name << std::endl;
+        iterator = iterator->next;  // el iterador apunta al siguiente elemento
+    }
+}
+```
+
+Representación en la siguiente slide
+        </script>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img src="slides/tad/lista-example-full.dot.png" />
+        <p>Ver código en la anterior slide</p>
+    </section>
+</section>
