@@ -1,12 +1,10 @@
-</section>
-
 <section data-transition="convex">
     <section data-markdown>
         <script type="text/template">
 La lista _es_ el **puntero al primer elemento**
 
 ```cpp
-std::shared_ptr<Element> my_list = e1;
+std::shared_ptr<Element> my_list;
 ``` 
         </script>
     </section>
@@ -809,13 +807,12 @@ void quick_sort(std::shared_ptr<Element>& elements, int left_index, int right_in
 </section>
 
 
-
 <section data-transition="convex">
     <section>
         <h2>Ejercicios propuestos</h2>
     </section>
     <section>
-        <h4>Encapsulación</h4>
+        <h4>💻  Encapsulación</h4>
         <p>Reúne el código de las funciones expuestas en este capítulo y agrúpalo como sigue:</p>
     </section>
 
@@ -969,4 +966,24 @@ Los puedes añadir a `list_functions.h` y `list_functions.cpp`.
         </script>
     </section>
 
+    <section data-markdown>
+        <script type="text/template">
+### Lista doblemente enlazada
+
+Implementa todas las funciones anteriores para una lista doblemente enlazada. 
+
+```cpp
+class ElementListaDoble {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementListaDoble> next = nullptr;
+        std::shared_ptr<ElementListaDoble> prev = nullptr;
+    public:
+        // Constructor 
+        ElementListaDoble(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+        </script>
+    </section>
 </section>
