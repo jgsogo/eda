@@ -27,6 +27,10 @@ toc:
   - section: TAD lineales
   - content_main: slides/07.lists.html
     title: "Listas"
+  - content_main: slides/07.lists-free-functions.html
+    title: "Listas con funciones libres"
+  - content_main: slides/07.lists-class.html
+    title: "Listas con clases"
   - content_main: slides/08.stacks.html
     title: "Pilas"
   - content_main: slides/09.queues.html

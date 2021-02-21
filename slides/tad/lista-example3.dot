@@ -6,10 +6,10 @@ digraph structs {
     nullptr1 [label=< <font color="#aaaaaa">nullptr</font> > color=invis]
     nullptr2 [label=< <font color="#aaaaaa">nullptr</font> > color=invis]
 
-    nullptr2 -> e1 [color=lightgrey dir=back weight=10]
-    e1 -> e2 -> e3 -> e4 [weight=10]
-    e4 -> e3 -> e2 -> e1 [constraint=false]
+    nullptr2 -> nicolas [color=lightgrey dir=back weight=10]
+    nicolas -> marina -> humberto -> juan [weight=10]
+    juan -> humberto -> marina -> nicolas [constraint=false]
 
-    e4 -> nullptr1 [color=lightgrey]
+    juan -> nullptr1 [color=lightgrey]
 
 }

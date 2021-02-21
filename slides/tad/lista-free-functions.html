@@ -1,0 +1,818 @@
+</section>
+
+<section data-transition="convex">
+    <section data-markdown>
+        <script type="text/template">
+La lista _es_ el **puntero al primer elemento**
+
+```cpp
+std::shared_ptr<Element> my_list = e1;
+``` 
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Iterar una lista</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Iterar una lista de elementos e imprimir sus datos
+
+```cpp[4-10]
+#include <memory>
+#include <iostream>
+
+///hide
+struct TipoDato { std::string name; };
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor 
+        Element(const TipoDato& dato_) : dato{dato_} {};
+};
+///unhide
+void print_list(std::shared_ptr<Element> lista) {
+    std::shared_ptr<Element> iterator = lista;
+    while (iterator != nullptr) {
+        std::cout << iterator->dato.name << std::endl;
+        iterator = iterator->next;
+    }
+}
+
+int main() {
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+
+    // Los podemos poner en "orden" (uno detrás de otro)
+    e1->next = e2;
+    e2->next = e3;
+
+    // La lista la representamos por el primer elemento
+    std::shared_ptr<Element> lista = e1;
+    print_list(lista);
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+💻  Imprimir la posición y el dato de cada elemento de una lista
+
+```cpp
+///hide
+#include <memory>
+#include <iostream>
+
+struct TipoDato { std::string name; };
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor 
+        Element(const TipoDato& dato_) : dato{dato_} {};
+};
+///unhide
+/* This function prints the index and the data of every
+   element in the list. For a list like {elem1, elem2, elem3}
+   it will print:
+
+   0: elem1
+   1: elem2
+   2: elem3
+*/
+void print_list(std::shared_ptr<Element> lista);
+///hide
+void print_list(std::shared_ptr<Element> lista) {
+    std::shared_ptr<Element> iterator = lista;
+    int idx = 0;
+    while (iterator != nullptr) {
+        std::cout << idx << ": " << iterator->dato.name << std::endl;
+        iterator = iterator->next;
+        idx++;
+    }
+}
+
+int main() {
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+
+    // Los podemos poner en "orden" (uno detrás de otro)
+    e1->next = e2;
+    e2->next = e3;
+
+    // La lista la representamos por el primer elemento
+    std::shared_ptr<Element> lista = e1;
+    print_list(lista);
+}
+///unhide
+``` 
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve">⭐  <code>for_each</code></h4>
+        <p>Ejecutar una acción sobre cada dato de la lista</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Ejecutar una acción sobre cada dato de la lista
+
+```cpp
+///hide
+#include <memory>
+#include <iostream>
+#include <functional>
+
+struct TipoDato { std::string name; };
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor 
+        Element(const TipoDato& dato_) : dato{dato_} {};
+};
+///unhide
+// Calls 'action' with the data of each element in the list
+void for_each(std::shared_ptr<Element> lista, 
+              std::function<void (TipoDato&)> action) {
+    // Iterate the list as usual
+    std::shared_ptr<Element> iterator = lista;
+    while (iterator != nullptr) {
+        action(iterator->dato); // Call the action
+        iterator = iterator->next;
+    }
+}
+
+///hide
+int main() {
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+
+    // Los podemos poner en "orden" (uno detrás de otro)
+    e1->next = e2;
+    e2->next = e3;
+
+    // La lista la representamos por el primer elemento
+    std::shared_ptr<Element> lista = e1;
+    for_each(lista, [](TipoDato& dato){
+        std::cout << dato.name << std::endl;
+    });
+}
+///unhide
+``` 
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>enumerate</code></h4>
+        <p>Ejecutar una acción sobre cada dato de la lista. La función recibe el dato y la posición en la lista.</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Ejecutar una acción sobre cada dato de la lista. La función recibe el dato y la posición en la lista.
+
+```cpp
+///hide
+#include <memory>
+#include <iostream>
+#include <functional>
+
+struct TipoDato { std::string name; };
+
+class Element {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<Element> next = nullptr;
+    public:
+        // Constructor 
+        Element(const TipoDato& dato_) : dato{dato_} {};
+};
+///unhide
+// Calls 'action' with the data of each element in the list
+void enumerate(std::shared_ptr<Element> lista, 
+              std::function<void (int, TipoDato&)> action) {
+    // Iterate the list as usual
+    std::shared_ptr<Element> iterator = lista;
+    int idx = 0;
+    while (iterator != nullptr) {
+        action(idx, iterator->dato); // Call the action
+        iterator = iterator->next;
+        idx++;
+    }
+}
+
+///hide
+int main() {
+    // Tenemos algunos datos
+    TipoDato t1{"nicolás"};
+    TipoDato t2{"marina"};
+    TipoDato t3{"humberto"};
+    
+    // Tenemos elementos que almacenan los datos
+    std::shared_ptr<Element> e1 = std::make_shared<Element>(Element{t1});
+    std::shared_ptr<Element> e2 = std::make_shared<Element>(Element{t2});
+    std::shared_ptr<Element> e3 = std::make_shared<Element>(Element{t3});
+
+    // Los podemos poner en "orden" (uno detrás de otro)
+    e1->next = e2;
+    e2->next = e3;
+
+    // La lista la representamos por el primer elemento
+    std::shared_ptr<Element> lista = e1;
+    enumerate(lista, [](int pos, TipoDato& dato){
+        std::cout << pos << ": " << dato.name << std::endl;
+    });
+}
+///unhide
+``` 
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Tamaño de una lista</h2>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>size</code></h4>
+        <p>Tamaño de la lista</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Tamaño de una lista (iterativo)
+
+```cpp
+int size(std::shared_ptr<Element> lista) {
+    int size = 0;
+    std::shared_ptr<Element> iterator = lista; // first element
+    while (iterator != nullptr) {
+        size += 1;
+        iterator = iterator->next;
+    }
+    return size;
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Tamaño de una lista (recursivo)
+
+```cpp
+int size(std::shared_ptr<Element> lista) {
+    if (lista == nullptr) {
+        return 0;
+    }
+    return 1 + size(lista->next);
+}
+``` 
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>empty</code></h4>
+        <p>Comprobar lista vacía</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Comprobar si una lista está vacía
+
+```cpp
+bool empty(std::shared_ptr<Element> lista) {
+    return (lista == nullptr);
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Comprobar si una lista está vacía...
+
+...usando otras funciones 🤔
+
+```cpp
+bool empty(std::shared_ptr<Element> lista) {
+    return size(lista) == 0;
+}
+```
+<!-- .element: class="fragment" -->
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Acceso</h2>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>front</code></h4>
+        <p>Devuelve el dato almacenado en el primer elemento</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve el dato almacenado en el primer elemento.
+
+```cpp
+// Returns data from the first element in 'lista'
+TipoDato& front(std::shared_ptr<Element> lista) {
+    return lista->dato;
+}
+```
+
+🚨 Si la lista está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>back</code></h4>
+        <p>Devuelve el dato almacenado en el último elemento de la lista</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve el dato almacenado en el último elemento de la lista.
+
+```cpp
+// Returns data from the last element in 'lista'
+TipoDato& back(std::shared_ptr<Element> lista) {
+    std::shared_ptr<Element> iterator = lista;
+    while (iterator->next != nullptr) {
+        iterator = iterator->next;
+    }
+    return iterator->dato;
+}
+```
+
+🚨 Si la lista está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>at</code></h4>
+        <p>Devuelve el elemento en una posición</p>
+        <div class="footnote">La función <code>at</code> (acceso aleatorio) no pertenece a la interfaz canónica de una lista.</div>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Acceder al dato en la posición `i`-ésima.
+
+```cpp
+// Returns the data from 'lista' at position 'pos'
+TipoDato& at(std::shared_ptr<Element> lista, int pos) {
+    std::shared_ptr<Element> iterator = lista;
+    int idx = 0;
+    while (iterator != nullptr) {
+        if (idx == pos) {
+            break;
+        }
+        iterator = iterator->next;
+        idx++;
+    }
+    return iterator->dato;
+}
+```
+🚨 Si el tamaño de la lista es menor, el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Inserción</h2>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>push_back</code></h4>
+        <p>Insertar dato al final</p>
+    </section>
+
+    <section>
+        <p>Insertar dato al final</p>
+        <img src="slides/tad/lista-push_back.dot.png"/>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Inserta un dato al final de la lista.
+
+```cpp
+// Inserts new date at the end
+void push_back(std::shared_ptr<Element>& lista,  // Note the reference
+               const TipoDato& dato) {
+    // Create the element to hold the incoming dato
+    std::shared_ptr<Element> elem = std::make_shared<Element>(Element{dato});
+    if (empty(lista)) {
+        lista = elem;  // Now it is the only element in the list
+    }
+    else {
+        // Traverse the list to the latest element
+        std::shared_ptr<Element> iterator = lista;
+        while (iterator->next != ) {
+            iterator = iterator->next;
+        }
+        // The new element will become the latest one
+        iterator->next = elem;
+    }
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>push_front</code></h4>
+        <p>Insertar un dato al principio</p>
+    </section>
+
+    <section>
+        <p>Insertar un dato al principio</p>
+        <img src="slides/tad/lista-push_front.dot.png"/>
+        <img class="fragment" data-fragment-index="1" src="slides/tad/lista-push_front2.dot.png"/>
+        <p class="fragment" data-fragment-index="1">¡Necesitamos modificar el puntero de <code>lista</code>! 👀</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Inserta un dato al principio de la lista.
+
+```cpp
+// Inserts element 'elem' as the first element of the list
+void push_front(std::shared_ptr<Element>& lista, // Note the reference
+                const TipoDato& dato) {
+    // Create the element to hold the incoming data
+    std::shared_ptr<Element> elem = std::make_shared<Element>(Element{dato});
+    if (empty(lista)) {
+        lista = elem;  // Now it is the only element in the list
+    }
+    else {
+        elem->next = lista;
+        lista = elem;
+    }
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>insert</code></h4>
+        <p>Insertar dato en una posición intermedia</p>
+    </section>
+
+    <section>
+        <p>Insertar dato en una posición intermedia</p>
+        <img src="slides/tad/lista-insert.dot.png"/>
+        <img class="fragment" data-fragment-index="1" src="slides/tad/lista-insert2.dot.png"/>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Inserta un dato en una posición dada.
+
+```cpp
+// Inserts 'dato' in the position indicated by 'pos'.
+void insert(std::shared_ptr<Element>& lista, // Note the reference
+            const TipoDato& dato,
+            int pos) {
+    // Create the element to hold the incoming data
+    std::shared_ptr<Element> elem = std::make_shared<Element>(Element{dato});
+
+    if (pos == 0) {
+        // Insertion at the beginning is particular
+        push_front(lista, dato);
+    }
+    else {
+        // Search the element before the requested position
+        std::shared_ptr<Element> iterator = lista;
+        int idx = 0;
+        while (idx != pos - 1) {
+            iterator = iterator->next;
+            idx++;
+        }
+        elem->next = iterator->next;
+        iterator->next = elem;
+    }
+}
+```
+
+🚨 Si el tamaño de la lista es menor, el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Borrado</h2>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>pop_back</code></h4>
+        <p>Elimina el último elemento</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Elimina el último elemento.
+
+```cpp
+// Removes the last element from the list
+void pop_back(std::shared_ptr<Element>& lista) {
+    if (lista->next == nullptr) {
+        // If the list only has one element
+        lista = nullptr;
+    }
+    else {
+        std::shared_ptr<Element> iterator = lista;
+        while (iterator->next->next != nullptr) {
+            iterator = iterator->next;
+        }
+        iterator->next = nullptr;
+    }
+}
+```
+
+🚨 Si la lista está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>pop_front</code></h4>
+        <p>Elimina el primer elemento</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Elimina el primer elemento.
+
+```cpp
+// Removes the first element from the list
+void pop_front(std::shared_ptr<Element>& lista) {
+    lista = lista->next;
+}
+```
+🚨 Si la lista está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>clear</code></h4>
+        <p>Elimina todos los elementos</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Elimina todos los elementos.
+
+```cpp
+// Remove all elements from the list
+void clear(std::shared_ptr<Element>& lista) {
+    lista = nullptr;
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>erase</code></h4>
+        <p>Borrar elemento en una posición</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Elimina el elemento de la posición indicada.
+
+```cpp
+// Remove element at position 'pos'
+void erase(std::shared_ptr<Element>& lista, int pos) {
+    if (pos == 0) {
+        lista = lista->next;
+    }
+    else {
+        // Search the element before the requested position
+        std::shared_ptr<Element> iterator = lista;
+        int idx = 0;
+        while (idx != pos - 1) {
+            iterator = iterator->next;
+            idx++;
+        }
+        iterator->next = iterator->next->next;
+    }
+}
+```
+🚨 Si la lista tiene una longitud menor el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Otras operaciones</h2>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>swap</code></h4>
+        <p>Intercambiar dos elementos</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Intercambiar dos elementos dados por sus índices.
+
+```cpp
+// Swap two elements inside the list. Assume pos2 > pos1
+void swap(std::shared_ptr<Element>& lista, 
+          int pos1, int pos2) {
+    auto& dato1 = at(lista, pos1);  // Note the reference
+    auto& dato2 = at(lista, pos2);  // Note the reference
+    std::swap(dato1, dato2);
+}
+```
+🚨 Si los elementos en las posiciones indicadas no existen el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>search</code></h4>
+        <p>Búsqueda de un dato</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Necesitamos una función para comparar instancias de `TipoDato`.
+
+```cpp
+// Function to compare two instances of TipoDato
+bool equal(const TipoDato& lhs, const TipoDato& rhs) {
+    return lhs.name == rhs.name;
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Búsqueda lineal de un dato (primera ocurrencia).
+
+```cpp
+// Returns the index of the element. If not found, returns -1.
+int search(std::shared_ptr<Element> lista, const TipoDato& dato) {
+    std::shared_ptr<Element> iterator = lista;
+    int found = -1; // If not found, it will return -1
+    int idx = 0;
+    while (iterator != nullptr) {
+        if (equal(iterator->dato, dato)) {  // Use external function to compare
+            found = idx;
+            break;
+        }
+        iterator = iterator->next;
+        idx++;
+    }
+    return found;
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4 class="caps-preserve"><code>slice</code></h4>
+        <p>Devuelve una lista nueva que contiene un _trozo_ de otra lista</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Devuelve una lista nueva que contiene un _trozo_ de otra lista.
+
+```cpp
+// Returns the slice taken from the input 'lista' between
+// indexes 'begin' and 'end'.
+std::shared_ptr<Element> slice(std::shared_ptr<Element> lista,
+                               int begin,
+                               int end) {
+    // Move an iterator to the element at position 'begin'
+    std::shared_ptr<Element> iterator = lista;
+    int idx = 0;
+    while (idx != begin) {
+        iterator = iterator->next;
+        idx++;
+    }
+    // We will push_back all elements to a new list
+    std::shared_ptr<Element> slice = std::make_shared<Element>(iterator->dato);
+    while (idx != end) { // until position 'end'
+        iterator = iterator->next;
+        idx++;
+        push_back(slice, iterator->dato);
+    }
+    return slice;
+}
+```
+
+🚨 Si los elementos en las posiciones indicadas no existen el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Ordenación</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Necesitamos una función para definir el criterio de ordenación entre instancias de `TipoDato`.
+
+```cpp
+// Function to compare two instances of TipoDato
+bool less_than(const TipoDato& lhs, const TipoDato& rhs) {
+    return lhs.name < rhs.name;
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <p>Podemos utilizar cualquier <a href="03.sorting-algorithms.html">algoritmo de ordenación</a>.</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Hemos implementado todas las funciones que utilizaban los algoritmos de ordenación
+
+|                 | swap | at | slice | push_back |
+| --------------: | ---- | ---------- | - | - |
+| Bubble sort     | 👍  | 👍 | | |
+| Selection sort  | 👍  | 👍 | | |
+| Mergesort       | | 👍  | 👍 | 👍 |
+| Quicksort       | 👍 | 👍  | | |
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+void bubble_sort(std::shared_ptr<Element>& elements);
+
+void selection_sort(std::shared_ptr<Element>& elements);
+
+std::shared_ptr<Element> merge_sort(const std::shared_ptr<Element>& elements);
+
+void quick_sort(std::shared_ptr<Element>& elements, int left_index, int right_index);
+
+```
+        </script>
+    </section>
+</section>
+
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejercicios propuestos</h2>
+    </section>
+    <!-- Distancia entre dos elementos (si no hay duplicados) -->
+</section>

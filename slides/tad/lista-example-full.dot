@@ -1,0 +1,28 @@
+digraph structs {
+    nodesep=.5;
+    rankdir=LR;
+    
+    subgraph cluster12 {
+        node [shape=record, width = .5];
+        node1 [label="{<m> |{<d> dato |<n> next }}"];
+        node2 [label="{<m> |{<d> dato |<n> next }}"];
+        node3 [label="{<m> |{<d> dato |<n> next }}"];
+        nullptr [color=invis]
+    }
+
+    e1 -> node1:m [constraint=false];
+    e2 -> node2:m [constraint=false];
+    e3 -> node3:m [constraint=false];
+    e1 -> e2 -> e3 [style=invis]
+
+    node1 -> node2 [ style = invis, weight= 10 ];
+    node2 -> node3 [ style = invis, weight= 10 ];
+
+    node1:n -> node2:m;
+    node2:n -> node3:m;
+    node3:n -> nullptr;
+
+    lista -> node1:m [constraint=true];
+    
+
+}
