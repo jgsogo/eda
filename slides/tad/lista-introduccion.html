@@ -38,11 +38,6 @@ class Element { // Also known as Node sometimes
     public:
         // Constructor 
         Element(const TipoDato& dato_) : dato{dato_} {};
-
-        // Other methods
-        bool is_last_element() { 
-            return next == nullptr; 
-        }
 };
 ```
         </script>
@@ -65,21 +60,21 @@ class Element { // Also known as Node sometimes
         <script type="text/template">
 Cada elemento contiene **un dato**, **un puntero** al elemento siguiente y **otro puntero** al anterior.
 
-```cpp[11]
+```cpp[9-11]
 #include <memory>
 #include <iostream>
 
 struct TipoDato {};
 
-class Element {
+class ElementListaDoble {
     public:
         // Members
         TipoDato dato;
-        std::shared_ptr<Element> next = nullptr;
-        std::shared_ptr<Element> prev = nullptr;
+        std::shared_ptr<ElementListaDoble> next = nullptr;
+        std::shared_ptr<ElementListaDoble> prev = nullptr;
     public:
         // Constructor 
-        Element(const TipoDato& dato_) : dato{dato_} {};
+        ElementListaDoble(const TipoDato& dato_) : dato{dato_} {};
 };
 ``` 
         </script>
@@ -181,11 +176,6 @@ class Element {
     public:
         // Constructor
         Element(const TipoDato& dato_) : dato{dato_} {};
-
-        // Other methods
-        bool is_last_element() { 
-            return next == nullptr; 
-        }
 };
 
 int main() {
