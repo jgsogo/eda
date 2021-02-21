@@ -814,5 +814,159 @@ void quick_sort(std::shared_ptr<Element>& elements, int left_index, int right_in
     <section>
         <h2>Ejercicios propuestos</h2>
     </section>
-    <!-- Distancia entre dos elementos (si no hay duplicados) -->
+    <section>
+        <h4>Encapsulación</h4>
+        <p>Reúne el código de las funciones expuestas en este capítulo y agrúpalo como sigue:</p>
+    </section>
+
+    <section>
+        <h6><code>TipoDato.h</code></h6>
+        <pre><code><script type="text/template">
+struct TipoDato {
+    // Data members
+};
+
+// Functions related to TipoDato (only headers)
+bool less_than(const TipoDato& lhs, const TipoDato& rhs);
+bool equal(const TipoDato& lhs, const TipoDato& rhs);
+</script></code></pre>
+    </section>
+
+    <section>
+        <h6><code>TipoDato.cpp</code></h6>
+        <pre><code><script type="text/template">
+#include <TipoDato.h>
+
+bool less_than(const TipoDato& lhs, const TipoDato& rhs) {
+    // Implementation
+}
+
+bool equal(const TipoDato& lhs, const TipoDato& rhs) {
+    // Implementation
+}
+</script></code></pre>
+    </section>
+
+    <section>
+        <h6><code>Element.h</code></h6>
+<pre><code><script type="text/template">
+#include <TipoDato.h>
+
+class Element {
+    // Only the declaration of members and functions
+}
+</script></code></pre>
+    </section>
+
+    <section>
+        <h6><code>Element.cpp</code></h6>
+<pre><code><script type="text/template">
+#include <Element.h>
+
+// Implementation for all the functions declared in Element.h
+Element::Element(...) ... {
+    ...
+}
+</script></code></pre>
+    </section>
+
+    <section>
+        <h6><code>list_functions.h</code></h6>
+<pre><code><script type="text/template">
+#include <Element.h>
+
+// Declaration of all the functions that apply to lists
+void for_each(std::shared_ptr<Element> lista, std::function<void (TipoDato&)> action);
+...
+int size(std::shared_ptr<Element> lista);
+...
+TipoDato& front(std::shared_ptr<Element> lista);
+...
+</script></code></pre>
+    </section>
+
+    <section>
+        <h6><code>list_functions.cpp</code></h6>
+<pre><code><script type="text/template">
+#include <list_functions.h>
+
+// Implementation of all the functions that apply to lists
+void for_each(std::shared_ptr<Element> lista, std::function<void (TipoDato&)> action) {
+    // Implementation
+}
+
+int size(std::shared_ptr<Element> lista) {
+    // Implementation
+}
+
+...
+</script></code></pre>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Construcción de listas
+
+Utilizando el código que has recogido en los ficheros anteriores, crea diferentes listas
+
+```cpp
+#include <list_functions.h>
+
+int main() {
+    TipoDato despertar{"despertar"};
+    TipoDato comer{"comer"};
+    TipoDato programar{"programar"};
+    TipoDato dormir{"dormir"};
+
+    std::shared_ptr<Element> agenda = std::make_shared<Element>(Element{despertar});
+    push_back(agenda, comer);
+    push_back(agenda, programar);
+    push_back(agenda, comer);
+    push_back(agenda, programar);
+    push_back(agenda, comer);
+    push_back(agenda, dormir);
+
+    print_list(agenda);
+}
+
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Reutilización
+
+Si cambiaras `TipoDato` por una estructura más compleja
+
+```cpp
+struct TipoDato {
+    int timestamp;  // When it was posted to Twitter
+    std::string name;  // Username of the author
+    std::string tweet;  // Content of the tweet
+    std::vector<std::string> hashtags;  // List of hashtags
+};
+```
+
+¿Tienes que modificar los algoritmos implementados en `list_functions.h`? ¿Qué código cambia?
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Algoritmos de ordenación
+
+Implementa alguno de los algoritmos de ordenación propuestos para que trabajen con tu lista
+
+```cpp
+void bubble_sort(std::shared_ptr<Element>& elements);
+void selection_sort(std::shared_ptr<Element>& elements);
+std::shared_ptr<Element> merge_sort(const std::shared_ptr<Element>& elements);
+void quick_sort(std::shared_ptr<Element>& elements, int left_index, int right_index);
+```
+
+Los puedes añadir a `list_functions.h` y `list_functions.cpp`. 
+        </script>
+    </section>
+
 </section>
