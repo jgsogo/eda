@@ -223,4 +223,33 @@ std::shared_ptr<Element> lista;
 ``` 
         </script>
     </section>
+
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejemplo en código</h2>
+        <h4>La lista como clase</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Definimos nuestro propio TAD a imagen y semejanza de `std::list<T>`.
+
+```cpp
+class List {
+    public:
+        List();
+
+        void push_back(const TipoDato&);
+        void push_front(const TipoDato&);
+
+        // more functions
+    protected:
+        std::shared_ptr<Element> front;
+};
+``` 
+        </script>
+    </section>
 </section>
