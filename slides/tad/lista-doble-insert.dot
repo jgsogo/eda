@@ -1,0 +1,28 @@
+digraph structs {
+    graph [overlap = false]
+    nodesep=.5;
+    rankdir=LR;
+
+    front [shape=rectangle]
+    back [shape=rectangle]
+    front -> back [weight=10 style=invis]
+    dato [color=blue]
+
+    e1 -> e2 -> dato -> e3 -> e4 [color=invis weight=10]
+
+    e1:n -> e2:nw [constraint=false]
+    e2:n -> dato:nw [constraint=false color=blue]
+    dato:n -> e3:nw [constraint=false color=blue]
+    e3:n -> e4:nw [constraint=false]
+
+    e4:s -> e3:se [constraint=false]
+    e3:s -> dato:se [constraint=false color=blue]
+    dato:s -> e2:se [constraint=false color=blue]
+    e2:s -> e1:se [constraint=false]
+
+    front -> e1 [constraint=false]
+    back -> e4 [constraint=false]
+    
+    {rank = same; front; e1}
+    {rank = same; back; e4}
+}
