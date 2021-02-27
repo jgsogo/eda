@@ -8,6 +8,7 @@ class LinkedList {
     ...
 };
 ``` 
+<small>`LinkedList.h`</small>
         </script>
     </section>
 </section>
@@ -15,20 +16,40 @@ class LinkedList {
 <section data-transition="convex">
     <section data-markdown data-state="darken" data-background="images/backgroup-suitup.jpg">
         <script type="text/template">
-Cada `Element` de la lista es igual que en el caso de funciones libres
+Cada elemento de la lista es _igual_ que en el caso de funciones libres
 
 ```cpp
-class Element {
+class ElementListaSimple {
     public:
         // Members
         TipoDato dato;
-        std::shared_ptr<Element> next = nullptr;
-        std::shared_ptr<Element> prev = nullptr; // if double-linked list
+        std::shared_ptr<ElementListaSimple> next = nullptr;
     public:
         // Constructor 
-        Element(const TipoDato& dato_) : dato{dato_} {};
+        ElementListaSimple(const TipoDato& dato_) : dato{dato_} {};
 };
-``` 
+```
+<small>`ElementListaSimple.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown data-state="darken" data-background="images/backgroup-suitup.jpg">
+        <script type="text/template">
+Cada elemento de la lista es _igual_ que en el caso de funciones libres
+
+```cpp
+class ElementListaDoble {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementListaDoble> next = nullptr;
+        std::shared_ptr<ElementListaDoble> prev = nullptr;
+    public:
+        // Constructor 
+        ElementListaDoble(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementListaDoble.h`</small>
         </script>
     </section>
 </section>
@@ -48,9 +69,9 @@ class LinkedList {
         // Lots of methods
     protected:
         // Simple list: only the pointer to the first element
-        std::shared_ptr<Element> front;
+        std::shared_ptr<ElementListaSimple> front;
 };
-``` 
+```
         </script>
     </section>
 
@@ -67,14 +88,13 @@ class DoubleLinkedList {
         std::shared_ptr<ElementListaDoble> front;
 };
 ``` 
-
-`ElementListaDoble` es quién tiene los punteros `next` y `prev`.
+Recuerda que los punteros al elemento siguiente/anterior los almacenan los elementos
         </script>
     </section>
 
     <section data-markdown>
         <script type="text/template">
-### Lista _completa_
+### Lista simpele _completa_
 
 A veces es útil tener el puntero al último elemento también
 
@@ -83,12 +103,33 @@ class LinkedList {
     public:
         // Lots of methods
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front;
+        std::shared_ptr<ElementListaSimple> back;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Lista doble _completa_
+
+A veces es útil tener el puntero al último elemento también
+
+```cpp
+class DoubleLinkedList {
+    public:
+        // Lots of methods
+    protected:
+        std::shared_ptr<ElementListaDoble> front;
+        std::shared_ptr<ElementListaDoble> back;
+};
+``` 
+<small>`DoubleLinkedList.h`</small> 
+        </script>
+    </section>
+
 </section>
 
 <section>
@@ -108,10 +149,11 @@ class LinkedList {
 
         // More methods
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+        std::shared_ptr<ElementListaSimple> back = nullptr;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
 
@@ -123,6 +165,7 @@ Constructor de una lista vacía
 LinkedList::LinkedList() : front{nullptr}, back{nullptr} {
 }
 ``` 
+<small>`LinkedList.cpp`</small> 
         </script>
     </section>
 
@@ -131,11 +174,12 @@ LinkedList::LinkedList() : front{nullptr}, back{nullptr} {
 Constructor de una lista con un elemento
 
 ```cpp
-LinkedList::LinkedList(const TipoDato& dato_) {
-    front = std::make_shared<Element>(Element{dato_});
+LinkedList::LinkedList(const TipoDato& dato) {
+    front = std::make_shared<ElementListaSimple>(ElementListaSimple{dato});
     back = front; // both are pointing to the same element
 }
 ``` 
+<small>`LinkedList.cpp`</small> 
         </script>
     </section>
 </section>
@@ -161,10 +205,11 @@ class LinkedList {
         void for_each(std::function<void (TipoDato&)> action) const;
         void enumerate(std::function<void (int, TipoDato&)> action) const;
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+        std::shared_ptr<ElementListaSimple> back = nullptr;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
 
@@ -174,7 +219,7 @@ Implementación en `LinkedList.cpp`
 ```cpp
 void LinkedList::for_each(std::function<void (TipoDato&)> action) const {
     // Iterate the list as usual
-    std::shared_ptr<Element> iterator = front;
+    std::shared_ptr<ElementListaSimple> iterator = front;
     while (iterator != nullptr) {
         action(iterator->dato); // Call the action
         iterator = iterator->next;
@@ -183,7 +228,7 @@ void LinkedList::for_each(std::function<void (TipoDato&)> action) const {
 
 void LinkedList::enumerate(std::function<void (int, TipoDato&)> action) const {
     // Iterate the list as usual
-    std::shared_ptr<Element> iterator = front;
+    std::shared_ptr<ElementListaSimple> iterator = front;
     int idx = 0;
     while (iterator != nullptr) {
         action(idx, iterator->dato); // Call the action
@@ -192,6 +237,7 @@ void LinkedList::enumerate(std::function<void (int, TipoDato&)> action) const {
     }
 }
 ``` 
+<small>`LinkedList.cpp`</small> 
         </script>
     </section>
 
@@ -214,10 +260,11 @@ class LinkedList {
         int size() const;
         bool empty() const;
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+        std::shared_ptr<ElementListaSimple> back = nullptr;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
 
@@ -232,6 +279,7 @@ bool LinkedList::empty() const {
     // Implementation
 }
 ``` 
+<small>`LinkedList.cpp`</small> 
 
 Inspiración en [el capítulo anterior](07.lists-free-functions.html). 
 <!-- .element: class="fragment" -->
@@ -244,7 +292,6 @@ Inspiración en [el capítulo anterior](07.lists-free-functions.html).
 
     <section data-markdown>
         <script type="text/template">
-`LinkedList.h`
 
 ```cpp[12-14]
 class LinkedList {
@@ -262,10 +309,11 @@ class LinkedList {
         TipoDato& back() const;
         TipoDato& at(int pos) const;
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+        std::shared_ptr<ElementListaSimple> back = nullptr;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
 
@@ -275,7 +323,6 @@ class LinkedList {
 
     <section data-markdown>
         <script type="text/template">
-`LinkedList.h`
 
 ```cpp[16-18]
 class LinkedList {
@@ -297,10 +344,11 @@ class LinkedList {
         void push_front(const TipoDato& dato);
         void insert(const TipoDato& dato, int pos);
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+        std::shared_ptr<ElementListaSimple> back = nullptr;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
 
@@ -310,8 +358,6 @@ class LinkedList {
 
     <section data-markdown>
         <script type="text/template">
-`LinkedList.h`
-
 ```cpp[20-23]
 class LinkedList {
     public:
@@ -337,10 +383,11 @@ class LinkedList {
         void clear();
         void erase(int pos);
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+        std::shared_ptr<ElementListaSimple> back = nullptr;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
 
@@ -350,9 +397,7 @@ class LinkedList {
 
     <section data-markdown>
         <script type="text/template">
-`LinkedList.h`
-
-```cpp[25-27]
+```cpp[25-26]
 class LinkedList {
     public:
         LinkedList();
@@ -379,12 +424,12 @@ class LinkedList {
 
         void swap(int pos1, int pos2);
         int search(const TipoDato& dato) const;
-        LinkedList slice(int begin, int end) const;
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+        std::shared_ptr<ElementListaSimple> back = nullptr;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
 
@@ -394,9 +439,7 @@ class LinkedList {
 
     <section data-markdown>
         <script type="text/template">
-`LinkedList.h`
-
-```cpp[29-31]
+```cpp[28-29]
 class LinkedList {
     public:
         LinkedList();
@@ -423,19 +466,21 @@ class LinkedList {
 
         void swap(int pos1, int pos2);
         int search(const TipoDato& dato) const;
-        LinkedList slice(int begin, int end) const;
 
         void sort();
         bool is_sorted() const;
-        LinkedList sort_copy(std::function<bool (const TipoDato&, const TipoDato&)>); // Sort using custom function
     protected:
-        std::shared_ptr<Element> front;
-        std::shared_ptr<Element> back;
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+        std::shared_ptr<ElementListaSimple> back = nullptr;
 };
 ``` 
+<small>`LinkedList.h`</small> 
         </script>
     </section>
 </section>
+
+<section data-external-slide-replace="slides/tad/lista-doble.html"></section>
+
 
 <section data-transition="convex">
     <section>
@@ -452,25 +497,97 @@ class LinkedList {
         </div>
     </section>
 
+    <section>
+        <h4>Tu propia biblioteca de TADs: listas</h4>
+        <p>Reune el código relacionado con las listas en tu ordenador</p>
+    </section>
+
+    <section>
+        <p>Necesitas almacenar datos:</p>
+        <ul>
+            <li><code>TipoDato.h</code></li>
+            <li><code>TipoDato.cpp</code></li>
+        </ul>
+    </section>
+
     <section data-markdown>
         <script type="text/template">
-### Haz tus propios ejemplos
-
-Crea pequeños programas utilizando las clases que ya tienes. Uitiliza diferentes `TipoDato`.
+Ejemplo de `TipoDato`: interfaz
 
 ```cpp
+#include <string>
+
 struct TipoDato {
     std::string film;
     int year;
     int number_stars;
 };
-```
+
+// A function to define order
+bool less_than(const TipoDato& lhs, const TipoDato& rhs);
+
+// A function to compare two instances
+bool equal(const TipoDato& lhs, const TipoDato& rhs);
+``` 
+<small>`TipoDato.h`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Ejemplo de `TipoDato`: implementación
 
 ```cpp
+#include "TipoDato.h"
+
+// A function to define order
+bool less_than(const TipoDato& lhs, const TipoDato& rhs) {
+    return lhs.year < rhs.year;  // Order by year
+}
+
+// A function to compare two instances
+bool equal(const TipoDato& lhs, const TipoDato& rhs) {
+    // Two films are equal if the have the same name and year.
+    return (lhs.film == rhs.film) && (lhs.year == rhs.year);
+}
+``` 
+<small>`TipoDato.h`</small> 
+        </script>
+    </section>
+
+    <section>
+        <p>Código relacionado con <code>LinkedList</code>:</p>
+        <ul>
+            <li><code>ElementListaSimple.h</code></li>
+            <li><code>LinkedList.h</code></li>
+            <li><code>LinkedList.cpp</code></li>
+        </ul>
+    </section>
+
+    <section>
+        <p>Añade la <code>DoubleLinkedList</code> a tu biblioteca:</p>
+        <ul>
+            <li><code>ElementListaDoble.h</code></li>
+            <li><code>DoubleLinkedList.h</code></li>
+            <li><code>DoubleLinkedList.cpp</code></li>
+        </ul>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+### Haz muchos ejemplos
+
+Crea pequeños programas utilizando las clases que ya tienes.
+
+```cpp
+#include "LinkedList.h"
+
 int main() {
     LinkedList films;
     films.push_back(TipoDato{"Citizen Kane", 1941, 5});
     films.push_back(TipoDato{"Into the wild", 2007, 5});
+    // ... add more films
 
     films.sort();
     films.for_each([](TipoDato& dato) { std::cout << dato.film << std::endl; });
@@ -479,27 +596,6 @@ int main() {
         </script>
     </section>
 
-    <section data-markdown>
-        <script type="text/template">
-### Lista doblemente enlazada
-
-Implementa la clase `DoubleLinkedList`.
-
-```cpp
-class DoubleLinkedList {
-    public:
-        DoubleLinkedList();
-        DoubleLinkedList(const TipoDato&);
-
-        // All methods...
-
-    protected:
-        std::shared_ptr<ElementListaDoble> front;
-        std::shared_ptr<ElementListaDoble> back;
-};
-```
-
-¿Resulta útil tener un puntero al elemento anterior?
-        </script>
+    <section data-background="images/programmer-247.jpg">
     </section>
 </section>

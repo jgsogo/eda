@@ -1,0 +1,158 @@
+<section data-transition="convex">
+    <section data-background="images/background-lista-doble.jpeg">
+        <h2 class="box-shadow-black white">Lista doblemente enlazada</h2>
+        <div class="credit white">Imagen: <a
+            href="https://quillette.com/2019/08/20/are-political-disagreements-real-disagreements/fingers-pointing-at-each-other-people-arguing-and-fighting-concept/">Quillette.com</a>
+    </div>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Cada elemento tiene un puntero al elemento anterior y otro puntero al elemento siguiente</p>
+        <img src="slides/tad/lista-doble.dot.png" />
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+**Es una lista**, así que su interfaz tiene los mismos métodos que la lista simple
+
+```cpp
+#include "ElementListaDoble.h"
+
+class DoubleLinkedList {
+    public:
+        DoubleLinkedList();
+
+        // Iterate
+        void for_each(std::function<void (TipoDato&)> action) const;
+        void enumerate(std::function<void (int, TipoDato&)> action) const;
+    
+        // Size-related methods
+        int size() const;
+        bool empty() const;
+    
+        // Access to data
+        TipoDato& front() const;
+        TipoDato& back() const;
+        TipoDato& at(int pos) const;
+    
+        // Insertion
+        void push_back(const TipoDato& dato);
+        void push_front(const TipoDato& dato);
+        void insert(const TipoDato& dato, int pos);
+    
+        // Removal
+        void pop_back();
+        void pop_front();
+        void clear();
+        void erase(int pos);
+    
+        // Other methods
+        void swap(int pos1, int pos2);
+        int search(const TipoDato& dato) const;
+        void sort();
+
+    protected:
+        std::shared_ptr<ElementListaDoble> front = nullptr;
+        std::shared_ptr<ElementListaDoble> back = nullptr;
+};
+```
+<small>`DoubleLinkedList.h`</small>
+
+        </script>
+    </section>
+
+    <section>
+        <p>Al tener un puntero <code>prev</code> al elemento anterior anterior, algunas operaciones son más sencillas.</p>
+    </section>
+
+    <section>
+        <h4>Ej. Borrar el último elemento</h4>
+        <p><code>pop_back</code></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p><code>linked_list.pop_back()</code></p>
+        <img src="slides/tad/lista-doble-pop_back.dot.png" />
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p><code>linked_list.pop_back()</code></p>
+        <img src="slides/tad/lista-doble-pop_back2.dot.png" />
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementación
+
+```cpp[5-18]
+#include "DoubleLinkedList.h"
+
+/* ... there are many more functions in this file... */
+
+void DoubleLinkedList::pop_back() {
+    if (front != back) {
+        // Take the element before the latest one
+        auto prevprev = back->prev;
+        // The next element now is 'nullptr'
+        prevprev->next = nullptr;
+        
+        // Update the value of 'back'
+        back = prevprev;
+    }
+    else { // If there is only one element in the list
+        this->clear(); // Just clear the list
+    }
+}
+```
+<small>`DoubleLinkedList.cpp`</small>
+        </script>
+    </section>
+
+    <section>
+        <h4>Ej. Insertar un elemento en una posición</h4>
+        <p><code>insert</code></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p><code>linked_list.insert(dato, 2)</code></p>
+        <img src="slides/tad/lista-doble-insert.dot.png" />
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementación
+
+```cpp[5-27]
+#include "DoubleLinkedList.h"
+
+/* ... there are many more functions in this file... */
+
+void DoubleLinkedList::insert(const TipoDato& dato, int pos) {
+    if (pos == 0) { // This is a particular scenario
+        this->push_front(dato);
+        return;
+    }
+
+    // Create the element we are going to insert
+    auto elem = std::make_shared<ElementListaDoble>(ElementListaDoble{dato});
+
+    // Search for the position where we are going to insert
+    auto iterator = front;
+    int idx = 0;
+    while (idx != pos) {
+        iterator = iterator->next;
+        idx++;
+    }
+
+    // Now assign the pointers properly
+    elem->next = iterator;
+    elem->prev = iterator->prev;
+    elem->next->prev = elem;
+    elem->prev->next = elem;
+}
+```
+<small>`DoubleLinkedList.cpp`</small>
+        </script>
+    </section>
+    
+</section>
