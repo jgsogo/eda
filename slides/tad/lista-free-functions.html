@@ -676,7 +676,7 @@ void swap(std::shared_ptr<Element>& lista,
     </section>
 
     <section>
-        <h4 class="caps-preserve"><code>search</code></h4>
+        <h4 class="caps-preserve"><code>find</code></h4>
         <p>Búsqueda de un dato</p>
     </section>
 
@@ -699,7 +699,7 @@ Búsqueda lineal de un dato (primera ocurrencia).
 
 ```cpp
 // Returns the index of the element. If not found, returns -1.
-int search(std::shared_ptr<Element> lista, const TipoDato& dato) {
+int find(std::shared_ptr<Element> lista, const TipoDato& dato) {
     std::shared_ptr<Element> iterator = lista;
     int found = -1; // If not found, it will return -1
     int idx = 0;

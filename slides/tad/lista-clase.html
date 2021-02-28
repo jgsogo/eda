@@ -423,7 +423,7 @@ class LinkedList {
         void erase(int pos);
 
         void swap(int pos1, int pos2);
-        int search(const TipoDato& dato) const;
+        int find(const TipoDato& dato) const;
     protected:
         std::shared_ptr<ElementListaSimple> front = nullptr;
         std::shared_ptr<ElementListaSimple> back = nullptr;
@@ -465,7 +465,7 @@ class LinkedList {
         void erase(int pos);
 
         void swap(int pos1, int pos2);
-        int search(const TipoDato& dato) const;
+        int find(const TipoDato& dato) const;
 
         void sort();
         bool is_sorted() const;
@@ -498,7 +498,7 @@ class LinkedList {
     </section>
 
     <section>
-        <h4>Tu propia biblioteca de TADs: listas</h4>
+        <h4>🙏 Tu propia biblioteca de TADs: listas</h4>
         <p>Reune el código relacionado con las listas en tu ordenador</p>
     </section>
 
@@ -596,6 +596,239 @@ int main() {
         </script>
     </section>
 
+    <section data-markdown>
+        <script type="text/template">
+Imprime las películas que correspondan al siglo XX.
+
+```cpp
+#include "LinkedList.h"
+
+int main() {
+    LinkedList films;
+    films.push_back(TipoDato{"Citizen Kane", 1941, 5});
+    films.push_back(TipoDato{"Into the wild", 2007, 5});
+    // ... add more films
+
+    films.for_each([](TipoDato& dato) { 
+        if (dato.year > 2000) {
+            std::cout << dato.film << std::endl; 
+        }
+    });
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Elimina las películas con menos de 3 estrellas.
+
+```cpp
+#include "LinkedList.h"
+
+int main() {
+    LinkedList films;
+    films.push_back(TipoDato{"Citizen Kane", 1941, 5});
+    films.push_back(TipoDato{"Into the wild", 2007, 5});
+    // ... add more films
+
+    // Store the 'positions' of those films
+    std::vector<int> positions;
+    films.enumerate([](int pos, TipoDato& dato) { 
+        if (dato.number_stars < 3) {
+            positions.push_back(pos);
+        }
+    });
+
+    // Now remove the films at those positions
+    // ATTENTION!!! Why we need to iterate in reverse order?
+    for (int i = positions.size(); i>0; i--) {
+        int pos = positions.at(i-1);
+        films.erase(pos);
+    }
+
+    // Print and check
+}
+``` 
+        </script>
+    </section>
+
     <section data-background="images/programmer-247.jpg">
     </section>
+</section>
+
+
+<section data-transition="convex">
+    <section data-background="images/background-actividades.png">
+        <h2>Actividades</h2>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 04 🌶</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+**Añade** una función a tu clase `DoubleLinkedList` para iterar la lista desde el final al principio
+
+```cpp
+class DoubleLinkedList {
+    public:
+        // ...
+        void for_each_reverse(std::function<void (TipoDato&)> action) const;
+        // ...
+}
+``` 
+<small>`DoubleLinkedList.h`</small>
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 05 🌶</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+**Añade** una función a tu clase `DoubleLinkedList` para buscar un elemento utilizando un criterio cualquiera
+
+```cpp
+class DoubleLinkedList {
+    public:
+        // ...
+        // Returns the index to the FIRST element that satisfies the criteria
+        int find(std::function<bool (TipoDato&)> action) const;
+        
+        // Returns the index to the LAST element that satisfies the criteria
+        int find_last_of(std::function<bool (TipoDato&)> action) const;
+}
+``` 
+<small>`DoubleLinkedList.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Ejemplo de uso:
+
+```cpp
+int main() {
+    DoubleLinkedList personas{};
+    // ...
+
+    // Search for a person 33 years old in 2020 (using lambdas!)
+    int idx = personas.find([](TipoDato& dato) {
+        int birth_date = dato.get_birth_date();
+        return (2020 - birth_date == 33);
+    });
+
+    TipoDato found = personas.at(idx);
+}
+``` 
+<small>`DoubleLinkedList.h`</small>
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 06 🌶🌶🌶</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Si nuestro `TipoDato` es una clase con preguntas como un Trivial
+
+```cpp
+class Pregunta {
+    private:
+        std::string pregunta;
+        std::string categoria;
+        std::array<std::string, 4> respuestas;
+        int respuesta_correcta;
+
+    public:
+        Pregunta();
+
+        // Add other methods that are needed (getters, setters,...)
+};
+
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Vamos a añadir unas funciones que nos permitan buscar en la lista utilizando un criterio cualquiera.
+
+```cpp
+class DoubleLinkedList {
+    public:
+        // ...
+        // Returns the index to the FIRST element that satisfies the criteria
+        int find(std::function<bool (TipoDato&)> action) const;
+        
+        // Returns the index to the LAST element that satisfies the criteria
+        int find_last_of(std::function<bool (TipoDato&)> action) const;
+        // ...
+}
+``` 
+<small>`DoubleLinkedList.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Estas funciones podríamos utilizarlas como sigue:
+
+```cpp[9-15]
+#include "DoubleLinkedList.h"
+
+int main() {
+    DoubleLinkedList preguntas{};
+    preguntas.push_back(....);
+    preguntas.push_back(....);
+    //...
+
+    std::string categoria = "historia";
+    auto q_historia = [&](TipoDato& dato) { 
+        return dato.categoria == categoria;
+    };
+
+    int idx_historia = preguntas.find(q_historia);
+    auto q = preguntas.at(idx_historia);
+
+    // Show the question to the user with the possible answers:
+    std::cout << q.pregunta << std::endl;
+    for (auto respuesta: q.respuestas) {
+        std::cout << respuesta << std::endl;
+    }
+
+}
+``` 
+<small>`LinkedList.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+ * Construye una lista con datos del tipo `Pregunta` <sup>(1)<sup>
+ * Construye un vector con las diferentes categorías <sup>(2)<sup>
+ * Pide al usuario que seleccione una categoría
+ * Busca una pregunta de esa categoría en tu lista
+ * Muestra la pregunta y sus respuestas
+ * Recoge y valida la respuesta del usuario
+ * Si es correcta, elimina la pregunta de la lista
+ * ... y vuelta a empezar 
+ 
+(1) Consejo: guarda las preguntas en un fichero de texto y léelo al empezar el programa.  <!-- .element: class="footnote" -->
+
+(2) Consejo: puedes construir este vector con las categorías de las preguntas que vas leyendo.  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
 </section>
