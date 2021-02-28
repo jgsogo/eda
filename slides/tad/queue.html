@@ -1,0 +1,345 @@
+<link rel="stylesheet" href="css/about_me.css">
+
+<section data-transition="convex">
+    <section data-background="images/background-queue.jpg">
+        <h2 class="box-shadow-black">Colas</h2>
+        <h4 class="box-shadow-black"><code>queue</code></h4>
+    </section>
+
+    <section>
+        <p>Colección de <span class="blue">elementos homogéneos</span></p>
+        <p>Los elementos tienen posisiciones asignadas (hay un orden)</p>
+        <p>Puede haber elementos repetidos</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Representación</h4>
+        <img src="slides/tad/lista-simple.dot.png" />
+
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>🤔 ¿Y en qué se diferencia de una lista?</p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-background="images/background-queue.jpg">
+        <h2 class="box-shadow-black">Colas -vs- Listas</h2>
+    </section>
+
+    <section>
+        <p>La diferencia entre una lista y una cola son los métodos expuestos para añadir y acceder a los elementos.</p>
+    </section>
+
+    <section>
+        <p><a href="https://en.cppreference.com/w/cpp/container">cppreference.com - containers library</a></p>
+        <img src="slides/tad/container-adaptors.png" />
+    </section>
+
+    <section>
+        <h4>Encapsulamiento</h4>
+        <p class="fragment">Misma implementación</p>
+        <p class="fragment">Diferente interfaz</p>
+    </section>
+
+
+    <section>
+        <h4>Cola/Queue: FIFO structure</h4>
+        <p>First In, First Out</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">        
+        <img src="slides/tad/queue-methods.png" />
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Implementación</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Una cola (`queue`) es una clase con estos métodos
+
+```cpp
+class Queue {
+    public:
+        Queue();
+
+        int size() const;
+        bool empty() const;
+
+        TipoDato& front() const;
+        TipoDato& back() const;
+
+        void push(const TipoDato& dato);
+        void pop() const;
+    protected:
+        std::shared_ptr<ElementListaDoble> front = nullptr;
+        std::shared_ptr<ElementListaDoble> back = nullptr;
+    };
+```
+<small>`Queue.h`</small> 
+
+<div class="footnote">Compara con la definición de <a href="https://en.cppreference.com/w/cpp/container/queue">queue en la librería standard</a>.</div>
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Mismos métodos que en una lista, pero otro nombre
+
+
+| Queue  | DoubleLinkedList |
+| ------ | ---------------- |
+| front  | front            |
+| back   | back             |
+| push   | push_back        |
+| pop    | pop_front        |
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Queue::push <!-- .element: class="caps-preserve" -->
+
+```cpp
+// Inserts an element, it will become the latest in the queue
+void Queue::push(const TipoDato& dato) {
+    // TODO: Exactly the same implementation 
+    //       as DoubleLinkedList::push_back
+}
+```
+<small>`Queue.cpp`</small> 
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Queue::pop <!-- .element: class="caps-preserve" -->
+
+```cpp
+// Removes the first element from the queue
+void Queue::pop() {
+    // TODO: Exactly the same implementation
+    //       as DoubleLinkedList::pop_front
+}
+```
+<small>`Queue.cpp`</small> 
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Queue::front <!-- .element: class="caps-preserve" -->
+
+```cpp
+// Removes the first element from the queue
+TipoDato& Queue::front() {
+    // TODO: Exactly the same implementation
+    //       as DoubleLinkedList::front
+}
+```
+<small>`Queue.cpp`</small> 
+
+🚨 Si la cola está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Queue::back <!-- .element: class="caps-preserve" -->
+
+```cpp
+// Removes the first element from the queue
+TipoDato& Queue::back() {
+    // TODO: Exactly the same implementation
+    //       as DoubleLinkedList::back
+}
+```
+<small>`Queue.cpp`</small> 
+
+🚨 Si la cola está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>¿Por qué existen?</h2>
+    </section>
+
+    <section>
+        <h2>Encapsulamiento</h2>
+        <p>Muestra sólo lo que se va a utilizar</p>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>Implementación biblioteca standard</h4>
+        <p>Compara tu clase <code>Queue</code> con la ofrecida por la biblioteca standard en <a
+                href="https://en.cppreference.com/w/cpp/container/queue"><code>std::queue</code></a>. ¿Se parecen?</p>
+        <div class="footnote">
+            <p>Pronto aprenderas a utilizar <strong>templates</strong> que generalizar
+                las estructuras de datos para cualquier tipo de dato (<code>std::queue&lt;int&gt;</code>,  <code>std::queue&lt;std::string&gt;</code>,...)</p>
+        </div>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: queue</h4>
+        <p>Reune el código relacionado con las colas en tu ordenador, junto al de las listas</p>
+    </section>
+
+    <section>
+        <p>Sólo necesitas añadir:</p>
+        <ul>
+            <li><code>Queue.h</code></li>
+            <li><code>Queue.cpp</code></li>
+        </ul>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Haz muchos ejemplos
+
+Crea pequeños programas utilizando las clases que ya tienes. 
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 10 🌶🌶🌶</h2>
+    </section>
+
+    <section>
+        <p>¿Por qué siempre te toca la cola más lenta? <a href="https://youtu.be/VPuRoEOVogo"><img data-src="images/youtube-logo.png" class="brand-icon" /></a></p>
+        <p>¿Cómo funciona la cola única?</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Vamos a crear una cola con `n_clients` clientes, cada uno de ellos almacena el tiempo que tarda en pagar
+
+```cpp
+struct TipoDato {  // Represent a Client
+    int time_to_pay;  // time in seconds
+};
+```
+<small>`TipoDato.h`</small> 
+
+
+```cpp
+int main() {
+    int n_clients = 100;
+    
+    Queue queue;
+    for (int i = 0; i<n_clients; i++) {
+        std::srand(1);  // TODO: Lee sobre esto
+        int time_random = std::rand() % 100; // Número aleatorio entre 0 y 99
+        queue.push(TipoDato{time_random});
+    }
+    // ...
+}
+```
+<small>`main.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Tenemos 4 cajas para atender a los clientes, vamos a almacenar el tiempo que les falta para estar libres
+
+```cpp
+int main() {
+    // ...
+    std::array<int, 4> cajas;
+}
+```
+<small>`main.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Podemos simular el paso del tiempo 
+
+```cpp
+int main() {
+    // ...
+    int tiempo = 0;
+    while (!queue.empty()) {
+        tiempo += 1; // llevamos la cuenta del tiempo
+        
+        // Restamos un segundo al tiempo que le falta para despachar a cada caja
+        for (auto& it: cajas) {  // Fíjate en esa referencia con el '&'
+            it = std::max(it-1, 0);
+        }
+    }
+}
+```
+<small>`main.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Si una caja está vacía puede coger al siguiente cliente
+
+```cpp
+int main() {
+    // ...
+    int tiempo = 0;
+    while (!queue.empty()) {
+        // ...
+        
+        // Si una caja está vacía, el siguiente cliente irá a ella
+        for (auto& it: cajas) {  // Fíjate en esa referencia con el '&'
+            if (it == 0 && !queue.empty()) {
+                TipoDato cliente = queue.front();
+                queue.pop();
+                it = cliente.time_to_pay;
+            }
+        }
+    }
+}
+```
+<small>`main.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+* ¿Cuántos segundos (`tiempo`) has tardado en procesar toda la cola?
+* ¿Cómo varía en función del número de cajas?
+* ¿Y en función del número de clientes?
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Si los clientes se distribuyeran en varias colas, una cola por cada caja, ¿tardaríamos más en despacharlos?
+
+¿Te atreves a simularlo?
+
+```cpp
+std::array<Queue, 4> cajas;
+```
+        </script>
+    </section>
+
+</section>

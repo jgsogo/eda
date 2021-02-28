@@ -713,7 +713,25 @@ class DoubleLinkedList {
 
     <section data-markdown>
         <script type="text/template">
-Ejemplo de uso:
+Ejemplo de uso: buscar personas que en un determinado año tengan cierta edad
+
+```cpp
+class TipoDato {  // Represent a Persona
+    public:
+    TipoDato();
+        // ... getters and setters
+
+    private:
+        std::string name;
+        int birth_year;
+};
+``` 
+<small>`TipoDato.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
 
 ```cpp
 int main() {
@@ -721,9 +739,10 @@ int main() {
     // ...
 
     // Search for a person 33 years old in 2020 (using lambdas!)
-    int idx = personas.find([](TipoDato& dato) {
+    int year_today = 2020;
+    int idx = personas.find([&](TipoDato& dato) {
         int birth_date = dato.get_birth_date();
-        return (2020 - birth_date == 33);
+        return (year_today - birth_date == 33);
     });
 
     TipoDato found = personas.at(idx);
@@ -744,7 +763,7 @@ int main() {
 Si nuestro `TipoDato` es una clase con preguntas como un Trivial
 
 ```cpp
-class Pregunta {
+class TipoDato {  // Represents a 'Pregunta'
     private:
         std::string pregunta;
         std::string categoria;
@@ -752,9 +771,9 @@ class Pregunta {
         int respuesta_correcta;
 
     public:
-        Pregunta();
+        TipoDato();
 
-        // Add other methods that are needed (getters, setters,...)
+        // ... other methods
 };
 
 ```
@@ -808,6 +827,8 @@ int main() {
         std::cout << respuesta << std::endl;
     }
 
+    // Get input from user
+    // ...
 }
 ``` 
 <small>`LinkedList.h`</small>
