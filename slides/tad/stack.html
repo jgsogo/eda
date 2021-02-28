@@ -1,0 +1,323 @@
+<section data-transition="convex">
+    <section data-background="images/background-stack.jpg">
+        <h2 class="box-shadow-black">Pilas</h2>
+        <h4 class="box-shadow-black"><code>stack</code></h4>
+    </section>
+
+    <section>
+        <p>Colección de <span class="blue">elementos homogéneos</span></p>
+        <p>Los elementos tienen posisiciones asignadas (hay un orden)</p>
+        <p>Puede haber elementos repetidos</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Representación</h4>
+        <img src="slides/tad/lista-simple.dot.png" />
+
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>🤔 ¿Y en qué se diferencia de una lista?</p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-background="images/background-stack.jpg">
+        <h2 class="box-shadow-black">Pilas -vs- Listas</h2>
+    </section>
+
+    <section>
+        <p>La diferencia entre una lista y una pila son los métodos expuestos para añadir y acceder a los elementos.</p>
+    </section>
+
+    <section>
+        <p><a href="https://en.cppreference.com/w/cpp/container">cppreference.com - containers library</a></p>
+        <img src="slides/tad/container-adaptors.png" />
+    </section>
+
+    <section>
+        <h4>Encapsulamiento</h4>
+        <p class="fragment">Misma implementación</p>
+        <p class="fragment">Diferente interfaz</p>
+    </section>
+
+
+    <section>
+        <h4>Pila/Stack: LIFO structure</h4>
+        <p>Last In, First Out</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">        
+        <img src="slides/tad/stack-methods.png" />
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Implementación</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Una pila (`stack`) es una clase con estos métodos
+
+```cpp
+class Stack {
+    public:
+        Stack();
+
+        int size() const;
+        bool empty() const;
+
+        void push(const TipoDato& dato);
+        void pop() const;
+        TipoDato& top() const;
+    protected:
+        std::shared_ptr<ElementListaSimple> front = nullptr;
+};
+```
+<small>`Stack.h`</small> 
+
+<div class="footnote">Compara con la definición de <a href="https://en.cppreference.com/w/cpp/container/stack">stack en la librería standard</a>.</div>
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Mismos métodos que en una lista, pero otro nombre
+
+
+| Stack | LinkedList |
+| ----- | ---------- |
+| push  | push_front |
+| pop   | pop_front  |
+| top   | front      |
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Stack::push <!-- .element: class="caps-preserve" -->
+
+```cpp
+// Inserts an element to the top of the stack (first element in list)
+void Stack::push(const TipoDato& dato) {
+    auto elem = std::make_shared<ElementListaSimple>(ElementListaSimple{dato});
+    if (front != nullptr) {
+        elem->next = front->next;
+        front = elem;
+    }
+    else {
+        front = elem;
+    }
+}
+```
+<small>`Stack.cpp`</small> 
+
+Es _igual_ que `LinkedList::push_front` 
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Stack::pop <!-- .element: class="caps-preserve" -->
+
+
+```cpp
+// Removes the element at the top of the stack (removes first element)
+void Stack::pop() {
+    if (front != nullptr) {
+        front = front->next;
+    }
+}
+```
+<small>`Stack.cpp`</small> 
+
+Es _igual_ que `LinkedList::pop_front` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Stack::top <!-- .element: class="caps-preserve" -->
+
+
+```cpp
+// Returns the element at the top of the stack (returns first element)
+TipoDato& Stack::top() {
+    return front->dato;
+}
+```
+<small>`Stack.cpp`</small> 
+
+Es _igual_ que `LinkedList::front` 
+
+🚨 Si la lista está vacía el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>¿Por qué existen?</h2>
+    </section>
+
+    <section>
+        <h2>Encapsulamiento</h2>
+        <p>Muestra sólo lo que se va a utilizar</p>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>Implementación biblioteca standard</h4>
+        <p>Compara tu clase <code>Queue</code> con la ofrecida por la biblioteca standard en <a
+                href="https://en.cppreference.com/w/cpp/container/stack"><code>std::stack</code></a>. ¿Se parecen?</p>
+        <div class="footnote">
+            <p>Pronto aprenderas a utilizar <strong>templates</strong> que generalizar
+                las estructuras de datos para cualquier tipo de dato (<code>std::stack&lt;int&gt;</code>,  <code>std::stack&lt;std::string&gt;</code>,...)</p>
+        </div>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: stack</h4>
+        <p>Reune el código relacionado con las pilas en tu ordenador, junto al de las listas</p>
+    </section>
+
+    <section>
+        <p>Sólo necesitas añadir:</p>
+        <ul>
+            <li><code>Stack.h</code></li>
+            <li><code>Stack.cpp</code></li>
+        </ul>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Haz muchos ejemplos
+
+Crea pequeños programas utilizando las clases que ya tienes.
+
+```cpp
+#include "Stack.h"
+
+int main() {
+    Stack books;
+    books.push(TipoDato{"Harry Potter", 1997});
+    books.push(TipoDato{"Don Quijote de la Mancha", 1605});
+    books.push(TipoDato{"Cien Años de Soledad", 1967});
+    // ... add more books
+
+
+    std::cout << "Next book to read: " << books.top() << std::endl;
+    books.pop();  // Remove after reading
+    std::cout << "Next book to read: " << books.top() << std::endl;
+    // ... 
+}
+``` 
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 07 🌶</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Invierte una cadena utilizando un `stack`
+
+```cpp
+#include "Stack.h"
+
+std::string reverse(const std::string& word) {
+    Stack stack;
+    // TODO: Implement something with this 'stack'
+
+    std::string reversed_string;
+    // TODO: Do something with the 'stack'
+
+    return reversed_string;
+}
+``` 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Puedes utilizarlo para saber si una palabra es un palíndromo
+
+```cpp
+#include "Stack.h"
+
+std::string reverse(const std::string& word) {
+    // Your implementation
+}
+
+bool is_palindrome(const std::string& word) {
+    auto word_without_blanks = remove_blanks(word);
+    auto reversed_word = reverse(word_without_blanks);
+    return word_without_blanks == reversed_word;
+}
+``` 
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 08 🌶🌶</h2>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Utiliza un `stack` para comprobar si una secuencia de paréntesis y corchetes es correcta (todos los que se abren se cierran en el orden correspondiente).
+
+```cpp
+bool check_braces(const std::string& braces);
+
+int main() {
+    check_braces("([](()))[]");  // --> true
+    check_braces("([())]");  // --> false
+}
+``` 
+
+<div class="footnote">¿Sabías que las <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">calculadoras RPN</a> (notación polaca inversa) están programadas con esta estrategia?</div>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Pistas:
+
+ * Ve recorriendo el `std::string` en orden
+ * Añade los paréntesis/corchetes de apertura al `stack`
+ * Cada vez que encuentres un elemento de cierre recupera el `top` del `stack` y comprueba si son pareja
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 09 🌶🌶🌶</h2>
+    </section>
+
+    <section>
+        <p>Resolver el problema de las <strong><a href="https://es.wikipedia.org/wiki/Torres_de_Han%C3%B3i">Torres de Hanói</a></strong> utilizando <span class="red">pilas</span> y <span class="blue">recursividad</span>.</p>
+        <img src="slides/tad/hanoi.gif" />
+    </section>
+</section>
