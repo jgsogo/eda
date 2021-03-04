@@ -1,3 +1,5 @@
+#include <functional>
+
 #include "ElementoListaDoble.h"
 
 class DoubleLinkedList {

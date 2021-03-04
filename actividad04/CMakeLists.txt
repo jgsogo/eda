@@ -8,14 +8,11 @@ include(CTest)
 enable_testing()
 
 add_library(actividad04
-	src/check_braces.h
-	src/check_braces.cpp
 	src/DoubleLinkedList.cpp
 	src/DoubleLinkedList.h
 	src/ElementoListaDoble.cpp
 	src/ElementoListaDoble.h
 	src/TipoDato.h
-	src/TipoDato.cpp
 )
 target_include_directories(actividad04 PUBLIC src)
 
