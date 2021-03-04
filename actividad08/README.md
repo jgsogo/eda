@@ -16,3 +16,13 @@ int main() {
 }
 ```
 
+En este directorio ya se encuentran declaradas todas las clases
+con los métodos necesarios, así que sólo tendrás que escribir
+su implementación en los correspondientes ficheros `.cpp`.
+
+Como siempre, la _test suite_ ejecutará automáticamente los tests
+que se encuentran en el directorio `tests` con cada 
+modificación (_commit_) que se realice en el correspondiente
+_pull-request_.
+
+¡Suerte!

@@ -15,3 +15,13 @@ class DoubleLinkedList {
 }
 ```
 
+En este ejercicio tendrás que modificar únicamente los
+ficheros `DoubleLinkedList.cpp` y `ElementoListaDoble.cpp` para
+implementar los métodos que están declarados en sus respectivos
+ficheros de cabecera (`DoubleLinkedList.h` y `ElementoListaDoble.h`).
+
+En el directtorio `tests` se encuentran varios tests que se
+ejecutarán automáticamente para probar el funcionamiento de las
+funciones que se habrán implementado en la clase `Stack`.
+
+¡Suerte!
