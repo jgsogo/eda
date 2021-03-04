@@ -2,7 +2,7 @@
 
 class Stack {
     public:
-        std::shared_ptr<ElementoListaSimple> top = nullptr;
+        std::shared_ptr<ElementoListaSimple> front = nullptr;
 
     public:
         Stack();

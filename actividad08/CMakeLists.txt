@@ -9,6 +9,7 @@ enable_testing()
 
 add_library(actividad08
 	src/check_braces.h
+	src/check_braces.cpp
 	src/Stack.cpp
 	src/Stack.h
 	src/ElementoListaSimple.cpp

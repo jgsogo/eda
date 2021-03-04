@@ -1,10 +1,9 @@
 
-#include <string>
-
 class TipoDato {
     public:
-        TipoDato(const std::string token);
+        TipoDato(char token);
+        char get_token() const;
 
     private:
-        std::string token;
+        char token;
 };

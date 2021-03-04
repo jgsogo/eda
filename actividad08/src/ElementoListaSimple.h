@@ -9,6 +9,5 @@ class ElementoListaSimple {
         std::shared_ptr<ElementoListaSimple> next = nullptr;
 
     public:
-        ElementoListaSimple();
         ElementoListaSimple(const TipoDato& datos);
 };
