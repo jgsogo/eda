@@ -37,17 +37,24 @@ toc:
     title: "Colas"
 
   - section: TAD no lineales
-  - content_main: slides/10.binary-tree.html
+  - url: 10.trees.html
+    content_main: slides/trees/00.trees/trees.html
+    title: "Árboles"
+  - url: 11.binary_trees.html
+    content_main: slides/trees/01.binary_trees/binary_trees.html
     title: "Árboles binarios"
-  - content_main: slides/11.binary-search-tree.html
-    title: "Árboles binarios de búsqueda"
-  - content_main: slides/12.avl-tree.html
-    title: "Árboles balanceados"
-  - content_main: slides/13.heaps.html
+  - url: 12.heaps.html
+    content_main: slides/trees/02.heaps/heaps.html
     title: "Montículos"
+  - url: 13.binary_search_trees.html
+    content_main: slides/trees/03.binary_search_tree/binary_search_tree.html
+    title: "Árboles binarios de búsqueda"
+  - url: 14.self-balancing_binary_search_tree.html
+    content_main: slides/trees/04.self-balancing_binary_search_tree/self-balancing_binary_search_tree.html
+    title: "Árboles BB equilibrados"
 
   - section: Grafos
-  - content_main: slides/14.graphs.html
+  - content_main: slides/15.graphs.html
     title: "Grafos"
 
   - section: Esquemas algorítmicos
