@@ -3,4 +3,4 @@ _virtualenv/
 /2021.soluciones.html
 toc.html
 index.html
-/slides/**/*.png
+/slides/**/*.dot.png
