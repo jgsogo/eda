@@ -1,0 +1,18 @@
+digraph {
+    rankdir=TB;
+
+    a -> b;
+    a -> c;
+    a -> d;
+    c -> e;
+    c -> f;
+    f -> g;
+
+    a [label=0]
+    b [label=1]
+    c [label=1]
+    d [label=1]
+    e [label=2]
+    f [label=2]
+    g [label=3]
+}

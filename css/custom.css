@@ -50,15 +50,15 @@ img.img-inline {
 
 .left {
     margin: 0px;
-    width: 40%;
+    width: 49%;
     position: absolute;
-    left: 1%;
+    left: 0%;
 }
 
 .right {
-    width: 40%;
+    width: 49%;
     position: absolute;
-    right: 1%;
+    right: 0%;
 }
 
 
