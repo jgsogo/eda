@@ -3,10 +3,14 @@
 
 #include "practica1.h"
 
-TEST_CASE( "std::string invertir(const std::string& input);")
+TEST_CASE( "std::string invertir(const std::string& input); -- dummy")
 {
     CHECK_THAT( invertir(""), Catch::Matchers::Matches("") );
     CHECK_THAT( invertir("a"), Catch::Matchers::Matches("a") );
-    CHECK_THAT( invertir("as"), Catch::Matchers::Matches("sa") );
-    CHECK_THAT( invertir("12345"), Catch::Matchers::Matches("54321") );
+}
+
+TEST_CASE( "std::string invertir(const std::string& input);")
+{
+    REQUIRE( invertir("as") == std::string{"sa"} );
+    REQUIRE( invertir("12345") == std::string{"54321"} );
 }
