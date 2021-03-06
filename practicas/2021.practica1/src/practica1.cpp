@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <math.h>
 
 /****************** 
     Recursividad 
@@ -154,22 +155,110 @@ bool equal(const std::array<std::array<int, 100>, 100>& lhs,
     return _equal_matrix(lhs, rhs, 0, 100);
 }
 
+int _sumdiv(int num, int x) {
+        if(x==1) {
+            return 1;
+        }
+        if (es_multiplo(num, x)) {
+            return x + _sumdiv(num, x-1);
+        }
+        else {
+            return _sumdiv(num, x-1);
+        }
+}
+
 bool is_perfect(int num) {
-    return false;
+    if (num == 1) {
+        return false;
+    }
+    else {
+        return _sumdiv(num, num/2) == num;
+    }
+}
+
+
+void _bubble_sort_recursive(std::vector<int>& values, int last) {
+    if (last != 0) {
+        // Run one iteration of bubble-sort algorithm
+        for (int k=0; k<last; k++) {
+            if (values[k] > values[k+1]) { // compare adyacent values
+                std::swap(values[k], values[k+1]);
+            }
+        }
+        _bubble_sort_recursive(values, last-1);
+    }
 }
 
 void bubble_sort_recursive(std::vector<int>& values) {
-
+    /* We know that after iteration 'n' the latest 'n' elements are already ordered  */
+    if (values.size() > 1) {
+        _bubble_sort_recursive(values, values.size()-1);
+    }
 }
 
 /****************** 
     Algorithms 
 ******************/
 
-void quicksort_strings(std::vector<std::string>& values) {
+bool _greater_than(const std::string& lhs, const std::string& rhs) {
+    // First check the length, if equal use lexicographic order
+    if (lhs.length() == rhs.length()) {
+        return lhs > rhs;
+    }
+    else {
+        return lhs.length() > rhs.length();
+    }
+}
 
+	
+int partition(std::vector<std::string>& elements, int left_index, int right_index)
+{
+    auto pivot = elements.at(left_index);
+    int i = left_index, j = right_index;
+ 
+    while(true) {
+        while( _greater_than(pivot, elements.at(i)) && i < j ) ++i;
+        while( _greater_than(elements.at(j), pivot) ) --j;
+        if( i >= j ) break;
+        std::swap(elements.at(i), elements.at(j));
+    }
+    std::swap(elements.at(left_index), elements.at(j));
+    return j;
+}
+
+void _quicksort_string(std::vector<std::string>& values, int left_index, int right_index) {
+    if (left_index >= right_index) {
+        return;
+    }
+    else {
+        // Compute the pivot
+        int pivot_index = partition(values, left_index, right_index);
+ 
+        // Apply quick-sort to both sides (pivot is already in place)
+        _quicksort_string(values, left_index, pivot_index-1);
+        _quicksort_string(values, pivot_index+1, right_index);
+    }
+}
+
+void quicksort_strings(std::vector<std::string>& values) {
+    _quicksort_string(values, 0, values.size()-1);
+}
+
+bool _greater_than(Point lhs, Point rhs, float origin_x, float origin_y) {
+    // Don't need to compute square-root as it is a constantly growing function.
+    auto lhs_distance = pow(lhs.y-origin_y, 2) + pow(lhs.x-origin_x, 2);
+    auto rhs_distance = pow(rhs.y-origin_y, 2) + pow(rhs.x-origin_x, 2);
+    return lhs_distance > rhs_distance;
 }
 
 void sort_by_distance(std::vector<Point>& values, float origin_x, float origin_y) {
-
+    if (values.empty()) { return; }
+    // Using bubble sort
+    for (int i=0; i<values.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<values.size()-1; k++) {  // 'n-1' iterations
+            if (_greater_than(values[k], values[k+1], origin_x, origin_y)) { // compare adyacent values
+                std::swap(values[k], values[k+1]);
+            }
+        }
+    }
 }
