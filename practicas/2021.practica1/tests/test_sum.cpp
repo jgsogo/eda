@@ -4,10 +4,10 @@
 #include "practica1.h"
 
 
-TEST_CASE( "test 'int sum(int N);'")
+TEST_CASE( "int sum(int N);")
 {
-    REQUIRE( cociente(0, 5) == 0 );
-    REQUIRE( cociente(10, 5) == 2 );
-    REQUIRE( cociente(10, 25) == 0 );
-    REQUIRE( cociente(10, 7) == 1 );
+    REQUIRE( sum(0) == 0 );
+    REQUIRE( sum(1) == 1 );
+    REQUIRE( sum(5) == 15 );
+    REQUIRE( sum(10) == 55 );
 }

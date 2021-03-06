@@ -6,8 +6,7 @@
 
 TEST_CASE( "void bubble_sort_recursive(std::vector<int>& values);")
 {
-    REQUIRE( cociente(0, 5) == 0 );
-    REQUIRE( cociente(10, 5) == 2 );
-    REQUIRE( cociente(10, 25) == 0 );
-    REQUIRE( cociente(10, 7) == 1 );
+    std::vector<int> values;
+    bubble_sort_recursive(values);
+    REQUIRE( false );
 }

@@ -6,8 +6,6 @@
 
 TEST_CASE( "std::string num2binary(int num);")
 {
-    REQUIRE( es_multiplo(10, 5) == true );
-    REQUIRE( es_multiplo(10, 25) == false );
-    REQUIRE( cociente(10, 3) == false );
-    REQUIRE( cociente(10, 10) == true );
+    REQUIRE( num2binary(10) == "11" );
+    REQUIRE( num2binary(10) == "11" );
 }

@@ -4,7 +4,7 @@
 #include "practica1.h"
 
 
-TEST_CASE( "test 'bool es_par(int num);'", "[test_es_par.cpp]" )
+TEST_CASE( "bool es_par(int num);'" )
 {
     REQUIRE( es_par(1) == false );
     REQUIRE( es_par(2) == true );
