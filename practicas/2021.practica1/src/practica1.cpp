@@ -76,7 +76,6 @@ void quicksort_strings(std::vector<std::string>& values) {
 
 }
 
-struct Point { float x, y; };
 void sort_by_distance(std::vector<Point>& values, float origin_x, float origin_y) {
 
 }
