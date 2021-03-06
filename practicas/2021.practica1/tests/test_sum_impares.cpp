@@ -4,10 +4,10 @@
 #include "practica1.h"
 
 
-TEST_CASE("test 'int sum_impares(int N);'")
+TEST_CASE("int sum_impares(int N);")
 {
-    REQUIRE( es_par(1) == false );
-    REQUIRE( es_par(2) == true );
-    REQUIRE( es_par(25) == false );
-    REQUIRE( es_par(1024) == true );
+    REQUIRE( sum_impares(0) == 0 );
+    REQUIRE( sum_impares(1) == 1 );
+    REQUIRE( sum_impares(5) == 9 );
+    REQUIRE( sum_impares(6) == 9 );
 }

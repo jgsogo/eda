@@ -4,7 +4,7 @@
 #include "practica1.h"
 
 
-TEST_CASE( "test 'int cociente(int dividendo, int divisor);'")
+TEST_CASE( "int cociente(int dividendo, int divisor);")
 {
     REQUIRE( cociente(0, 5) == 0 );
     REQUIRE( cociente(10, 5) == 2 );

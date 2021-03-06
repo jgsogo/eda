@@ -6,8 +6,8 @@
 
 TEST_CASE( "void quicksort_strings(std::vector<std::string>& values);")
 {
-    REQUIRE( cociente(0, 5) == 0 );
-    REQUIRE( cociente(10, 5) == 2 );
-    REQUIRE( cociente(10, 25) == 0 );
-    REQUIRE( cociente(10, 7) == 1 );
+    std::vector<std::string> values;
+    quicksort_strings(values);
+
+    REQUIRE( false );
 }

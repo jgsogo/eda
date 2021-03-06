@@ -6,8 +6,10 @@
 
 TEST_CASE( "bool equal(const std::vector<int>& lhs, const std::vector<int>& rhs);")
 {
-    REQUIRE( cociente(0, 5) == 0 );
-    REQUIRE( cociente(10, 5) == 2 );
-    REQUIRE( cociente(10, 25) == 0 );
-    REQUIRE( cociente(10, 7) == 1 );
+    const std::vector<int> empty;
+    REQUIRE( equal(empty, empty) == true );
+
+    const std::vector<int> single;
+    REQUIRE( equal(single, single) == true );
+    REQUIRE( equal(single, empty) == false );
 }
