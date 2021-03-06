@@ -150,7 +150,7 @@ bool _equal_array(const std::array<int, 100>& lhs, const std::array<int, 100>& r
         return true;
     }
     else {
-        return (lhs[i] == rhs[i]) && _equal_array(lhs, rhs, i+1, j);
+        return (lhs.at(i) == rhs.at(i)) && _equal_array(lhs, rhs, i+1, j);
     }
 }
 
@@ -159,7 +159,7 @@ bool _equal_matrix(const std::array<std::array<int, 100>, 100>& lhs, const std::
         return true;
     }
     else {
-        return _equal_array(lhs[i], rhs[i], 0, 100) && _equal_matrix(lhs, rhs, i+1, j);
+        return _equal_array(lhs.at(i), rhs.at(i), 0, 100) && _equal_matrix(lhs, rhs, i+1, j);
     }
 }
 
