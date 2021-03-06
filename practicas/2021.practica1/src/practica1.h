@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <array>
 
 bool es_par(int num);
 
