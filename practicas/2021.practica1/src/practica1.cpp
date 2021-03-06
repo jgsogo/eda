@@ -4,6 +4,7 @@
 #include <vector>
 #include <math.h>
 
+
 /****************** 
     Recursividad 
 ******************/
@@ -102,23 +103,35 @@ std::string invertir(const std::string& input) {
         return input;
     }
     else {
-        std::string ret{input.back(), 1};
+        std::string ret{input.back()};
         return ret + invertir(input.substr(0, input.size()-1));
     }
 }
 
 int invertir(int num) {
-    if (num > 9) {
-        int ud = num % 10;
-        return ud*10 + invertir(num / 10);
+    int cociente = num / 10;
+    int resto = num % 10;
+    if (cociente != 0) {
+        // I need to multiply 'resto' to the 10^i where 'i' is the length of 'num'
+        int factor = pow(10, int(log10(num)));
+        return resto*factor + invertir(cociente);
     }
     else {
-        return num;
+        return resto;
     }
 }
 
 std::string num2binary(int num) {
-    return "";
+    if (num == 0) {
+        return "0";
+    }
+    else if (num == 1) {
+        return "1";
+    }
+    else {
+        std::string here = (num % 2 == 0) ? "0" : "1";
+        return num2binary(num / 2) + here;
+    }
 }
 
 bool equal(const std::vector<int>& lhs, const std::vector<int>& rhs) {
@@ -200,13 +213,23 @@ void bubble_sort_recursive(std::vector<int>& values) {
     Algorithms 
 ******************/
 
-bool _greater_than(const std::string& lhs, const std::string& rhs) {
-    // First check the length, if equal use lexicographic order
+bool _gt_than(const std::string& lhs, const std::string& rhs) {
+    // Greater than: first check the length, if equal use lexicographic order
     if (lhs.length() == rhs.length()) {
         return lhs > rhs;
     }
     else {
         return lhs.length() > rhs.length();
+    }
+}
+
+bool _lte_than(const std::string& lhs, const std::string& rhs) {
+    // Less than or equal: first check the length, if equal use lexicographic order
+    if (lhs == rhs) {
+        return true;
+    }
+    else {
+        return _gt_than(rhs, lhs);
     }
 }
 
@@ -217,8 +240,8 @@ int partition(std::vector<std::string>& elements, int left_index, int right_inde
     int i = left_index, j = right_index;
  
     while(true) {
-        while( _greater_than(pivot, elements.at(i)) && i < j ) ++i;
-        while( _greater_than(elements.at(j), pivot) ) --j;
+        while( _lte_than(elements.at(i), pivot) && i < j ) ++i;
+        while( _gt_than(elements.at(j), pivot) ) --j;
         if( i >= j ) break;
         std::swap(elements.at(i), elements.at(j));
     }
