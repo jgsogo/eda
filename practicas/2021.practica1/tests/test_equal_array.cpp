@@ -12,9 +12,13 @@ TEST_CASE( "bool equal(const std::array<std::array<int, 100>, 100>& lhs, const s
     std::array<std::array<int, 100>, 100> values;
     for (int i=0; i<100; i++) {
         for (int j=0; j<100; j++) {
-            values[i][j] = i*j;
+            values.at(i).at(j) = i*j;
         }
     }
     REQUIRE( equal(values, values) == true );
     REQUIRE( equal(values, lhs) == false );
+
+    auto other = values;
+    other.at(99).at(99) = 0;
+    REQUIRE( equal(values, other) == false );
 }
