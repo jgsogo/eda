@@ -103,16 +103,16 @@
     </section>
 
     <section>
-        <h4>Profundidad</h4>
+        <h4>Profundidad (nivel)</h4>
         <p>
-            La <span class="blue">profundidad de un nodo</span> es la logitud del camino (único) que comienza en la raíz
+            La <span class="blue">profundidad (nivel) de un nodo</span> es la logitud del camino (único) que comienza en la raíz
             y termina en el nodo.
         </p>
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
         <img class="r-stretch" src="slides/trees/00.trees/tree-depth.dot.png" />
-        <p>La profundidad de un nodo es la profundidad de su nodo padre más uno.</p>
+        <p>La profundidad (nivel) de un nodo es la profundidad de su nodo padre más uno.</p>
     </section>
 </section>
 
@@ -183,20 +183,22 @@
     <section data-background-color="rgb(255, 255, 255)">
         <p>DFS post-orden</p>
         <img class="r-stretch" src="slides/trees/00.trees/tree-dfs-preorden.dot.png" />
-        <p><code>b, e, g, f, c, d, a<code></p>
+        <p><code>b, e, g, f, c, d, a</code></p>
     </section>
 
     <section>
         <h4>Recorrido in-orden (*)</h4>
-        <p>Se recorre en in-orden el primer subárbol (si existe), luego se visita el nodo raíz y después se recorre en
-            in-orden los subárboles restantes (recursivo).</p>
-        <div class="footnote">Tiene sentido fundamentalmente en <a href="11.binary_trees.html">árboes binarios</a></div>.
+        <p>
+            Se recorre en in-orden el primer subárbol (si existe), luego se visita el nodo raíz y después se recorre en
+            in-orden los subárboles restantes (recursivo).
+        </p>
+        <div class="footnote">Tiene sentido fundamentalmente en <a href="11.binary_trees.html">árboes binarios</a>.</div>
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
         <p>DFS in-orden</p>
         <img class="r-stretch" src="slides/trees/00.trees/tree-dfs-preorden.dot.png"/>
-        <p><code>b, e, g, f, c, d, a<code></p>
+        <p><code>b, a, e, c, g, f, d</code></p>
     </section>
 </section>
 
@@ -212,10 +214,169 @@
             pasar al siguiente nivel.
         </p>
     </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>BFS</p>
+        <img class="r-stretch" src="slides/trees/00.trees/tree-bfs.dot.png"/>
+        <p><code>a, b, c, d, e, f, g</code></p>
+    </section>
 </section>
 
 <section data-transition="convex">
     <section>
         <h2>Implementación</h2>
+        <h4>Árboles con C++</h4>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/00.trees/tree-structs.dot.png"/>
+        <p><small>Un árbol es una colección de elementos enlazados donde estos elementos almacenan datos. El árbol será el puntero al nodo raíz.</small></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `ElementoArbol.h`
+
+Cada elemento contiene datos y punteros a los hijos
+
+```cpp
+class ElementoArbol {
+    public:
+        // Members
+        TipoDato dato;
+        std::vector<std::shared_ptr<ElementoArbol>> children;
+    public:
+        // Constructor 
+        ElementoArbol(const TipoDato& dato_) : dato{dato_} {};
+}
+```
+<small>`ElementoArbol.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `Tree.h`
+
+El árbol es el puntero al nodo raíz y las operaciones que pueden realizarse con él (*).
+
+```cpp[3,6-7|9-12|13-14]
+class Tree {
+    protected:
+        std::shared_ptr<ElementoArbol> root = nullptr;
+
+    public:
+        Tree();  // Creates empty tree
+        Tree(const TipoDato& dato);  // Creates tree with root node
+
+        // Member functions (properties of the tree structure)
+        int height() const;
+        int size() const; // Returns number of nodes
+
+        // A way to add subtrees to an existing tree
+        void add_subtree(const Tree& subtree);
+}
+```
+<!-- .element: class="r-stretch" -->
+<small>`Tree.h`</small>
+
+Así como para las listas, colas y pilas existen en la biblioteca estándard de C++, los árboles (en general) no, así que no podemos referirnos a una interfaz estándard. <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Creando un árbol: con la interfaz de que disponemos tenemos que ir nivel a nivel 🤷‍♂️
+
+```cpp[5-6|8-11|13-17|19-21|23-25]
+#include <iostream>
+#include "Tree.h"
+
+int main() {
+    // Nivel 3
+    Tree g{TipoDato{"g"}};
+    
+    // Nivel 2
+    Tree e{TipoDato{"e"}};
+    Tree f{TipoDato{"f"}};
+    f.add_subtree(g);
+
+    // Nivel 1
+    Tree b{TipoDato{"b"}};
+    Tree c{TipoDato{"c"}};
+    Tree d{TipoDato{"d"}};
+    c.add_subtree(f);
+
+    // Nivel 0
+    Tree a{TipoDato{"a"}};
+    a.add_subtree(c);
+
+    // Get some properties
+    std::cout << "Altura: " << a.height() << std::endl;
+    std::cout << "Tamaño/peso: " << a.size() << std::endl;
+}
+```
+<small>`main.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `Tree.cpp`
+
+Sabemos cómo implementar algunas funciones
+
+```cpp
+
+// Constructor for an empty tree
+Tree::Tree() {}
+
+// Constructor for a tree with the root node
+Tree::Tree(const TipoDato& dato) {
+    root = std::make_shared<ElementoArbol>(ElementoArbol{dato});
+}
+
+void Tree::add_subtree(const Tree& subtree) {
+    if (subtree.root != nullptr) {
+        root.children.push_back(subtree.root);
+    }
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+... pero no podemos implementar el resto de métodos si no sabemos recorrer el árbol 😨 
+
+```cpp
+int Tree::height() const {
+    // We don't know (yet) how to traverse the tree structure
+}
+
+int Tree::size() const {
+    // We don't know (yet) how to traverse the tree structure
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+</section>
+
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Implementación DFS</h2>
+        <h4>Recorrido en profundidad con C++</h4>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Implementación BFS</h2>
+        <h4>Recorrido en anchura con C++</h4>
     </section>
 </section>

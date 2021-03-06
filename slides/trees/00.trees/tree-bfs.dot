@@ -1,0 +1,11 @@
+digraph {
+    rankdir=TB;
+
+    a -> b [label=< <font point-size="10">1</font> >];
+    a -> c [label=< <font point-size="10">2</font> >];
+    a -> d [label=< <font point-size="10">3</font> >];
+    c -> e [label=< <font point-size="10">4</font> >];
+    c -> f [label=< <font point-size="10">5</font> >];
+    f -> g [label=< <font point-size="10">6</font> >];
+
+}
