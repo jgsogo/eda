@@ -6,11 +6,9 @@
 
 TEST_CASE( "int invertir(int num);" )
 {
-    CHECK( invertir(1) == 1 );
-    CHECK( invertir(2) == 2 );
-    bool r25 = invertir(25) == 52;
-    std::cout << ">" << invertir(1024) << std::endl;
-    std::cout << ">" << r25 << std::endl;
-    CHECK( r25 );
-    CHECK( invertir(1024) == 4201 );
+    REQUIRE( invertir(1) == 1 );
+    REQUIRE( invertir(2) == 2 );
+    REQUIRE( invertir(1234) == 4321 );
+    REQUIRE( invertir(1000) == 1 );
+    REQUIRE( invertir(12) == 21 );
 }
