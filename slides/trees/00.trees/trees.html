@@ -1,6 +1,154 @@
 <section data-transition="convex">
     <section>
-        <h2>Definición y propiedades</h2>
+        <h2>Definiciones y propiedades</h2>
+    </section>
+
+    <section>
+        <h4>Árbol</h4>
+        <p>
+            Un <span class="blue">árbol</span> es un TAD que consta de un nodo (<span class="red">nodo raíz</span>) y
+            una lista o conjunto de subárboles.
+        </p>
+    </section>
+
+    <section>
+        <h4>Árbol ordenado (árbol)</h4>
+        <p>
+            Cuando el orden de los subárboles es importante (lista), se dice que es un <span class="blue">árbol
+                ordenado</span> (*).
+        </p>
+        <p class="footnote">(*) Por defecto un árbol se considera ordenado.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Ejemplo de árbol [ordenado]</p>
+        <img class="stretch" src="slides/trees/00.trees/tree.dot.png" />
+        <p><small>Se dice que es ordenado porque los subárboles con nodo raíz <code>b</code>, <code>c</code> y
+                <code>d</code> son una lista.</small></p>
+    </section>
+
+    <section>
+        <h4>Tipos de nodos</h4>
+        <ul>
+            <li><strong class="blue">Nodo raíz</strong>: <em>cabeza</em> o primer elemento del árbol.</li>
+            <li><strong class="blue">Nodo hijo</strong>: son los nodos raíz de los subárboles.</li>
+            <li><strong class="blue">Nodo padre</strong>: si <code>b</code> es un nodo hijo de <code>a</code>, entonces
+                <code>a</code> es el nodo padre de <code>b</code>.</li>
+            <li><strong class="blue">Nodo hoja o externo</strong>: nodo que no tiene hijos.</li>
+            <li><strong class="blue">Nodo interno</strong>: cualquier nodo con algún hijo.</li>
+        </ul>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <div class="left">
+            <img src="slides/trees/00.trees/tree-node-types.dot.png" />
+        </div>
+        <div class="right">
+            <p>Tipos de nodos</p>
+            <ul>
+                <li class="red">Nodo raíz</li>
+                <li class="blue">Nodo hoja o externo</li>
+                <li>Nodo interno</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h4>Camino</h4>
+        <p>
+            Cualquier secuencia de nodos <code>n<sub>1</sub>...n<sub>p</sub></code> que cumpla que cada nodo es el padre
+            del siguiente en la secuencia.
+        </p>
+        <p class="fragment">La <span class="blue">longitud de un camino</span> es el número de nodos menos uno
+            (<code>p-1</code>)</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Descendientes</h4>
+        <div class="left">
+            <p>Todos los nodos accesibles por un camino que comience en dicho nodo.</p>
+            <hr />
+            <p>Los descendientes del nodo <code class="blue">c</code> son <code class="red">{e, f, g}</code></p>
+        </div>
+        <div class="right">
+            <img src="slides/trees/00.trees/tree-descendents.dot.png" />
+        </div>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Ascendientes</h4>
+        <div class="left">
+            <p>Nodos del camino que va desde el nodo raíz hasta el nodo en consideración.</p>
+            <hr />
+            <p>Los asciendentes del nodo <code class="blue">g</code> son <code class="red">{a, c, f}</code></p>
+        </div>
+        <div class="right">
+            <img src="slides/trees/00.trees/tree-ascendents.dot.png" />
+        </div>
+    </section>
+
+    <section>
+        <h4>Altura</h4>
+        <p>
+            La <span class="blue">altura de un nodo</span> es la logitud del camino más largo que
+            comienza en el nodo y termina en una hoja.</p>
+        <p class="fragment">
+            La <span class="blue">altura de un árbol</span> es la altura de su nodo raíz.
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/00.trees/tree-altura.dot.png" />
+        <p>La altura de un nodo se puede calcular como la mayor de las alturas de sus nodos hijo más una unidad.</p>
+    </section>
+
+    <section>
+        <h4>Profundidad (nivel)</h4>
+        <p>
+            La <span class="blue">profundidad (nivel) de un nodo</span> es la logitud del camino (único) que comienza en la raíz
+            y termina en el nodo.
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/00.trees/tree-depth.dot.png" />
+        <p>La profundidad (nivel) de un nodo es la profundidad de su nodo padre más uno.</p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Recorrido de árboles</h2>
+    </section>
+
+    <section>
+        <h4>Búsqueda no informada</h4>
+        <p>
+            Se recorre todo el árbol sin tener una pista de donde se encuentra el elemento buscado. También se conoce
+            como <span class="blue">búsqueda a ciegas</span>.
+        </p>
+    </section>
+
+    <section>
+        <p>Estrategias de búsqueda no informada:</p>
+        <ul>
+            <li>Recorrido en profundidad</li>
+            <li>Recorrido en anchura</li>
+        </ul>
+    </section>
+
+    <section>
+        <h4>Búsqueda informada</h4>
+        <p>
+            Cuando existe un criterio de ordenación para los elementos del árbol (*) se puede optimizar el
+            recorrido del árbol.
+        </p>
+        <hr />
+        <p>
+            Los <a href="13.binary_search_trees.html">árboles binarios de búsqueda</a> son ejemplos de árboles que
+            presentan esta propiedad.
+        </p>
+        <div class="footnote">(*) No confundir con árbol ordenado, que se refiere al orden de los subárboles.</div>
     </section>
 </section>
 
@@ -9,12 +157,226 @@
         <h2>Recorrido en profundidad</h2>
         <h4>Depth-first search (DFS)</h4>
     </section>
+
+    <section>
+        <p>En un <span class="blue">recorrido en profundidad</span> se recorre cada uno de los subárboles de un nodo
+            antes de pasar al siguiente subárbol del mismo nodo (*).</p>
+        <div class="footnote">(*) Nótese que es una definición recursiva.</div>
+    </section>
+
+    <section>
+        <h4>Recorrido pre-orden</h4>
+        <p>Se vista el nodo raíz y luego se recorre en pre-orden cada uno de los subárboles (recursivo).</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>DFS pre-orden</p>
+        <img class="r-stretch" src="slides/trees/00.trees/tree-dfs-preorden.dot.png" />
+        <p><code>a, b, c, e, f, g, d</code></p>
+    </section>
+
+    <section>
+        <h4>Recorrido post-orden</h4>
+        <p>Se recorre en post-orden cada uno de los subárboles y luego se visita el nodo raíz (recursivo).</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>DFS post-orden</p>
+        <img class="r-stretch" src="slides/trees/00.trees/tree-dfs-preorden.dot.png" />
+        <p><code>b, e, g, f, c, d, a</code></p>
+    </section>
+
+    <section>
+        <h4>Recorrido in-orden (*)</h4>
+        <p>
+            Se recorre en in-orden el primer subárbol (si existe), luego se visita el nodo raíz y después se recorre en
+            in-orden los subárboles restantes (recursivo).
+        </p>
+        <div class="footnote">Tiene sentido fundamentalmente en <a href="11.binary_trees.html">árboes binarios</a>.</div>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>DFS in-orden</p>
+        <img class="r-stretch" src="slides/trees/00.trees/tree-dfs-preorden.dot.png"/>
+        <p><code>b, a, e, c, g, f, d</code></p>
+    </section>
 </section>
 
 <section data-transition="convex">
     <section>
-        <h2>Recorrido en anchura</h2>
+        <h2>Recorrido en anchura/amplitud</h2>
         <h4>Breadth-first search (BFS)</h4>
+    </section>
+
+    <section>
+        <p>
+            En un <span class="blue">recorrido en anchura</span> se recorren todos los nodos de un mismo nivel antes de
+            pasar al siguiente nivel.
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>BFS</p>
+        <img class="r-stretch" src="slides/trees/00.trees/tree-bfs.dot.png"/>
+        <p><code>a, b, c, d, e, f, g</code></p>
     </section>
 </section>
 
+<section data-transition="convex">
+    <section>
+        <h2>Implementación</h2>
+        <h4>Árboles con C++</h4>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/00.trees/tree-structs.dot.png"/>
+        <p><small>Un árbol es una colección de elementos enlazados donde estos elementos almacenan datos. El árbol será el puntero al nodo raíz.</small></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `ElementoArbol.h`
+
+Cada elemento contiene datos y punteros a los hijos
+
+```cpp
+class ElementoArbol {
+    public:
+        // Members
+        TipoDato dato;
+        std::vector<std::shared_ptr<ElementoArbol>> children;
+    public:
+        // Constructor 
+        ElementoArbol(const TipoDato& dato_) : dato{dato_} {};
+}
+```
+<small>`ElementoArbol.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `Tree.h`
+
+El árbol es el puntero al nodo raíz y las operaciones que pueden realizarse con él (*).
+
+```cpp[3,6-7|9-12|13-14]
+class Tree {
+    protected:
+        std::shared_ptr<ElementoArbol> root = nullptr;
+
+    public:
+        Tree();  // Creates empty tree
+        Tree(const TipoDato& dato);  // Creates tree with root node
+
+        // Member functions (properties of the tree structure)
+        int height() const;
+        int size() const; // Returns number of nodes
+
+        // A way to add subtrees to an existing tree
+        void add_subtree(const Tree& subtree);
+}
+```
+<!-- .element: class="r-stretch" -->
+<small>`Tree.h`</small>
+
+Así como para las listas, colas y pilas existen en la biblioteca estándard de C++, los árboles (en general) no, así que no podemos referirnos a una interfaz estándard. <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Creando un árbol: con la interfaz de que disponemos tenemos que ir nivel a nivel 🤷‍♂️
+
+```cpp[5-6|8-11|13-17|19-21|23-25]
+#include <iostream>
+#include "Tree.h"
+
+int main() {
+    // Nivel 3
+    Tree g{TipoDato{"g"}};
+    
+    // Nivel 2
+    Tree e{TipoDato{"e"}};
+    Tree f{TipoDato{"f"}};
+    f.add_subtree(g);
+
+    // Nivel 1
+    Tree b{TipoDato{"b"}};
+    Tree c{TipoDato{"c"}};
+    Tree d{TipoDato{"d"}};
+    c.add_subtree(f);
+
+    // Nivel 0
+    Tree a{TipoDato{"a"}};
+    a.add_subtree(c);
+
+    // Get some properties
+    std::cout << "Altura: " << a.height() << std::endl;
+    std::cout << "Tamaño/peso: " << a.size() << std::endl;
+}
+```
+<small>`main.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `Tree.cpp`
+
+Sabemos cómo implementar algunas funciones
+
+```cpp
+
+// Constructor for an empty tree
+Tree::Tree() {}
+
+// Constructor for a tree with the root node
+Tree::Tree(const TipoDato& dato) {
+    root = std::make_shared<ElementoArbol>(ElementoArbol{dato});
+}
+
+void Tree::add_subtree(const Tree& subtree) {
+    if (subtree.root != nullptr) {
+        root.children.push_back(subtree.root);
+    }
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+... pero no podemos implementar el resto de métodos si no sabemos recorrer el árbol 😨 
+
+```cpp
+int Tree::height() const {
+    // We don't know (yet) how to traverse the tree structure
+}
+
+int Tree::size() const {
+    // We don't know (yet) how to traverse the tree structure
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+</section>
+
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Implementación DFS</h2>
+        <h4>Recorrido en profundidad con C++</h4>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Implementación BFS</h2>
+        <h4>Recorrido en anchura con C++</h4>
+    </section>
+</section>

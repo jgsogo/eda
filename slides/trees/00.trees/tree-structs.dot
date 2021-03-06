@@ -1,0 +1,22 @@
+digraph structs {
+    rankdir=LR;
+    
+    node [shape=record, width = .5];
+    node1 [label="{<m> |{<d> datos |<n> children }}"];
+    node2 [label="{<m> |{<d> datos |<n> children }}"];
+    node3 [label="{<m> |{<d> datos |<n> children }}"];
+    node4 [label="{<m> |{<d> datos |<n> children }}"];
+    node5 [label="{<m> |{<d> datos |<n> children }}"];
+    node6 [label="{<m> |{<d> datos |<n> children }}"];
+    node7 [label="{<m> |{<d> datos |<n> children }}"];
+
+
+    node1:n -> node2:w;
+    node1:n -> node3:w;
+    node1:n -> node4:w;
+
+    node3:n -> node5:w;
+    node3:n -> node6:w;
+
+    node6:n -> node7:w;
+}
