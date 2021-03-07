@@ -1,3 +1,4 @@
+#pragma once
 
 #include "ElementoListaDoble.h"
 
@@ -18,6 +19,6 @@ class Queue {
         void sneak_in(const Persona& contact, Queue& friends);
 
     protected:
-        std::shared_ptr<ElementListaDoble> front = nullptr;
-        std::shared_ptr<ElementListaDoble> back = nullptr;
+        std::shared_ptr<ElementListaDoble> _front = nullptr;
+        std::shared_ptr<ElementListaDoble> _back = nullptr;
 };
