@@ -1,3 +1,4 @@
+#pragma once
 
 #include "Queue.h"
 
@@ -8,7 +9,7 @@ class WardrobeElement {
         std::shared_ptr<WardrobeElement> next = nullptr;
     public:
         // Constructor 
-        WardrobeElement(const std::string& dato_);
+        WardrobeElement(const std::string& owner);
 };
 
 class Wardrobe {
@@ -19,7 +20,7 @@ class Wardrobe {
         bool empty() const;
 
         void push(const std::string& dato);
-        void pop() const;
+        void pop();
         std::string& top() const;
     protected:
         std::shared_ptr<WardrobeElement> front = nullptr;
