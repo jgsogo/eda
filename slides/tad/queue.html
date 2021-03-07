@@ -76,10 +76,10 @@ class Queue {
         TipoDato& back() const;
 
         void push(const TipoDato& dato);
-        void pop() const;
+        void pop();
     protected:
-        std::shared_ptr<ElementListaDoble> front = nullptr;
-        std::shared_ptr<ElementListaDoble> back = nullptr;
+        std::shared_ptr<ElementListaDoble> _front = nullptr;
+        std::shared_ptr<ElementListaDoble> _back = nullptr;
     };
 ```
 <small>`Queue.h`</small> 
@@ -231,115 +231,273 @@ Crea pequeños programas utilizando las clases que ya tienes.
         <p>¿Cómo funciona la cola única?</p>
     </section>
 
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Métodos de Montecarlo</p>
+        <img class="r-stretch" src="slides/tad/montecarlo-pi.gif"/>
+        <p>
+            <small>
+                Existen problemas cuyas entradas son tan complejas o que dependen de tantas variables que su 
+                solución sólo se puede calcular mediante simulación.
+            </small>
+        </p>
+    </section>
+
+    <section>
+        <p>
+            Con el ordenador podemos <strong>simular</strong> el escenario de un supermercado y calcular los
+            tiempos de espera medios, la longitud de las colas en las cajas, el número de cajas que hay que
+            abrir,...
+        </p>
+    </section>
+
     <section data-markdown>
         <script type="text/template">
-Vamos a crear una cola con `n_clients` clientes, cada uno de ellos almacena el tiempo que tarda en pagar
+### Simular el paso del tiempo
+
+Para simular el paso del tiempo utilizamos un bucle y un contador de segundos (`seconds`). 
 
 ```cpp
-struct TipoDato {  // Represent a Client
-    int time_to_pay;  // time in seconds
+int main() {
+    int seconds = 0;
+    while (seconds < 10000) {
+        // Things will happen here
+        // ...
+
+        seconds += 1; // next timestep
+    }
+}
+```
+<small>`main.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Clientes
+
+En nuestra simulación habrá clientes, que tardarán entre `0` y `99` segundos en pasar por caja
+
+```cpp
+class Client {
+    public:
+        Client() {
+            // Random number between 0 and 99
+            time_to_pay = std::rand() % 100;
+        }
+
+    public:
+        int time_to_pay;
 };
 ```
-<small>`TipoDato.h`</small> 
+<small>`Client.h`</small>
+        </script>
+    </section>
 
+    <section data-markdown>
+        <script type="text/template">
+Podemos simular que aparece un nuevo cliente cada dos minutos
 
 ```cpp
 int main() {
-    int n_clients = 100;
-    
-    Queue queue;
-    for (int i = 0; i<n_clients; i++) {
-        std::srand(1);  // TODO: Lee sobre esto
-        int time_random = std::rand() % 100; // Número aleatorio entre 0 y 99
-        queue.push(TipoDato{time_random});
+    int seconds = 0;
+    while (seconds < 10000) {
+        // ...
+        if (seconds % 120 == 0) {
+            // ...add the client to a queue
+        }
+
+        seconds += 1; // next timestep
     }
-    // ...
 }
 ```
-<small>`main.cpp`</small> 
+<small>`main.cpp`</small>
+<div class="footnote">Sería interesante utilizar una <a href="https://es.wikipedia.org/wiki/Distribuci%C3%B3n_de_Poisson">distribución de Poisson</a> para generar estos eventos.</div>
         </script>
+    </section>
+
+    <section>
+        <h4>Una cola por caja</h4>
+        <p>Los clientes se añaden a la cola más corta</p>
     </section>
 
     <section data-markdown>
         <script type="text/template">
-Tenemos 4 cajas para atender a los clientes, vamos a almacenar el tiempo que les falta para estar libres
+Tenemos que buscar la cola más corta para añadir los nuevos clientes a ella
 
 ```cpp
-int main() {
-    // ...
-    std::array<int, 4> cajas;
-}
-```
-<small>`main.cpp`</small> 
-        </script>
-    </section>
-
-    <section data-markdown>
-        <script type="text/template">
-Podemos simular el paso del tiempo 
-
-```cpp
-int main() {
-    // ...
-    int tiempo = 0;
-    while (!queue.empty()) {
-        tiempo += 1; // llevamos la cuenta del tiempo
-        
-        // Restamos un segundo al tiempo que le falta para despachar a cada caja
-        for (auto& it: cajas) {  // Fíjate en esa referencia con el '&'
-            it = std::max(it-1, 0);
+void add_new_client(std::array<Queue, 4>& lanes) {
+    // Creates a new client and add it to the shortest queue
+    Client client{};
+    int shortest_idx = 0;
+    for (int i=0; i<lanes.size(); i++) {
+        if (lanes[i].size() < lanes[shortest_idx].size()) {
+            shortest_idx = i;
         }
     }
+    // Push client to the shortest queue
+    lanes[shortest_idx].push(client);
 }
 ```
-<small>`main.cpp`</small> 
+<small>`main.cpp`</small>
         </script>
     </section>
 
     <section data-markdown>
         <script type="text/template">
-Si una caja está vacía puede coger al siguiente cliente
+Añadimos el evento a nuestra simulación
 
 ```cpp
 int main() {
-    // ...
-    int tiempo = 0;
-    while (!queue.empty()) {
+    int seconds = 0;
+    std::array<Queue, 4> lanes;
+    while (seconds < 10000) {
         // ...
-        
-        // Si una caja está vacía, el siguiente cliente irá a ella
-        for (auto& it: cajas) {  // Fíjate en esa referencia con el '&'
-            if (it == 0 && !queue.empty()) {
-                TipoDato cliente = queue.front();
-                queue.pop();
-                it = cliente.time_to_pay;
+        if (seconds % 120 == 0) {
+            add_new_client(lanes);
+        }
+        // ...
+        seconds += 1; // next timestep
+    }
+}
+```
+<small>`main.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Simulamos el tiempo que tardan en pagar los clientes
+
+```cpp[6-14]
+int main() {
+    int seconds = 0;
+    std::array<Queue, 4> lanes;
+    while (seconds < 10000) {
+        // ...
+        for (auto& lane: lanes) {  // Note the '&'
+            if (!lane.empty()) {
+                auto& front_client = lane.front(); // Note the '&'
+                front_client.time_to_pay--;
+                if (front_client.time_to_pay <= 0) {
+                    lane.pop();
+                }
             }
         }
+
+        // ...
+        seconds += 1; // next timestep
     }
 }
 ```
-<small>`main.cpp`</small> 
+<small>`main.cpp`</small>
         </script>
     </section>
 
     <section data-markdown>
         <script type="text/template">
-* ¿Cuántos segundos (`tiempo`) has tardado en procesar toda la cola?
-* ¿Cómo varía en función del número de cajas?
-* ¿Y en función del número de clientes?
+Recogemos la informacion que nos interesa en cada instante de tiempo, lo [guardamos en un fichero](https://www.cplusplus.com/doc/tutorial/files/).
+
+```cpp[4-5,11-15,20]
+#include <fstream>
+
+int main() {
+    std::ofstream data;
+    data.open("output.txt");
+
+    int seconds = 0;
+    std::array<Queue, 4> lanes;
+    while (seconds < 10000) {
+        // ...
+        // Save to file
+        int total = 0;
+        data << seconds << " ";
+        for (auto lane: lanes) {
+            data << lane.size() << " ";
+            total += lane.size();
+        }
+        data << total << "\n";
+
+        // ...
+        seconds += 1; // next timestep
+    }
+    data.close();
+    return 0;
+}
+```
+<small>`main.cpp`</small>
         </script>
+    </section>
+
+    <section>
+        <p>Utiliza excel (o cualquier software) para hacer una gráfica en la que se muestre la distribución de personas esperando.</p>
+    </section>
+
+    <section>
+        <p>Varía los parámetros y observa cómo cambia la distribución: número de cajas, los tiempos de pago, tiempo entre clientes,...</p>
+    </section>
+
+
+    <section>
+        <h4>Sistema de cola única</h4>
     </section>
 
     <section data-markdown>
         <script type="text/template">
-Si los clientes se distribuyeran en varias colas, una cola por cada caja, ¿tardaríamos más en despacharlos?
-
-¿Te atreves a simularlo?
+Existe una única cola a la que se añaden los clientes
 
 ```cpp
-std::array<Queue, 4> cajas;
+int main() {
+    int seconds = 0;
+    Queue clients;
+    while (seconds < 10000) {
+        // ...
+        if (seconds % 120 == 0) {
+            clients.push(Client{});
+        }
+        // ...
+        seconds += 1; // next timestep
+    }
+}
 ```
+<small>`main.cpp`</small>
         </script>
     </section>
 
+
+    <section data-markdown>
+        <script type="text/template">
+Las cajas atienden a los clientes uno por uno
+
+```cpp[8-19]
+int main() {
+    int seconds = 0;
+    
+    std::array<Client, 4> lanes;
+
+    while (seconds < 10000) {
+        // ...
+        // Simulate clients paying at the lanes
+        for (int i=0; i<lanes.size(); i++) {
+            lanes[i].time_to_pay--;
+            if (lanes[i].time_to_pay <= 0) {
+                // Take next client from the queue
+                if (!clients.empty()) {
+                    auto front_client = clients.front();
+                    clients.pop();
+                    lanes[i] = front_client;
+                }
+            }
+        }
+        // ...
+        seconds += 1; // next timestep
+    }
+}
+```
+<small>`main.cpp`</small>
+        </script>
+    </section>
+
+    <section data-background="slides/tad/queue-single-queue.jpg">
+        <h4 class="box-shadow-black">Conclusiones</h4>
+    </section>
 </section>
