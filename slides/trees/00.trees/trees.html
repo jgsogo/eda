@@ -371,6 +371,61 @@ int Tree::size() const {
         <h2>Implementación DFS</h2>
         <h4>Recorrido en profundidad con C++</h4>
     </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### [DFS] pre-order
+
+```cpp
+void dfs_preorder(std::shared_ptr<ElementoArbol> elem,
+                  std::function<void (TipoDato&)> action) {
+    action(elem->dato);
+    for (auto child: elem->children) {
+        dfs_preorder(child, action);
+    }
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### [DFS] post-order
+
+```cpp
+void dfs_postorder(std::shared_ptr<ElementoArbol> elem,
+                  std::function<void (TipoDato&)> action) {
+    for (auto child: elem->children) {
+        dfs_postorder(child, action);
+    }
+    action(elem->dato);
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### [DFS] in-order
+
+```cpp
+void dfs_inorder(std::shared_ptr<ElementoArbol> elem,
+                  std::function<void (TipoDato&)> action) {
+    if (!elem->children.empty()) {
+        dfs_inorder(elem->children[0], action)
+    }
+    action(elem->dato);
+
+    for (int i=1; i<elem->children.size(); i++) {
+        dfs_inorder(elem->children[1], action);
+    }
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
 </section>
 
 
