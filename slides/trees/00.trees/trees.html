@@ -338,7 +338,7 @@ Tree::Tree(const TipoDato& dato) {
 
 void Tree::add_subtree(const Tree& subtree) {
     if (subtree.root != nullptr) {
-        root.children.push_back(subtree.root);
+        root->children.push_back(subtree.root);
     }
 }
 ```
@@ -348,22 +348,53 @@ void Tree::add_subtree(const Tree& subtree) {
 
     <section data-markdown>
         <script type="text/template">
-... pero no podemos implementar el resto de métodos si no sabemos recorrer el árbol 😨 
+... algunas son recursivas 😨 
 
 ```cpp
+#include <algorithm>
+
+int _height(std::shared_ptr<ElementoArbol> element) {
+    if (element->children.empty()) {
+        return 0;
+    }
+    else {
+        int max_children = 0;
+        for (auto child: element->children) {
+            max_children = std::max(max_children, _height(child));
+        }
+        return 1 + max_children;
+    }
+}
+
 int Tree::height() const {
-    // We don't know (yet) how to traverse the tree structure
+    return _height(root);
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+... algunas son recursivas 😨 
+
+```cpp
+int _size(std::shared_ptr<ElementoArbol> element) {
+    int n_nodes = 1;
+    for (auto child: element->children) {
+        n_nodes += _size(child);
+    }
+    return n_nodes;
 }
 
 int Tree::size() const {
-    // We don't know (yet) how to traverse the tree structure
+    return _size(root);
 }
 ```
 <small>`Tree.cpp`</small>
         </script>
     </section>
 </section>
-
 
 
 <section data-transition="convex">
