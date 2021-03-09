@@ -248,7 +248,7 @@ class ElementoArbol {
     public:
         // Constructor 
         ElementoArbol(const TipoDato& dato_) : dato{dato_} {};
-}
+};
 ```
 <small>`ElementoArbol.h`</small>
         </script>
@@ -295,21 +295,24 @@ Creando un árbol: con la interfaz de que disponemos tenemos que ir nivel a nive
 int main() {
     // Nivel 3
     Tree g{TipoDato{"g"}};
-    
+ 
     // Nivel 2
     Tree e{TipoDato{"e"}};
     Tree f{TipoDato{"f"}};
     f.add_subtree(g);
-
+ 
     // Nivel 1
     Tree b{TipoDato{"b"}};
     Tree c{TipoDato{"c"}};
     Tree d{TipoDato{"d"}};
+    c.add_subtree(e);
     c.add_subtree(f);
-
+ 
     // Nivel 0
     Tree a{TipoDato{"a"}};
+    a.add_subtree(b);
     a.add_subtree(c);
+    a.add_subtree(d);
 
     // Get some properties
     std::cout << "Altura: " << a.height() << std::endl;
@@ -348,7 +351,7 @@ void Tree::add_subtree(const Tree& subtree) {
 
     <section data-markdown>
         <script type="text/template">
-... algunas son recursivas 😨 
+... algunas son recursivas 🤓
 
 ```cpp
 #include <algorithm>
@@ -358,11 +361,11 @@ int _height(std::shared_ptr<ElementoArbol> element) {
         return 0;
     }
     else {
-        int max_children = 0;
+        int max_children_height = 0;
         for (auto child: element->children) {
-            max_children = std::max(max_children, _height(child));
+            max_children_height = std::max(max_children_height, _height(child));
         }
-        return 1 + max_children;
+        return 1 + max_children_height;
     }
 }
 
@@ -376,7 +379,7 @@ int Tree::height() const {
 
     <section data-markdown>
         <script type="text/template">
-... algunas son recursivas 😨 
+... algunas son recursivas 🤓
 
 ```cpp
 int _size(std::shared_ptr<ElementoArbol> element) {
@@ -405,15 +408,44 @@ int Tree::size() const {
 
     <section data-markdown>
         <script type="text/template">
+Añadimos funciones miembro para recorrer el árbol
+
+```cpp[11-14]
+class Tree {
+    protected:
+        std::shared_ptr<ElementoArbol> root = nullptr;
+
+    public:
+        Tree();  // Creates empty tree
+        Tree(const TipoDato& dato);  // Creates tree with root node
+
+        // ... more functions
+        
+        // Different traverse strategies
+        void dfs_preorder(std::function<void (TipoDato&)> action) const;
+        void dfs_postorder(std::function<void (TipoDato&)> action) const;
+        void dfs_inorder(std::function<void (TipoDato&)> action) const;
+}
+```
+<small>`Tree.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
 ### [DFS] pre-order (recursivo)
 
 ```cpp
-void dfs_preorder(std::shared_ptr<ElementoArbol> root,
-                  std::function<void (TipoDato&)> action) {
+void _dfs_preorder(std::shared_ptr<ElementoArbol> root,
+                   std::function<void (TipoDato&)> action) {
     action(root->dato);
     for (auto child: root->children) {
-        dfs_preorder(child, action);
+        _dfs_preorder(child, action);
     }
+}
+
+void Tree::dfs_preorder(std::function<void (TipoDato&)> action) const {
+    dfs_preorder_iterativo(root, action);
 }
 ```
 <small>`Tree.cpp`</small>
@@ -425,22 +457,25 @@ void dfs_preorder(std::shared_ptr<ElementoArbol> root,
 ### [DFS] pre-order (iterativo)
 
 ```cpp
-void dfs_preorder(std::shared_ptr<ElementoArbol> root,
-                  std::function<void (TipoDato&)> action) {
-    Stack stack;
+void dfs_preorder_iterativo(std::shared_ptr<ElementoArbol> root,
+                            std::function<void (TipoDato&)> action) {
+    Stack stack;  // You can reuse your Stack.h
     stack.push(root);
 
     while(!stack.empty()) {
         auto elem = stack.top();
         stack.pop();
         action(elem->dato);
-        for (auto child: elem->children) {
-            stack.push(child);
+        // Iterate backwards
+        for (auto it = elem->children.rbegin(); it != elem->children.rend(); it++) {
+            stack.push(*it);
         }
     }
 }
 ```
 <small>`Tree.cpp`</small>
+
+En general, vamos a preferir la implementación recursiva porque es más sencilla. <!-- .element: class="footnote" -->
         </script>
     </section>
 
@@ -449,27 +484,16 @@ void dfs_preorder(std::shared_ptr<ElementoArbol> root,
 ### [DFS] post-order (recursivo)
 
 ```cpp
-void dfs_postorder(std::shared_ptr<ElementoArbol> root,
-                  std::function<void (TipoDato&)> action) {
+void _dfs_postorder(std::shared_ptr<ElementoArbol> root,
+                    std::function<void (TipoDato&)> action) {
     for (auto child: root->children) {
-        dfs_postorder(child, action);
+        _dfs_postorder(child, action);
     }
     action(root->dato);
 }
-```
-<small>`Tree.cpp`</small>
-        </script>
-    </section>
 
-    <section data-markdown>
-        <script type="text/template">
-### [DFS] post-order (iterativo)
-
-```cpp
-void dfs_postorder(std::shared_ptr<ElementoArbol> root,
-                  std::function<void (TipoDato&)> action) {
-    Stack stack;
-    std::shared_ptr<ElementoArbol> lastNodeVisited = nullptr;
+void Tree::dfs_postorder(std::function<void (TipoDato&)> action) const {
+    _dfs_postorder(root, action);
 }
 ```
 <small>`Tree.cpp`</small>
@@ -478,19 +502,23 @@ void dfs_postorder(std::shared_ptr<ElementoArbol> root,
 
     <section data-markdown>
         <script type="text/template">
-### [DFS] in-order
+### [DFS] in-order (recursivo)
 
 ```cpp
-void dfs_inorder(std::shared_ptr<ElementoArbol> root,
+void _dfs_inorder(std::shared_ptr<ElementoArbol> root,
                   std::function<void (TipoDato&)> action) {
     if (!root->children.empty()) {
-        dfs_inorder(root->children[0], action)
+        _dfs_inorder(root->children[0], action);
     }
     action(root->dato);
 
     for (int i=1; i<root->children.size(); i++) {
-        dfs_inorder(root->children[i], action);
+        _dfs_inorder(root->children[i], action);
     }
+}
+
+void Tree::dfs_inorder(std::function<void (TipoDato&)> action) const {
+    _dfs_inorder(root, action);
 }
 ```
 <small>`Tree.cpp`</small>
@@ -503,5 +531,188 @@ void dfs_inorder(std::shared_ptr<ElementoArbol> root,
     <section>
         <h2>Implementación BFS</h2>
         <h4>Recorrido en anchura con C++</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Añadimos funciones miembro para recorrer el árbol
+
+```cpp[11-14]
+class Tree {
+    protected:
+        std::shared_ptr<ElementoArbol> root = nullptr;
+
+    public:
+        Tree();  // Creates empty tree
+        Tree(const TipoDato& dato);  // Creates tree with root node
+
+        // ... more functions
+        
+        // Breadth-first search
+        void bfs(std::function<void (TipoDato&)> action) const;
+}
+```
+<small>`Tree.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Breadth-first search (iterativo)
+
+```cpp
+void Tree::bfs(std::function<void (TipoDato&)> action) const {
+    Queue queue;  // We need a queue!
+    queue.push(root);
+    while (!queue.empty()) {
+        QueueTipoDato elem = queue.front();
+        queue.pop();
+        action(elem->dato);
+        for (auto child: elem->children) {
+            queue.push(QueueTipoDato{child});
+        }
+    }
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: tree</h4>
+        <p>Reune el código relacionado con los árboles en tu ordenador, junto al de otros TAD</p>
+    </section>
+
+    <section>
+        <p>Necesitarás añadir:</p>
+        <ul>
+            <li><code>Tree.h</code></li>
+            <li><code>Tree.cpp</code></li>
+            <li><code>ElementoArbol.h</code></li>
+        </ul>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Haz muchos ejemplos
+
+Construye un árbol y recórrelo:
+
+```cpp
+int main() {
+    // ... construye tu árbol
+    Tree a{...};
+
+    // Get some properties
+    std::cout << "Altura: " << a.height() << std::endl;
+    std::cout << "Tamaño/peso: " << a.size() << std::endl;
+
+    // Create your lambda to print every node
+    auto print_node = [](const TipoDato& dato){
+        std::cout << dato << ", ";
+    };
+
+    std::cout << "DFS pre-order: ";
+    a.dfs_preorder(print_node);
+    std::cout << std::endl;
+
+    std::cout << "DFS post-order: ";
+    a.dfs_postorder(print_node);
+    std::cout << std::endl;
+
+    std::cout << "DFS in-order: ";
+    a.dfs_inorder(print_node);
+    std::cout << std::endl;
+
+    std::cout << "BFS: ";
+    a.bfs(print_node);
+    std::cout << std::endl;
+}
+```
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 11 🌶</h2>
+        <h4>Aritmética utilizando árboles</h4>
+    </section>
+
+    <section>
+        <p><strong>Operadores binarios:</strong> son aquellos que requiren dos operandos, ej.: suma, producto, resta,...</p>
+        <hr/>
+        <p><strong>Operadores unarios:</strong> son aquellos que requiren un único operando, ej.: <code>log</code>, factorial, <code>-</code>...</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores binarios</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-suma.dot.png" />
+        <p><code>3 + 4</code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>3 4 +</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores unarios (notación prefija)</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-logarithm.dot.png" />
+        <p><code>-  log 4 </code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>4 log -</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores unarios (notación postfija)</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-factorial.dot.png" />
+        <p><code>3 * 4 !</code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>3 4 * !</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Construye el siguiente árbol</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-sum-prod.dot.png" />
+        <p><code>(2+3)! * (10+20)</code></p>
+    </section>
+
+    <section>
+        <p>Comprueba que DFS post-order (notación postfija, RPN, notación polaca inversa) muestra una expresión no ambigua (*)</p>
+        <p><code>2 3 +   ! 10 20 + *</code></p>
+        <div class="footnote">(*) Hazlo con papel y lápiz, recuerda que había que utilizar una pila/stack para ir metiendo y sacando los operandos (<a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">Wikipedia</a>).</div>
+    </section>
+
+    <section>
+        <p>... pero la notación infija (DFS in-order) necesita paréntesis para ejecutar las operaciones en orden</p>
+        <p><code>2 + 3 !   * 10 + 20</code></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Crea una función parecida a `Tree::dfs_inorder` para añadir los paréntesis necesarios: 
+
+```cpp
+// TODO: You will need to add some 'std::cout << "("' at some points.
+void _print_infix(std::shared_ptr<ElementoArbol> root) {
+    if (!root->children.empty()) {
+        _print_infix(root->children[0]);
+    }
+    std::cout << root->dato;
+
+    for (int i=1; i<root->children.size(); i++) {
+        _print_infix(root->children[i]);
+    }
+}
+
+void Tree::_print_infix() const {
+    _print_infix(root);
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
     </section>
 </section>
