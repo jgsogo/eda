@@ -405,13 +405,13 @@ int Tree::size() const {
 
     <section data-markdown>
         <script type="text/template">
-### [DFS] pre-order
+### [DFS] pre-order (recursivo)
 
 ```cpp
-void dfs_preorder(std::shared_ptr<ElementoArbol> elem,
+void dfs_preorder(std::shared_ptr<ElementoArbol> root,
                   std::function<void (TipoDato&)> action) {
-    action(elem->dato);
-    for (auto child: elem->children) {
+    action(root->dato);
+    for (auto child: root->children) {
         dfs_preorder(child, action);
     }
 }
@@ -422,15 +422,54 @@ void dfs_preorder(std::shared_ptr<ElementoArbol> elem,
 
     <section data-markdown>
         <script type="text/template">
-### [DFS] post-order
+### [DFS] pre-order (iterativo)
 
 ```cpp
-void dfs_postorder(std::shared_ptr<ElementoArbol> elem,
+void dfs_preorder(std::shared_ptr<ElementoArbol> root,
                   std::function<void (TipoDato&)> action) {
-    for (auto child: elem->children) {
+    Stack stack;
+    stack.push(root);
+
+    while(!stack.empty()) {
+        auto elem = stack.top();
+        stack.pop();
+        action(elem->dato);
+        for (auto child: elem->children) {
+            stack.push(child);
+        }
+    }
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### [DFS] post-order (recursivo)
+
+```cpp
+void dfs_postorder(std::shared_ptr<ElementoArbol> root,
+                  std::function<void (TipoDato&)> action) {
+    for (auto child: root->children) {
         dfs_postorder(child, action);
     }
-    action(elem->dato);
+    action(root->dato);
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### [DFS] post-order (iterativo)
+
+```cpp
+void dfs_postorder(std::shared_ptr<ElementoArbol> root,
+                  std::function<void (TipoDato&)> action) {
+    Stack stack;
+    std::shared_ptr<ElementoArbol> lastNodeVisited = nullptr;
 }
 ```
 <small>`Tree.cpp`</small>
@@ -442,15 +481,15 @@ void dfs_postorder(std::shared_ptr<ElementoArbol> elem,
 ### [DFS] in-order
 
 ```cpp
-void dfs_inorder(std::shared_ptr<ElementoArbol> elem,
+void dfs_inorder(std::shared_ptr<ElementoArbol> root,
                   std::function<void (TipoDato&)> action) {
-    if (!elem->children.empty()) {
-        dfs_inorder(elem->children[0], action)
+    if (!root->children.empty()) {
+        dfs_inorder(root->children[0], action)
     }
-    action(elem->dato);
+    action(root->dato);
 
-    for (int i=1; i<elem->children.size(); i++) {
-        dfs_inorder(elem->children[1], action);
+    for (int i=1; i<root->children.size(); i++) {
+        dfs_inorder(root->children[i], action);
     }
 }
 ```
