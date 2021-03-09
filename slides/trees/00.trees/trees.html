@@ -638,6 +638,81 @@ int main() {
 ```
         </script>
     </section>
+</section>
 
 
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 11 🌶</h2>
+        <h4>Aritmética utilizando árboles</h4>
+    </section>
+
+    <section>
+        <p><strong>Operadores binarios:</strong> son aquellos que requiren dos operandos, ej.: suma, producto, resta,...</p>
+        <hr/>
+        <p><strong>Operadores unarios:</strong> son aquellos que requiren un único operando, ej.: <code>log</code>, factorial, <code>-</code>...</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores binarios</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-suma.dot.png" />
+        <p><code>3 + 4</code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>3 4 +</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores unarios (notación prefija)</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-logarithm.dot.png" />
+        <p><code>-  log 4 </code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>4 log -</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores unarios (notación postfija)</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-factorial.dot.png" />
+        <p><code>3 * 4 !</code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>3 4 * !</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Construye el siguiente árbol</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-sum-prod.dot.png" />
+        <p><code>(2+3)! * (10+20)</code></p>
+    </section>
+
+    <section>
+        <p>Comprueba que DFS post-order (notación postfija, RPN, notación polaca inversa) muestra una expresión no ambigua (*)</p>
+        <p><code>2 3 +   ! 10 20 + *</code></p>
+        <div class="footnote">(*) Hazlo con papel y lápiz, recuerda que había que utilizar una pila/stack para ir metiendo y sacando los operandos (<a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">Wikipedia</a>).</div>
+    </section>
+
+    <section>
+        <p>... pero la notación infija (DFS in-order) necesita paréntesis para ejecutar las operaciones en orden</p>
+        <p><code>2 + 3 !   * 10 + 20</code></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Crea una función parecida a `Tree::dfs_inorder` para añadir los paréntesis necesarios: 
+
+```cpp
+// TODO: You will need to add some 'std::cout << "("' at some points.
+void _print_infix(std::shared_ptr<ElementoArbol> root) {
+    if (!root->children.empty()) {
+        _print_infix(root->children[0]);
+    }
+    std::cout << root->dato;
+
+    for (int i=1; i<root->children.size(); i++) {
+        _print_infix(root->children[i]);
+    }
+}
+
+void Tree::_print_infix() const {
+    _print_infix(root);
+}
+```
+<small>`Tree.cpp`</small>
+        </script>
+    </section>
 </section>

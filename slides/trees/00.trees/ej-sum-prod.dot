@@ -1,0 +1,22 @@
+digraph {
+    rankdir=TB;
+
+    a [label="*"]
+    b [label="!"]
+    c0 [label="+"]
+    c1 [label="+"]
+    c2 [label=""]
+    d0 [label="2"]
+    d1 [label="3"]
+    d2 [label="10"]
+    d3 [label="20"]
+
+    a -> b;
+    b -> c0;
+    b -> c2;
+    a -> c1;
+    c0 -> d0;
+    c0 -> d1;
+    c1 -> d2;
+    c1 -> d3;
+}
