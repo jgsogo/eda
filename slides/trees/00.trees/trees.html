@@ -446,7 +446,7 @@ void _dfs_preorder(std::shared_ptr<ElementoArbol> root,
 }
 
 void Tree::dfs_preorder(std::function<void (TipoDato&)> action) const {
-    dfs_preorder_iterativo(root, action);
+    _dfs_preorder(root, action);
 }
 ```
 <small>`Tree.cpp`</small>
