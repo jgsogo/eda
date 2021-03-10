@@ -1,6 +1,7 @@
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
         <h2>Definiciones y propiedades</h2>
+        <div class="credit white">Imagen: <a href"https://www.elagoradiario.com/desarrollo-sostenible/cambio-climatico/arboles-agua-eficiente-cambio-climatico/">El Ágora</a>
     </section>
 
     <section>
@@ -117,7 +118,7 @@
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
         <h2>Recorrido de árboles</h2>
     </section>
 
@@ -153,7 +154,7 @@
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
         <h2>Recorrido en profundidad</h2>
         <h4>Depth-first search (DFS)</h4>
     </section>
@@ -203,7 +204,7 @@
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
         <h2>Recorrido en anchura/amplitud</h2>
         <h4>Breadth-first search (BFS)</h4>
     </section>
@@ -223,7 +224,7 @@
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
         <h2>Implementación</h2>
         <h4>Árboles con C++</h4>
     </section>
@@ -288,7 +289,7 @@ Así como para las listas, colas y pilas existen en la biblioteca estándard de 
         <script type="text/template">
 Creando un árbol: con la interfaz de que disponemos tenemos que ir nivel a nivel 🤷‍♂️
 
-```cpp[5-6|8-11|13-17|19-21|23-25]
+```cpp[5-6|8-11|13-18|20-24|26-28]
 #include <iostream>
 #include "Tree.h"
 
@@ -361,11 +362,11 @@ int _height(std::shared_ptr<ElementoArbol> element) {
         return 0;
     }
     else {
-        int max_children_height = 0;
+        int height = 0;
         for (auto child: element->children) {
-            max_children_height = std::max(max_children_height, _height(child));
+            height = std::max(height, _height(child));
         }
-        return 1 + max_children_height;
+        return 1 + height;
     }
 }
 
@@ -401,7 +402,7 @@ int Tree::size() const {
 
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
         <h2>Implementación DFS</h2>
         <h4>Recorrido en profundidad con C++</h4>
     </section>
@@ -528,7 +529,7 @@ void Tree::dfs_inorder(std::function<void (TipoDato&)> action) const {
 
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
         <h2>Implementación BFS</h2>
         <h4>Recorrido en anchura con C++</h4>
     </section>
@@ -581,7 +582,7 @@ void Tree::bfs(std::function<void (TipoDato&)> action) const {
 
 
 <section data-transition="convex">
-    <section>
+    <section data-background="images/background-actividades.png">
         <h2>Ejercicios propuestos</h2>
     </section>
 
