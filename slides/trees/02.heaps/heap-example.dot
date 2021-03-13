@@ -1,0 +1,35 @@
+digraph {
+    rankdir=TB;
+
+    node [shape=circle style=filled]
+
+    a -> b1
+    a -> b12 [weight=10 style=invis]
+    a -> b2
+
+    b1 -> c1
+    b1 -> c12 [weight=10 style=invis]
+    b1 -> c2
+
+    b2 -> c3
+    b2 -> c34 [weight=10 style=invis]
+    b2 -> c4 [style=invis]
+
+    a [label="9"]
+    
+    b1 [label="34"]
+    b12 [width=.1 style=invis]
+    b2 [label="21"]
+
+    c1 [label="57"]
+    c12 [width=.1 style=invis]
+    c2 [label="56"]
+    c3 [label="25"]
+    c34 [width=.1 style=invis]
+    c4 [style=invis]
+
+    {rank=same c1 c12 c2 b12 c3 c34 c4}
+
+    node1 [shape=record label="{{<m> 9 | 34 | 21 | 57 | 56 | 25 }}"];
+    b12 -> node1 [style=invis]
+}
