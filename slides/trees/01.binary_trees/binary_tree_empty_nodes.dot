@@ -1,0 +1,25 @@
+digraph {
+    rankdir=TB;
+
+    o1 [label="" color=lightgrey];
+    o2 [label="" color=lightgrey];
+    o3 [label="" color=lightgrey];
+    o4 [label="" color=lightgrey];
+    o5 [label="" color=lightgrey];
+    o6 [label="" color=lightgrey];
+
+    a -> o1;
+    a -> c;
+
+    c -> e;
+    c -> f;
+
+    e -> o2;
+    e -> o3;
+
+    f -> g;
+    f -> o4;
+
+    g -> o5;
+    g -> o6;
+}

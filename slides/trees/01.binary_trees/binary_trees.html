@@ -3,6 +3,199 @@
     <section>
         <h2>Definición/Concepto</h2>
     </section>
+
+    <section>
+        Un <span class="blue">árbol binario</span> es un árbol que, o bien está vacío (*), 
+        o bien consta de un nodo raíz con dos subárboles binarios, denominados derecho e izquierdo.
+        <p class="footnote">(*) Se trata de un artificio para que no exista ambigüedad a la hora de identificar el subárbol izquierdo y derecho.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-out">
+        <p>Ejemplo de árbol binario</p>
+        <img class="stretch" src="slides/trees/01.binary_trees/binary_tree_empty_nodes.dot.png" />
+        <p><small>Siempre existe un subárbol izquierdo (<code>left</code>) y otro derecho (<code>right</code>), aunque estén vacíos.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none">
+        <p>No representamos los árboles vacíos, PERO</p>
+        <img class="stretch" src="slides/trees/01.binary_trees/binary_tree.dot.png" />
+        <p><small>...pero están ahí, ¡fíjate en que las flechas están inclinadas!</small></p>
+    </section>
+
+    <section>
+        <p>De un árbol binario vacío (árbol sin nodo raíz) se dice que su altura es -1 (*).</p>
+        <p class="footnote">(*) Según cómo lo implementes este dato puede ser útil o irrelevante.</p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
+        <h2>Implementación</h2>
+        <h4>Árboles binarios con C++</h4>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-structs.dot.png"/>
+        <p><small>Un árbol es una colección de elementos enlazados que contienen datos y punteros (izquierdo y derecho) a sus hijos. El árbol será el puntero al nodo raíz.</small></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `ElementoArbolBinario.h`
+
+Cada elemento contiene datos y punteros a los hijos izquierdo y derecho
+
+```cpp
+class ElementoArbolBinario {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementoArbolBinario> left = nullptr;
+        std::shared_ptr<ElementoArbolBinario> right = nullptr;
+    public:
+        // Constructor 
+        ElementoArbolBinario(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementoArbolBinario.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinaryTree.h`
+
+El árbol es el puntero al nodo raíz y las operaciones que pueden realizarse con él.
+
+```cpp[3,6-7|9-12|13-15]
+class BinaryTree {
+    protected:
+        std::shared_ptr<ElementoArbolBinario> root = nullptr;
+
+    public:
+        BinaryTree();  // Creates empty tree
+        BinaryTree(const TipoDato& dato);  // Creates tree with root node
+
+        // Member functions (properties of the tree structure)
+        int height() const;
+        int size() const; // Returns number of nodes
+
+        // A way to add subtrees to an existing tree
+        void add_left_subtree(const BinaryTree& subtree);
+        void add_right_subtree(const BinaryTree& subtree);
+}
+```
+<!-- .element: class="r-stretch" -->
+<small>`BinaryTree.h`</small>
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinaryTree.cpp`
+
+La implementación es _igual_ a la de un árbol normal
+
+```cpp
+
+// Constructor for an empty tree
+BinaryTree::BinaryTree() {}
+
+// Constructor for a tree with the root node
+BinaryTree::BinaryTree(const TipoDato& dato) {
+    root = std::make_shared<ElementoArbolBinario>(ElementoArbolBinario{dato});
+}
+
+void BinaryTree::add_left_subtree(const BinaryTree& subtree) {
+    root->left = subtree.root;
+}
+
+void BinaryTree::add_right_subtree(const BinaryTree& subtree) {
+    root->right = subtree.root;
+}
+```
+<small>`BinaryTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Altura (recuerda cuál era la altura del árbol vacío):
+
+```cpp
+#include <algorithm>
+
+int _height(std::shared_ptr<ElementoArbolBinario> element) {
+    if (element == nullptr) {
+        return -1;
+    }
+    else {
+        int height_left = _height(element->left);
+        int height_right = _height(element->right);
+        return 1 + std::max(height_left, height_right);
+    }
+}
+
+int BinaryTree::height() const {
+    return _height(root);
+}
+```
+<small>`BinaryTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Tamaño
+
+```cpp
+int _size(std::shared_ptr<ElementoArbolBinario> element) {
+    if (element->root == nullptr) {
+        return 0;
+    }
+    else {
+        int size_left = _size(element->left);
+        int size_right = _size(element->right);
+        return 1 + size_left + size_right;
+    }
+}
+
+int BinaryTree::size() const {
+    return _size(root);
+}
+```
+<small>`BinaryTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Por supuesto, también se pueden visitar/recorrer...
+
+```cpp[11-14|16-17]
+class BinaryTree {
+    protected:
+        std::shared_ptr<ElementoArbolBinario> root = nullptr;
+
+    public:
+        BinaryTree();  // Creates empty tree
+        BinaryTree(const TipoDato& dato);  // Creates tree with root node
+
+        // ... more functions
+        
+        // Depth-first search
+        void dfs_preorder(std::function<void (TipoDato&)> action) const;
+        void dfs_postorder(std::function<void (TipoDato&)> action) const;
+        void dfs_inorder(std::function<void (TipoDato&)> action) const;
+        
+        // Breadth-first search
+        void bfs(std::function<void (TipoDato&)> action) const;
+}
+```
+<small>`BinaryTree.h`</small>
+        </script>
+    </section>
 </section>
 
 <section data-transition="convex">
@@ -17,4 +210,23 @@
     </section>
 </section>
 
+<section data-transition="convex">
+    <section data-background="images/background-actividades.png">
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: binary_tree</h4>
+        <p>Reune el código relacionado con los árboles árboles en tu ordenador, junto al de otros TAD</p>
+    </section>
+
+    <section>
+        <p>Necesitarás añadir:</p>
+        <ul>
+            <li><code>BinaryTree.h</code></li>
+            <li><code>BinaryTree.cpp</code></li>
+            <li><code>ElementoArbolBinario.h</code></li>
+        </ul>
+    </section>
+</section>
 
