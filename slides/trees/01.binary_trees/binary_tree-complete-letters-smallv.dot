@@ -1,0 +1,6 @@
+digraph structs {
+    rankdir=LR;
+    
+    node [shape=record, width = .5];
+    node1 [label="{<m> a| b | c | d | e | f}"];
+}

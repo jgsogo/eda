@@ -1,13 +1,6 @@
 digraph {
     rankdir=TB;
 
-    o1 [label="" color=lightgrey];
-    o2 [label="" color=lightgrey];
-    o3 [label="" color=lightgrey];
-    o4 [label="" color=lightgrey];
-    o5 [label="" color=lightgrey];
-    o6 [label="" color=lightgrey];
-
     a -> o1;
     a -> c;
 
@@ -15,11 +8,24 @@ digraph {
     c -> f;
 
     e -> o2;
+    e -> e_m [style=invis];
     e -> o3;
 
     f -> g;
+    f -> f_m [style=invis];
     f -> o4;
 
     g -> o5;
     g -> o6;
+
+    o1 [label="" width=.1 height=.1 style=filled];
+    o2 [label="" width=.1 height=.1 style=filled];
+    o3 [label="" width=.1 height=.1 style=filled];
+    o4 [label="" width=.1 height=.1 style=filled];
+    o5 [label="" width=.1 height=.1 style=filled];
+    o6 [label="" width=.1 height=.1 style=filled];
+    e_m [label="" style=invis width=.1 height=.1 ]
+    f_m [label="" style=invis width=.1 height=.1 ]
+
+    {rank = same; o2 e_m o3 o4 f_m}
 }

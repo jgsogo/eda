@@ -1,0 +1,14 @@
+digraph {
+    rankdir=TB;
+
+    node [shape=circle style=filled label=""]
+
+    a -> b;
+    a -> c;
+
+    c -> d;
+    c -> e;
+
+    d -> f;
+    d -> g;
+}
