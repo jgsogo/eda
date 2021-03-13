@@ -3,18 +3,474 @@
     <section>
         <h2>Definición/Concepto</h2>
     </section>
+
+    <section>
+        Un <span class="blue">árbol binario</span> es un árbol que, o bien está vacío (*), 
+        o bien consta de un nodo raíz con dos subárboles binarios, denominados derecho e izquierdo.
+        <p class="footnote">(*) Se trata de un artificio para que no exista ambigüedad a la hora de identificar el subárbol izquierdo y derecho.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-out">
+        <p>Ejemplo de árbol binario</p>
+        <img class="stretch" src="slides/trees/01.binary_trees/binary_tree_empty_nodes.dot.png" />
+        <p><small>Siempre existe un subárbol izquierdo (<code>left</code>) y otro derecho (<code>right</code>), aunque estén vacíos.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none">
+        <p>No representamos los árboles vacíos, PERO</p>
+        <img class="stretch" src="slides/trees/01.binary_trees/binary_tree.dot.png" />
+        <p><small>...pero están ahí, ¡fíjate en que las flechas están inclinadas!</small></p>
+    </section>
+
+    <section>
+        <p>De un árbol binario vacío (árbol sin nodo raíz) se dice que su altura es -1 (*).</p>
+        <p class="footnote">(*) Según cómo lo implementes este dato puede ser útil o irrelevante.</p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/trees/00.trees/background-tree1.jpg">
+        <h2>Implementación</h2>
+        <h4>Árboles binarios con C++</h4>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-structs.dot.png"/>
+        <p><small>Un árbol es una colección de elementos enlazados que contienen datos y punteros (izquierdo y derecho) a sus hijos. El árbol será el puntero al nodo raíz.</small></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `ElementoArbolBinario.h`
+
+Cada elemento contiene datos y punteros a los hijos izquierdo y derecho
+
+```cpp
+class ElementoArbolBinario {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementoArbolBinario> left = nullptr;
+        std::shared_ptr<ElementoArbolBinario> right = nullptr;
+    public:
+        // Constructor 
+        ElementoArbolBinario(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementoArbolBinario.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinaryTree.h`
+
+El árbol es el puntero al nodo raíz y las operaciones que pueden realizarse con él.
+
+```cpp[3,6-7|9-12|13-15]
+class BinaryTree {
+    protected:
+        std::shared_ptr<ElementoArbolBinario> root = nullptr;
+
+    public:
+        BinaryTree();  // Creates empty tree
+        BinaryTree(const TipoDato& dato);  // Creates tree with root node
+
+        // Member functions (properties of the tree structure)
+        int height() const;
+        int size() const; // Returns number of nodes
+
+        // A way to add subtrees to an existing tree
+        void add_left_subtree(const BinaryTree& subtree);
+        void add_right_subtree(const BinaryTree& subtree);
+}
+```
+<!-- .element: class="r-stretch" -->
+<small>`BinaryTree.h`</small>
+
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinaryTree.cpp`
+
+La implementación es _igual_ a la de un árbol normal
+
+```cpp
+
+// Constructor for an empty tree
+BinaryTree::BinaryTree() {}
+
+// Constructor for a tree with the root node
+BinaryTree::BinaryTree(const TipoDato& dato) {
+    root = std::make_shared<ElementoArbolBinario>(ElementoArbolBinario{dato});
+}
+
+void BinaryTree::add_left_subtree(const BinaryTree& subtree) {
+    root->left = subtree.root;
+}
+
+void BinaryTree::add_right_subtree(const BinaryTree& subtree) {
+    root->right = subtree.root;
+}
+```
+<small>`BinaryTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Altura (recuerda cuál era la altura del árbol vacío):
+
+```cpp
+#include <algorithm>
+
+int _height(std::shared_ptr<ElementoArbolBinario> element) {
+    if (element == nullptr) {
+        return -1;
+    }
+    else {
+        int height_left = _height(element->left);
+        int height_right = _height(element->right);
+        return 1 + std::max(height_left, height_right);
+    }
+}
+
+int BinaryTree::height() const {
+    return _height(root);
+}
+```
+<small>`BinaryTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Tamaño
+
+```cpp
+int _size(std::shared_ptr<ElementoArbolBinario> element) {
+    if (element->root == nullptr) {
+        return 0;
+    }
+    else {
+        int size_left = _size(element->left);
+        int size_right = _size(element->right);
+        return 1 + size_left + size_right;
+    }
+}
+
+int BinaryTree::size() const {
+    return _size(root);
+}
+```
+<small>`BinaryTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Por supuesto, también se pueden visitar/recorrer...
+
+```cpp[11-14|16-17]
+class BinaryTree {
+    protected:
+        std::shared_ptr<ElementoArbolBinario> root = nullptr;
+
+    public:
+        BinaryTree();  // Creates empty tree
+        BinaryTree(const TipoDato& dato);  // Creates tree with root node
+
+        // ... more functions
+        
+        // Depth-first search
+        void dfs_preorder(std::function<void (TipoDato&)> action) const;
+        void dfs_postorder(std::function<void (TipoDato&)> action) const;
+        void dfs_inorder(std::function<void (TipoDato&)> action) const;
+        
+        // Breadth-first search
+        void bfs(std::function<void (TipoDato&)> action) const;
+}
+```
+<small>`BinaryTree.h`</small>
+        </script>
+    </section>
 </section>
 
 <section data-transition="convex">
     <section>
         <h2>Variantes</h2>
     </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Árbol binario estricto</h4>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-strict.dot.png"/>
+        <p><small>Si un subárbol está vacío, el otro también (todo tiene 0 ó 2 hijos).</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Árbol binario lleno</h4>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-full.dot.png"/>
+        <p><small>Es un árbol estricto donde en cada nodo se cumple que la altura del árbol izquierdo es igual a la del derecho, y ambos subárboles son árboles llenos.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Los <span class="red">árboles binarios llenos</span> son los árboles con 
+            máximo número de nodos (<code>n</code>) para una altura (<code>h</code>) dada:
+        </p>
+        <p><code>n = 2<sup>h+1</sup> - 1</code></p>
+        <p class="footnote"><code>log2(n+1) = h + 1</code></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Árbol binario completo</h4>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-complete.dot.png"/>
+        <p><small>Es un árbol lleno hasta el penúltimo nivel. En el último nivel los nodos están agrupados a la izquierda</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            En los <span class="red">árboles binarios completos</span> su altura es proporcional
+            al logaritmo del número de nodos:
+        </p>
+        <p><code>h ∈ O(log n)</code></p>
+    </section>
 </section>
 
 <section data-transition="convex">
     <section>
-        <h2>Árboles completos</h2>
+        <h2>Árboles binarios completos</h2>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-complete.dot.png"/>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Recorrido por niveles (BFS)</h4>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-complete-letters.dot.png"/>
+        <p><small>a, b, c, d, e, f, g, h, i, j, k, l</small></p>
+    </section>
+
+    <section data-menu-title="Reconstrucción" data-background-color="rgb(255, 255, 255)">
+        <p>Puedo reconstruir un árbol binario completo a partir de su recorrido BFS</p>
+        <table>
+            <tr>
+                <td><img src="slides/trees/01.binary_trees/binary_tree-complete-letters-smallv.dot.png"/></td>
+                <td class="fragment"><img src="slides/trees/01.binary_trees/binary_tree-complete-letters-small.dot.png"/></td>
+            </tr>
+        </table>
+        <p class="fragment"><small>🤓 ¡Puedo almacenar el árbol en un vector!</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>En el vector, a partir del índice <code>i</code> de un elemento, puedo conocer el índice de su nodo padre y el de sus nodos hijos</p>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-complete-posvector.dot.png"/>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            <table>
+                <tr>
+                    <td><img width="500" src="slides/trees/01.binary_trees/binary_tree-complete-posvector.dot.png"/></td>
+                    <td><img src="slides/trees/01.binary_trees/binary_tree-complete-letters-small-posvector.dot.png"/></td>
+                </tr>
+            </table>
+        </p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Implementación en C++
+
+```cpp
+class CompleteBinaryTree {
+    public:
+        CompleteBinaryTree();
+
+        int height() const;
+        int size() const;
+
+        void push(const TipoDato& dato); // Adds element at the end
+
+        void bfs(std::function<void (TipoDato&)> action) const; // Trivial
+    protected:
+        std::vector<TipoDato> _data;
+};
+```
+¡No hay punteros!
+
+Si nos dicen la altura 'h' máxima del árbol podríamos utilizar un 'std::array<TipoDato, n>', donde 'n' es el número máximo de nodos: '2^(h+1)-1'  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-background="images/background-actividades.png">
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: binary_tree</h4>
+        <p>Reune el código relacionado con los árboles árboles en tu ordenador, junto al de otros TAD</p>
+    </section>
+
+    <section>
+        <p>Necesitarás añadir:</p>
+        <ul>
+            <li><code>BinaryTree.h</code></li>
+            <li><code>BinaryTree.cpp</code></li>
+            <li><code>ElementoArbolBinario.h</code></li>
+        </ul>
     </section>
 </section>
 
 
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 12 🌶</h2>
+        <h4>Aritmética utilizando árboles</h4>
+    </section>
+
+    <section>
+        <p>Implementa el <a href="10.trees.html#/9">ejercicio 11</a> utilizando <span class="red">árboles binarios</span>.</p>
+        <p>(Sustituye los nodos cuyo contenido era vacío por un árbol binario vacío)</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores binarios (infijos)</p>
+        <img class="r-stretch" src="slides/trees/00.trees/ej-suma.dot.png" />
+        <p><code>3 + 4</code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>3 4 +</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores unarios (prefijos)</p>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/ej-logarithm.dot.png" />
+        <p><code>- log 4 </code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>4 log -</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Operadores unarios (postfijos)</p>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/ej-factorial.dot.png" />
+        <p><code>3 * 4 !</code> <sub><sup>(DFS in-order, notación infija)</sup></sub></p>
+        <p><code>3 4 * !</code> <sub><sup>(DFS post-order, notación postfija, <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">RPN</a>)</sup></sub></p>
+    </section>
+
+    <section>
+        <p>💻  Construye árboles con diferentes expresiones algebraicas 
+           y utiliza las funciones <code>dfs_inorder</code> y <code>dfs_postorder</code>
+           para recorrerlos e imprimirlos. 
+        </p>
+        <div class="footnote">(*) Comprueba que el recorrido postorder se corresponde con la Notación Polaca Inversa (<a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_polaca_inversa">Wikipedia</a>).</div>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 13 🌶</h2>
+        <h4>Árbol binario completo</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementa la siguiente interfaz para un árbol binario completo:
+
+```cpp
+class CompleteBinaryTree {
+    public:
+        CompleteBinaryTree();
+
+        int height() const;
+        int size() const;
+        bool empty() const;
+        
+        void push(const TipoDato& dato); // Adds element at the end
+
+        int index(const TipoDato& elem) const; // Returns the index for the given element (-1 if not found)
+        const TipoDato& at(int index) const; // Returns element at the given position
+
+        int parent(int index) const; // Returns the index of the parent element (-1 if not exists)
+        int left(int index) const; // Returns the index of the left child (-1 if not exists)
+        int right(int index) const; // Returns the index of the right child (-1 if not exists)
+
+    protected:
+        std::vector<TipoDato> _data;
+};
+```
+        </script>
+    </section>
+
+    <section>
+        <p>Utilizando la clase anterior, ¿podrías implementar las diferentes estrategias de recorrido de un árbol (recorrido en profundidad, en anchura)?</p>
+    </section>
+
+        <section data-markdown>
+        <script type="text/template">
+Amplía la interfaz de la clase con las siguientes funciones
+
+```cpp[7-10]
+class CompleteBinaryTree {
+    public:
+        CompleteBinaryTree();
+
+        // ... other methods
+
+        void dfs_preorder(std::function<void (const TipoDato&)> action) const;
+        void dfs_postorder(std::function<void (const TipoDato&)> action) const;
+        void dfs_inorder(std::function<void (const TipoDato&)> action) const;
+        void bfs(std::function<void (const TipoDato&)> action) const;
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Recorrido en profundidad pre orden <!-- .element: class="caps-preserve" -->
+
+```cpp[27-36|17-25|1-15]
+void _dfs_preorder(const CompleteBinaryTree& tree,
+                   int idx_node,
+                   std::function<void (const TipoDato&)> action) {
+    if (idx_node == -1) {
+        return;
+    }
+
+    action(tree.at(idx_node));
+
+    int left_idx = tree.left(idx_node);
+    _dfs_preorder(tree, left_idx, action);
+
+    int right_idx = tree.right(idx_node);
+    _dfs_preorder(tree, right_idx, action);
+}
+
+void CompleteBinaryTree::dfs_preorder(std::function<void (const TipoDato&)> action) const {
+    if (this->empty()) {
+        return;
+    }
+    else {
+        // Start recursion from the root node (idx=0)
+        _dfs_preorder(*this, 0, action);
+    }
+}
+
+int main() {
+    CompleteBinaryTree tree;
+    tree.push(...);
+    tree.push(...);
+    ...
+
+    dfs_preorder(tree, [](const TipoDato& dato){
+        std::cout << dato << std::endl;
+    });
+}
+```
+<small><code>dfs_preorder</code></small>
+        </script>
+    </section>
+
+</section>

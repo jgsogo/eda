@@ -1,0 +1,13 @@
+digraph {
+    rankdir=TB;
+
+    a -> b
+
+    b -> c1 
+    b -> c2
+
+    a [label="" xlabel="i div 2"];
+    b [label="" xlabel="i" style=filled];
+    c1 [label="" xlabel="2i"];
+    c2 [label="" xlabel="2i+1"];
+}

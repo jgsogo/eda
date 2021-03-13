@@ -1,0 +1,29 @@
+digraph {
+    rankdir=TB;
+
+    a -> o1 [style=invis];
+    a -> c;
+
+    c -> e;
+    c -> f;
+
+    e -> o2 [style=invis];
+    e -> o3 [style=invis];
+
+    f -> g;
+    f -> o44 [style=invis];
+    f -> o4 [style=invis];
+
+    g -> o5 [style=invis];
+    g -> o6 [style=invis];
+
+    o1 [style=invis];
+    o2 [style=invis];
+    o3 [style=invis];
+    o4 [style=invis];
+    o44 [style=invis];
+    o5 [style=invis];
+    o6 [style=invis];
+
+
+}
