@@ -11,21 +11,28 @@
         </p>
     </section>
 
-    <section>
-        <h4>Propiedad de montículo</h4>
-        <p>Todo nodo es menor que sus descendientes (montículo de mínimos).</p>
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Propiedad de montículo (de mínimos)</h4>
+        <p>Todo nodo es menor que sus descendientes</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-example.dot.png" />
         <p class="footnote">Por supuesto, se puede definir un <em>montículo de máximos</em> como aquél en que cada nodo es mayor que sus descendientes.</p>
     </section>
 
     <section>
         <h4>Otras propiedades</h4>
+        <ul>
+            <li>El <span class="red">nodo raíz</span> es el mínimo (primera posición)</li>
+            <li>La <span class="red">altura</span> es logarítmica respecto al número de nodos (es un árbol binario completo)</li>
+        </ul>
     </section>
-</section>
 
-<section data-transition="convex">
     <section>
-        <h2>Utilidad</h2>
-        <h4>Cola de prioridad</h4>
+        <p>
+            Si un sólo elemento no cumple la propiedad de montículo se puede 
+            reestablecer mediante <span class="red">ascensos</span> (intercambio 
+            con su padre) o <span class="red">descensos</span> (intercambio con el 
+            mayor de sus hijos)
+        </p>
     </section>
 </section>
 
@@ -33,6 +40,267 @@
     <section>
         <h2>Operaciones</h2>
     </section>
+
+    <section>
+        <h4>Ascenso de un elemento</h4>
+        <p>Consiste en intercambiar un elemento con su padre</p>
+    </section>
+
+    <section>
+        <h4>Descenso de un elemento</h4>
+        <p>Consiste en intercambiar un elemento con el mayor de sus hijos</p>
+    </section>
+
+    <section>
+        <h4>Inserción de un elemento</h4>
+        <p>Se sitúa al final del vector (última hoja del árbol) y se <span class="red">asciende</span> hasta que cumple la propiedad de montículo.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">       
+        <p>Inserción de un elemento</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-insertion-1.dot.png" />
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">       
+        <p>Inserción de un elemento</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-insertion-2.dot.png" />
+        <p>1) Insertar el elemento en la última posición.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">       
+        <p>Inserción de un elemento</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-insertion-3.dot.png" />
+        <p>2) Ascender: intercambiar el nodo con su padre.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">       
+        <p>Inserción de un elemento</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-insertion-4.dot.png" />
+        <p>3) Ascender: intercambiar el nodo con su padre.</p>
+    </section>
+
+    <section>
+        <h4>Eliminar la raíz</h4>
+        <p>Se intercambia con el último elemento (y se elimina) y se <span class="red">desciende</span> la nueva raíz hasta que se reestablezca la propiedad.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">       
+        <p>Eliminar la raíz</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-remove-1.dot.png" />
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">       
+        <p>Eliminar la raíz</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-remove-2.dot.png" />
+        <p>1) Intercambiar la raíz con el último elemento.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">       
+        <p>Eliminar la raíz</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-remove-3.dot.png" />
+        <p>2) Descender la nueva raíz: intercambio con su hijo más grande.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">       
+        <p>Eliminar la raíz</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-remove-4.dot.png" />
+        <p>2) Descender: intercambio con su hijo más grande.</p>
+    </section>
 </section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Utilidad</h2>
+        <h4>TAD: Cola de prioridad</h4>
+    </section>
+
+    <section>
+        <h4>Cola de prioridad</h4>
+        <p>
+            Una cola de prioridad es un tipo de dato abstracto similar a una <span class="red">cola</span> 
+            en la que los elementos tienen adicionalmente una prioridad asignada.
+        </p>
+        <hr/>
+        <p>
+            Se puede implementar utilizando un montículo.
+        </p>
+    </section>
+
+    <section>
+        <p>Características (buenas) de un montículo:</p>
+        <ul>
+            <li>El acceso al mínimo es <code>O(1)</code></li>
+            <li>La inserción de un valor es <code>O(log n)</code></li>
+            <li>El borrado del mínimo es <code>O(log n)</code></li>
+            <li>Almacenamiento en un <code>vector</code> (sin punteros)</li>
+        </ul>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Implementación en C++
+
+Esta cola sí tiene una interfaz standard (<a href="https://en.cppreference.com/w/cpp/container/priority_queue">cppreference</a>):
+
+```cpp
+class PriorityQueue {
+    public:
+        PriorityQueue();
+
+        int size() const;
+        bool empty() const;
+
+        TipoDato& top() const;
+
+        void push(const TipoDato& dato);
+        void pop();
+
+    protected:
+        std::vector<TipoDato> _data;
+};
+```
+<small>`PriorityQueue.h`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Algunos métodos son triviales
+
+```cpp
+PriorityQueue::PriorityQueue() {}
+
+int PriorityQueue::size() const {
+    return _data.size();
+}
+
+bool PriorityQueue::empty() const {
+    return _data.empty();
+}
+```
+<small>`PriorityQueue.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+El primer elemento es el de mayor prioridad, coincide con la raíz del montículo
+
+```cpp
+TipoDato& PriorityQueue::top() const {
+    return _data.at(0);
+}
+```
+<small>`PriorityQueue.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Inserción de un elemento
+
+```cpp[15-22|2-13]
+// Recursive heapify-up algorithm
+void PriorityQueue::heapify_up(int i) {
+    if (i == 0) { return;}
+
+    // check if the node at index `i` and its parent violate the heap property
+    if (_data[parent(i)] < _data[i]) {
+        // swap the two if heap property is violated
+        std::swap(_data[i], _data[parent(i)]);
+
+        // call heapify-up on the parent
+        heapify_up(_data(i));
+    }
+}
+
+void PriorityQueue::push(const TipoDato& dato) {
+    // Insert at the end:
+    _data.push_back(dato);
+
+    // Get element index and call heapify-up procedure
+    int index = size() - 1;
+    heapify_up(index);
+}
+```
+<small>`PriorityQueue.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Eliminar el primer elemento (la raíz del montículo)
+
+```cpp[26-35|1-24]
+// Recursive heapify-down algorithm.
+void heapify_down(int i)
+{
+    // get left and right child of node at index `i`
+    int idx_left = left(i);
+    int idx_right = right(i);
+
+    // Identify largest element
+    int idx_largest = i;
+    if (data[idx_left] > data[idx_largest]) {
+        idx_largest = idx_left;
+    }
+    if (data[idx_right] > data[idx_largest]) {
+        idx_largest = idx_right;
+    }
+
+    // swap with a child having greater value and
+    // call heapify-down on the child
+    if (idx_largest != i)
+    {
+        swap(data[i], A[idx_largest]);
+        heapify_down(idx_largest);
+    }
+}
+
+void PriorityQueue::pop() {
+    if (this->empty()) {return;}
+
+    // replace the root of the heap with the last element (and remove it)
+    _data[0] = _data.back();
+    _data.pop_back();
+
+    // call heapify-down on the root node
+    heapify_down(0);
+}
+```
+<small>`PriorityQueue.cpp`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Funciones auxiliares
+
+Hemos utilizado algunas funciones auxiliares: `parent`, `left`, `right`
+
+```cpp[15-22|2-13]
+class PriorityQueue {
+    public:
+        PriorityQueue();
+
+        // ... other methods
+
+    private:
+        // This functions are private
+        int parent(int index) const;
+        int left(int index) const;
+        int right(int index) const;
+};
+```
+<small>`PriorityQueue.h`</small> 
+        </script>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Estas funciones son una simple operación matemática</p>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-complete-posvector.dot.png"/>
+    </section>
+</section>
+
 
 <section data-external-slide-replace="slides/trees/02.heaps/heapsort.html"> </section>

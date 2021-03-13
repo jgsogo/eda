@@ -1,0 +1,83 @@
+digraph {
+    rankdir=TB;
+
+    node [shape=circle]
+
+    a -> b1
+    a -> b12 [weight=10 style=invis]
+    a -> b2
+
+    b1 -> c1
+    b1 -> c12 [weight=10 style=invis]
+    b1 -> c2
+
+    b2 -> c3
+    b2 -> c34 [weight=10 style=invis]
+    b2 -> c4
+
+    c1 -> d1
+    c1 -> d12 [weight=10 style=invis]
+    c1 -> d2
+
+    c2 -> d3
+    c2 -> d34 [weight=10 style=invis]
+    c2 -> d4
+
+    c3 -> d5
+    c3 -> d56 [weight=10 style=invis]
+    c3 -> d6
+
+    c4 -> d7 [style=invis]
+    c4 -> d78 [weight=10 style=invis]
+    c4 -> d8 [style=invis]
+
+    a [label="A"]
+    
+    b1 [label="B"]
+    b2 [label="F"]
+
+    c1 [label="E"]
+    c2 [label="D"]
+    c3 [label="P"]
+    c4 [label="H"]
+
+    d1 [label="Z"]
+    d2 [label="M"]
+    d3 [label="R"]
+    d4 [label="W"]
+    d5 [label="S"]
+    d6 [label="C" style=filled]
+    d7 [style=invis]
+    d8 [style=invis]
+
+    b12 [width=.1 style=invis]
+    c12 [width=.1 style=invis]
+    c34 [width=.1 style=invis]
+
+    d12 [width=.1 style=invis]
+    d34 [width=.1 style=invis]
+    d56 [width=.1 style=invis]
+    d78 [width=.1 style=invis]
+
+    {rank=same d1 d12 d2 c12 d3 d34 d4 b12 d5 d56 d6 c34 d7 d78 d8 }
+
+    node2 [label=< <table BORDER="0" CELLBORDER="1" CELLSPACING="0" cellpadding="10">
+                    <tr>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>F</td>
+                        <td>E</td>
+                        <td>D</td>
+                        <td>P</td>
+                        <td>H</td>
+                        <td>Z</td>
+                        <td>M</td>
+                        <td>R</td>
+                        <td>W</td>
+                        <td>S</td>
+                        <td bgcolor="grey">C</td>
+                    </tr>
+                   </table> >
+            shape=plaintext]
+    b12 -> node2 [style=invis]
+}
