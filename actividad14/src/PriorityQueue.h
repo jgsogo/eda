@@ -17,7 +17,7 @@ class PriorityQueue {
         void pop();
 
     private:
-        // This functions are private
+        // These functions are private
         void heapify_down(int i);
         void heapify_up(int i);
         int parent(int index) const;
