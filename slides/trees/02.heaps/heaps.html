@@ -1,4 +1,3 @@
-
 <section data-transition="convex">
     <section>
         <h2>Definición y propiedades</h2>
@@ -6,8 +5,9 @@
 
     <section>
         <p>
-            Un <span class="blue">montículo (heap)</span> es un <span class="red">árbol binario completo</span> 
-            cuyos nodos almacenan elementos comparables y donde todo nodo cumple la <span class="red">propiedad de montículo</span>.
+            Un <span class="blue">montículo (heap)</span> es un <span class="red">árbol binario completo</span>
+            cuyos nodos almacenan elementos comparables y donde todo nodo cumple la <span class="red">propiedad de
+                montículo</span>.
         </p>
     </section>
 
@@ -15,22 +15,24 @@
         <h4>Propiedad de montículo (de mínimos)</h4>
         <p>Todo nodo es menor que sus descendientes</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-example.dot.png" />
-        <p class="footnote">Por supuesto, se puede definir un <em>montículo de máximos</em> como aquél en que cada nodo es mayor que sus descendientes.</p>
+        <p class="footnote">Por supuesto, se puede definir un <em>montículo de máximos</em> como aquél en que cada nodo
+            es mayor que sus descendientes.</p>
     </section>
 
     <section>
         <h4>Otras propiedades</h4>
         <ul>
             <li>El <span class="red">nodo raíz</span> es el mínimo (primera posición)</li>
-            <li>La <span class="red">altura</span> es logarítmica respecto al número de nodos (es un árbol binario completo)</li>
+            <li>La <span class="red">altura</span> es logarítmica respecto al número de nodos (es un árbol binario
+                completo)</li>
         </ul>
     </section>
 
     <section>
         <p>
-            Si un sólo elemento no cumple la propiedad de montículo se puede 
-            reestablecer mediante <span class="red">ascensos</span> (intercambio 
-            con su padre) o <span class="red">descensos</span> (intercambio con el 
+            Si un sólo elemento no cumple la propiedad de montículo se puede
+            reestablecer mediante <span class="red">ascensos</span> (intercambio
+            con su padre) o <span class="red">descensos</span> (intercambio con el
             mayor de sus hijos)
         </p>
     </section>
@@ -53,27 +55,28 @@
 
     <section>
         <h4>Inserción de un elemento</h4>
-        <p>Se sitúa al final del vector (última hoja del árbol) y se <span class="red">asciende</span> hasta que cumple la propiedad de montículo.</p>
+        <p>Se sitúa al final del vector (última hoja del árbol) y se <span class="red">asciende</span> hasta que cumple
+            la propiedad de montículo.</p>
     </section>
 
-    <section data-background-color="rgb(255, 255, 255)">       
+    <section data-background-color="rgb(255, 255, 255)">
         <p>Inserción de un elemento</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-insertion-1.dot.png" />
     </section>
 
-    <section data-background-color="rgb(255, 255, 255)">       
+    <section data-background-color="rgb(255, 255, 255)">
         <p>Inserción de un elemento</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-insertion-2.dot.png" />
         <p>1) Insertar el elemento en la última posición.</p>
     </section>
 
-    <section data-background-color="rgb(255, 255, 255)">       
+    <section data-background-color="rgb(255, 255, 255)">
         <p>Inserción de un elemento</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-insertion-3.dot.png" />
         <p>2) Ascender: intercambiar el nodo con su padre.</p>
     </section>
 
-    <section data-background-color="rgb(255, 255, 255)">       
+    <section data-background-color="rgb(255, 255, 255)">
         <p>Inserción de un elemento</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-insertion-4.dot.png" />
         <p>3) Ascender: intercambiar el nodo con su padre.</p>
@@ -81,27 +84,28 @@
 
     <section>
         <h4>Eliminar la raíz</h4>
-        <p>Se intercambia con el último elemento (y se elimina) y se <span class="red">desciende</span> la nueva raíz hasta que se reestablezca la propiedad.</p>
+        <p>Se intercambia con el último elemento (y se elimina) y se <span class="red">desciende</span> la nueva raíz
+            hasta que se reestablezca la propiedad.</p>
     </section>
 
-    <section data-background-color="rgb(255, 255, 255)">       
+    <section data-background-color="rgb(255, 255, 255)">
         <p>Eliminar la raíz</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-remove-1.dot.png" />
     </section>
 
-    <section data-background-color="rgb(255, 255, 255)">       
+    <section data-background-color="rgb(255, 255, 255)">
         <p>Eliminar la raíz</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-remove-2.dot.png" />
         <p>1) Intercambiar la raíz con el último elemento.</p>
     </section>
 
-    <section data-background-color="rgb(255, 255, 255)">       
+    <section data-background-color="rgb(255, 255, 255)">
         <p>Eliminar la raíz</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-remove-3.dot.png" />
         <p>2) Descender la nueva raíz: intercambio con su hijo más grande.</p>
     </section>
 
-    <section data-background-color="rgb(255, 255, 255)">       
+    <section data-background-color="rgb(255, 255, 255)">
         <p>Eliminar la raíz</p>
         <img class="r-stretch" src="slides/trees/02.heaps/heap-remove-4.dot.png" />
         <p>2) Descender: intercambio con su hijo más grande.</p>
@@ -117,10 +121,10 @@
     <section>
         <h4>Cola de prioridad</h4>
         <p>
-            Una cola de prioridad es un tipo de dato abstracto similar a una <span class="red">cola</span> 
+            Una cola de prioridad es un tipo de dato abstracto similar a una <span class="red">cola</span>
             en la que los elementos tienen adicionalmente una prioridad asignada.
         </p>
-        <hr/>
+        <hr />
         <p>
             Se puede implementar utilizando un montículo.
         </p>
@@ -150,7 +154,7 @@ class PriorityQueue {
         int size() const;
         bool empty() const;
 
-        TipoDato& top() const;
+        const TipoDato& top() const;
 
         void push(const TipoDato& dato);
         void pop();
@@ -187,7 +191,7 @@ bool PriorityQueue::empty() const {
 El primer elemento es el de mayor prioridad, coincide con la raíz del montículo
 
 ```cpp
-TipoDato& PriorityQueue::top() const {
+const TipoDato& PriorityQueue::top() const {
     return _data.at(0);
 }
 ```
@@ -199,27 +203,27 @@ TipoDato& PriorityQueue::top() const {
         <script type="text/template">
 Inserción de un elemento
 
-```cpp[15-22|2-13]
+```cpp[15-22|1-13]
 // Recursive heapify-up algorithm
 void PriorityQueue::heapify_up(int i) {
     if (i == 0) { return;}
-
+ 
     // check if the node at index `i` and its parent violate the heap property
-    if (_data[parent(i)] < _data[i]) {
+    if (_data.at(parent(i)) > _data.at(i)) {
         // swap the two if heap property is violated
         std::swap(_data[i], _data[parent(i)]);
-
+ 
         // call heapify-up on the parent
-        heapify_up(_data(i));
+        heapify_up(parent(i));
     }
 }
 
 void PriorityQueue::push(const TipoDato& dato) {
     // Insert at the end:
     _data.push_back(dato);
-
+ 
     // Get element index and call heapify-up procedure
-    int index = size() - 1;
+    int index = this->size() - 1;
     heapify_up(index);
 }
 ```
@@ -233,37 +237,37 @@ Eliminar el primer elemento (la raíz del montículo)
 
 ```cpp[26-35|1-24]
 // Recursive heapify-down algorithm.
-void heapify_down(int i)
+void PriorityQueue::heapify_down(int i)
 {
     // get left and right child of node at index `i`
     int idx_left = left(i);
     int idx_right = right(i);
-
-    // Identify largest element
-    int idx_largest = i;
-    if (data[idx_left] > data[idx_largest]) {
-        idx_largest = idx_left;
+ 
+    // Identify lowest element
+    int idx_lowest = i;
+    if (idx_left < this->size() && _data.at(idx_lowest) > _data.at(idx_left)) {
+        idx_lowest = idx_left;
     }
-    if (data[idx_right] > data[idx_largest]) {
-        idx_largest = idx_right;
+    if (idx_right < this->size() && _data.at(idx_lowest) > _data.at(idx_right)) {
+        idx_lowest = idx_right;
     }
-
-    // swap with a child having greater value and
+ 
+    // swap with a child having lowest value and
     // call heapify-down on the child
-    if (idx_largest != i)
+    if (idx_lowest != i)
     {
-        swap(data[i], A[idx_largest]);
-        heapify_down(idx_largest);
+        std::swap(_data[i], _data[idx_lowest]);
+        heapify_down(idx_lowest);
     }
 }
 
 void PriorityQueue::pop() {
     if (this->empty()) {return;}
-
+ 
     // replace the root of the heap with the last element (and remove it)
     _data[0] = _data.back();
     _data.pop_back();
-
+ 
     // call heapify-down on the root node
     heapify_down(0);
 }
@@ -278,7 +282,7 @@ void PriorityQueue::pop() {
 
 Hemos utilizado algunas funciones auxiliares: `parent`, `left`, `right`
 
-```cpp[15-22|2-13]
+```cpp
 class PriorityQueue {
     public:
         PriorityQueue();
@@ -286,7 +290,10 @@ class PriorityQueue {
         // ... other methods
 
     private:
-        // This functions are private
+        // These functions are private
+        void heapify_down(int i);
+        void heapify_up(int i);
+
         int parent(int index) const;
         int left(int index) const;
         int right(int index) const;
@@ -298,9 +305,205 @@ class PriorityQueue {
 
     <section data-background-color="rgb(255, 255, 255)">
         <p>Estas funciones son una simple operación matemática</p>
-        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-complete-posvector.dot.png"/>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-complete-posvector.dot.png" />
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+¡Atención! En el std::vector empezamos a contar en '0'.
+
+```cpp
+int PriorityQueue::parent(int index) const {
+    return (index-1) / 2;
+}
+
+int PriorityQueue::left(int index) const {
+    return (index*2 + 1);
+}
+
+int PriorityQueue::right(int index) const {
+    return (index*2 + 2);
+}
+```
+<small>`PriorityQueue.cpp`</small> 
+        </script>
     </section>
 </section>
 
-
 <section data-external-slide-replace="slides/trees/02.heaps/heapsort.html"> </section>
+
+<section data-transition="convex">
+    <section data-background="images/background-actividades.png">
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: priority_queue</h4>
+        <p>Reune el código relacionado con los montículos en tu ordenador, junto al de otros TAD</p>
+    </section>
+
+    <section>
+        <p>Necesitarás añadir:</p>
+        <ul>
+            <li><code>PriorityQueue.h</code></li>
+            <li><code>PriorityQueue.cpp</code></li>
+        </ul>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="images/barajas.jpg">
+        <h2>💻 Actividad 14 🌶🌶</h2>
+        <h4>Aeropuerto Madrid-Barajas Adolfo Suárez</h4>
+    </section>
+
+    <section data-state="darken" data-background="images/barajas.jpg">
+        <p>
+            Uno de los cuellos de botella en un aeropuerto es una <span class="blue">pista de despegue</span>.
+            Siempre hay varios aviones esperando para despegar y el problema al que se enfrentan los controladores es
+            organizarlos en una <span class="blue">cola por prioridad</span>.
+        </p>
+    </section>
+
+    <section data-state="darken" data-background="images/barajas.jpg">
+        <p>Reglas de prioridad:</p>
+        <ol>
+            <li>Aviones que transportan transplantes (máxima prioridad).</li>
+            <li>Jets privados.</li>
+            <li>Resto de aviones según su hora prevista de salida.</li>
+        </ol>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Representación de los aviones:  <!-- .element: class="caps-preserve" -->
+
+```cpp
+class Avion { // TipoDato
+    public:
+        Avion(int hora_salida, int minuto_salida, bool is_transplante, bool is_jet);
+        
+        // Order criteria based on priority
+        bool operator<(const Avion& other) const;
+        
+        // Overloaded << operator to print information
+        std::ostream& operator<<(std::ostream& os) const;
+    
+    private:
+        int hora_salida;
+        int minuto_salida;
+        bool is_transplante;
+        bool is_jet;
+};
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Cola de prioridad para la pista:  <!-- .element: class="caps-preserve" -->
+
+```cpp
+class PriorityQueue {
+    public:
+        PriorityQueue();
+
+        int size() const;
+        bool empty() const;
+
+        const Avion& top() const;
+
+        void push(const Avion& dato);
+        void pop();
+
+    private:
+        // This functions are private
+        void heapify_down(int i);
+        void heapify_up(int i);
+        int parent(int index) const;
+        int left(int index) const;
+        int right(int index) const;
+
+    private:
+        std::vector<Avion> _data;
+};
+```
+        </script>
+    </section>
+
+    <section>
+        <p>Inténtalo tú mismo, y siempre puedes echarle un ojo a una solución <a href="https://github.com/jgsogo/eda/tree/actividades/actividad14">aquí</a>.</p>
+    </section>
+
+    <section>
+        <p>¿Quieres más realismo?</p>
+        <p>
+            Échale un ojo a la <a href="09.queues.html#/6">actividad 10</a> que hicimos cuando hablamos de las colas.
+            Prueba a <span class="red">simular</span> el aeropuerto, creando aviones a medida que pasa el tiempo
+            que tendrán que ponerse en su situación correspondiente en la cola.
+        </p>
+    </section>
+
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>💻 Actividad 15 🌶🌶</h2>
+        <h4>Método heapsort</h4>
+    </section>
+
+    <section>
+        <p>
+            Implementa el método <em>heapsort</em> para un montículo de números enteros.
+        </p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Interfaz pública de la clase:
+
+```cpp
+using TipoDato = int;
+
+class PriorityQueue {
+    public:
+        PriorityQueue();
+
+        bool empty() const;
+
+        void create_from(const std::vector<TipoDato>& values);
+        const std::vector<TipoDato>& get_underlying_vector() const;
+
+        void pop();
+};
+```
+
+Necesitarás otros métodos privados como el `heapify_down`, `left`, `right`, `parent`,...
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Ejemplo de main:
+
+```cpp
+
+int main() {
+    std::vector<int> values{3, 5, 8, 1, 2};
+
+    PriorityQueue pqueue;
+    pqueue.create_from(values);
+    while (!pqueue.empty()) {
+        pqueue.pop();
+    }
+
+    auto& ordered_vector = pqueue.get_underlying_vector();
+    for (auto v: ordered_vector) {
+        std::cout << v << std::endl;
+    }
+}
+```
+        </script>
+    </section>
+</section>
