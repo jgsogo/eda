@@ -1,7 +1,153 @@
-
 <section data-transition="convex">
     <section>
         <h2>Heapsort</h2>
         <h4>Ordenación por montículos</h4>
+    </section>
+
+    <section>
+        <h4>Creación de un montículo a partir de un array</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Alternativa 1:
+
+Insertar los `n` elementos del array uno por uno
+
+
+```cpp
+int main() {
+    std::vector<int> values{3, 5, 1, 8, 2};
+
+    PriorityQueue pqueue;
+    for (auto v: values) {
+        pqueue.push();
+    }
+}
+```
+
+Problema: duplicamos la memoria, dentro de la `PriorityQueue` hay otro `std::vector`
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Alternativa 2 (1/2):
+
+Utilizamos el propio vector para construir el montículo
+
+
+```cpp
+class PriorityQueue {
+    public:
+        PriorityQueue();
+        // ... more functions
+        void create_from(const std::vector<TipoDato>& values);
+    private:
+        std::vector<TipoDato> _data;
+};
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Alternativa 2 (2/2):
+
+Utilizamos el propio vector para construir el montículo
+
+```cpp
+void PriorityQueue::create_from(const std::vector<TipoDato>& values) {
+    _data = values;
+    for(int i = (_data.size()‐2)/2; i >= 0; i‐‐) {
+        heapify_down(i);
+    }
+}
+```
+
+No utilizo memoria extra y el número de operaciones sigue siendo `O(n)`.
+        </script>
+    </section>
+
+    <section>
+        <h2>Heapsort</h2>
+    </section>
+
+    <section data-background-video-muted>
+        <div class="credit">Link: <a href="https://www.youtube.com/watch?v=ZZuD6iUe3Pc">Youtube</a></div>
+        <iframe class="r-stretch" src="https://www.youtube.com/embed/ZZuD6iUe3Pc" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Necesito una variable adicional para almacenar el tamaño del montículo (`int _size`):
+
+```cpp
+class PriorityQueue {
+    public:
+        PriorityQueue();
+        // ... more functions
+        void create_from(const std::vector<TipoDato>& values);
+    private:
+        std::vector<TipoDato> _data;
+        int _size;
+};
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Las funciones correspondientes deberán actualizar el valor de esta variable:
+
+```cpp
+void PriorityQueue::create_from(const std::vector<TipoDato>& values) {
+    _data = values;
+    _size = _data.size();
+    
+    // Regular operations to satisfy heap property
+    for(int i = (_data.size()‐2)/2; i >= 0; i‐‐) {
+        heapify_down(i);
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+En vez de borrar los elementos simplemente actualizamos el número
+
+```cpp
+void PriorityQueue::pop() {
+    if (this->empty()) {return;}
+
+    // replace the root of the heap with the last element
+    std::swap(data.at(0), data.at(_size-1));
+
+    // call heapify-down on the root node
+    heapify_down(0);
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <p>
+            Al realizar <code>n</code> extracciones del mínimo nos queda un montículo vacío,
+            pero en el vector nos han quedado los elementos borrados en las posiciones
+            inversas.
+        </p>
+        <hr />
+        <p>
+            En un montículo de mínimos obtenemos un vector ordenado de mayor
+            a menor.
+        </p>
+        <hr />
+        <p>
+            Tiempo: <code>O(n log n)</code>. Espacio: <code>O(1)</code>.
+        </p>
     </section>
 </section>
