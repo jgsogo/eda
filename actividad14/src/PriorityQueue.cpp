@@ -75,16 +75,13 @@ void PriorityQueue::heapify_up(int i) {
 }
 
 int PriorityQueue::parent(int index) const {
-    //std::cout << "PriorityQueue::parent(index=" << index << ")" << std::endl;
     return (index-1) / 2;
 }
 
 int PriorityQueue::left(int index) const {
-    //std::cout << "PriorityQueue::left(index=" << index << ")" << std::endl;
     return (index*2 + 1);
 }
 
 int PriorityQueue::right(int index) const {
-    //std::cout << "PriorityQueue::right(index=" << index << ")" << std::endl;
     return (index*2 + 2);
 }
