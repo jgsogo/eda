@@ -4,7 +4,7 @@
 
 class Avion { // TipoDato
     public:
-        Avion(int hora_salida, int minuto_salida, bool is_transplante, bool is_jet);
+        Avion(int hora_salida, int minuto_salida, bool is_jet, bool is_transplante);
         
         // Order criteria based on priority
         bool operator<=(const Avion& other) const;

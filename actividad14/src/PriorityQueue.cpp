@@ -1,5 +1,7 @@
 #include "PriorityQueue.h"
 
+#include <iostream>
+
 PriorityQueue::PriorityQueue() {
     
 }
@@ -41,21 +43,21 @@ void PriorityQueue::heapify_down(int i) {
     int idx_left = left(i);
     int idx_right = right(i);
  
-    // Identify largest element
-    int idx_largest = i;
-    if (idx_left < this->size() && _data.at(idx_left) > _data.at(idx_largest)) {
-        idx_largest = idx_left;
+    // Identify lowest element
+    int idx_lowest = i;
+    if (idx_left < this->size() && _data.at(idx_lowest) > _data.at(idx_left)) {
+        idx_lowest = idx_left;
     }
-    if (idx_right < this->size() && _data.at(idx_right) > _data.at(idx_largest)) {
-        idx_largest = idx_right;
+    if (idx_right < this->size() && _data.at(idx_lowest) > _data.at(idx_right)) {
+        idx_lowest = idx_right;
     }
  
-    // swap with a child having greater value and
+    // swap with a child having lowest value and
     // call heapify-down on the child
-    if (idx_largest != i)
+    if (idx_lowest != i)
     {
-        std::swap(_data[i], _data[idx_largest]);
-        heapify_down(idx_largest);
+        std::swap(_data[i], _data[idx_lowest]);
+        heapify_down(idx_lowest);
     }
 }
 
@@ -63,7 +65,7 @@ void PriorityQueue::heapify_up(int i) {
     if (i == 0) { return;}
  
     // check if the node at index `i` and its parent violate the heap property
-    if (_data.at(i) > _data.at(parent(i))) {
+    if (_data.at(parent(i)) > _data.at(i)) {
         // swap the two if heap property is violated
         std::swap(_data[i], _data[parent(i)]);
  
@@ -73,21 +75,16 @@ void PriorityQueue::heapify_up(int i) {
 }
 
 int PriorityQueue::parent(int index) const {
-    return index / 2;
+    //std::cout << "PriorityQueue::parent(index=" << index << ")" << std::endl;
+    return (index-1) / 2;
 }
 
 int PriorityQueue::left(int index) const {
-    int idx = index*2;
-    if (idx <= this->size()) {
-        return idx;
-    }
-    return -1;
+    //std::cout << "PriorityQueue::left(index=" << index << ")" << std::endl;
+    return (index*2 + 1);
 }
 
 int PriorityQueue::right(int index) const {
-    int idx = index*2 + 1;
-    if (idx <= this->size()) {
-        return idx;
-    }
-    return -1;
+    //std::cout << "PriorityQueue::right(index=" << index << ")" << std::endl;
+    return (index*2 + 2);
 }

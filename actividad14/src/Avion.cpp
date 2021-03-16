@@ -4,7 +4,7 @@
 
 
 
-Avion::Avion(int hora_salida, int minuto_salida, bool is_transplante, bool is_jet) 
+Avion::Avion(int hora_salida, int minuto_salida, bool is_jet, bool is_transplante) 
     : hora_salida(hora_salida), minuto_salida(minuto_salida), is_transplante(is_transplante), is_jet(is_jet) {
 
 }
