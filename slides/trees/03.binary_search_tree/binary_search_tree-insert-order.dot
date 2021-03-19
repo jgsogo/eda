@@ -1,0 +1,30 @@
+digraph {
+    rankdir=TB;
+
+    a -> b1 [style=invis]
+    a -> b12 [weight=10 style=invis]
+    a -> b2
+
+    b2 -> c3 [style=invis]
+    b2 -> c34 [weight=10 style=invis]
+    b2 -> c4
+
+    c4 -> d1  [style=invis]
+    c4 -> d12 [weight=10 style=invis]
+    c4 -> d2
+
+    a [label=10]
+    b2 [label=20]
+    c4 [label=30]
+    d2 [label=31]
+    
+    b1 [style=invis]
+    b12 [width=.1 style=invis]
+    c3 [style=invis]
+    c34 [width=.1 style=invis]
+
+    d1 [style=invis]
+    d12 [width=.1 style=invis]
+
+    {rank=same b12 c3 c34 c4 }
+}
