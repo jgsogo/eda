@@ -1,0 +1,74 @@
+digraph {
+    rankdir=TB;
+
+    node [shape=circle style=filled]
+
+    a1 -> b1;
+    a1 -> b2;
+
+    b1 -> c1;
+    b1 -> c12 [style=invis weight=10];
+    b1 -> c2;
+
+    b2 -> c3;
+    b2 -> c34 [style=invis weight=10];
+    b2 -> c4;
+
+    c1 -> d1;
+    c1 -> d12 [style=invis weight=10];
+    c1 -> d2;
+
+    c2 -> d3;
+    c2 -> d34 [style=invis weight=10];
+    c2 -> d4;
+
+    c3 -> d5;
+    c3 -> d56 [style=invis weight=10];
+    c3 -> d6 [style=invis];
+
+    c4 -> d7 [style=invis];
+    c4 -> d78 [style=invis];
+    c4 -> d8 [style=invis];
+
+    d2 -> e1
+    d2 -> e12 [style=invis weight=10];
+    d2 -> e2 [style=invis];
+
+    d4 -> e3
+    d4 -> e34 [style=invis weight=10];
+    d4 -> e4
+
+
+    a1 [label="65" xlabel=-1];
+    b1 [label="32" xlabel=0];
+    b2 [label="79" xlabel=-1];
+    c1 [label="25" xlabel=1];
+    c2 [label="37" xlabel=1];
+    c3 [label="78" xlabel=-1];
+    c4 [label="93" xlabel=0];
+    d1 [label="12" xlabel=0];
+    d2 [label="29" xlabel=-1];
+    d3 [label="35" xlabel=0];
+    d4 [label="46" xlabel=0];
+    d5 [label="66" xlabel=0];
+
+    d6 [style=invis];
+    d7 [style=invis];
+    d8 [style=invis];
+
+    e1 [label="26" xlabel=0]
+    e2 [style=invis]
+    e3 [label="44" xlabel=0]
+    e4 [label="50" xlabel=0]
+
+    c12 [label="" width=.1 style=invis];
+    c34 [label="" width=.1 style=invis];
+    d12 [label="" width=.1 style=invis];
+    d34 [label="" width=.1 style=invis];
+    d56 [label="" width=.1 style=invis];
+    d78 [label="" width=.1 style=invis];
+    e12 [label="" width=.1 style=invis];
+    e34 [label="" width=.1 style=invis];
+
+    {rank = same; d1 d2 d3 d4 d5 d6 d7 d8 c12 c34 d12 d34 d56 d78}
+}

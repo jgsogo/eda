@@ -1,6 +1,35 @@
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/04.self-balancing_binary_search_tree/background-avl.jpeg">
         <h2>Árboles equilibrados</h2>
+    </section>
+
+    <section>
+        <p>
+            Los árboles BB tienen unas características muy buenas (operaciones <code>O(h)</code>),
+            pero podían degenerarse y terminar convertidos en una lista enlazada con operaciones
+            muy ineficientes (<code>O(h)</code>).
+        </p>
+    </section>
+
+    <section>
+        <p>
+            Los <span class="red">árboles equilibrados</span> son árboles BB con ciertas restricciones
+            estructurales para garantizar que su <span class="blue">altura sea logarítmica</span> (<code>h ~ O(log n)</code>).
+        </p>
+        <hr/>
+        <p>
+            El precio a pagar son <span class="blue">etapas extra</span> en las operaciones de inserción y borrado (a veces en el acceso).
+        </p>
+    </section>
+
+    <section>
+        <p>Implementaciones de <a href="https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree">árboles BB equilibrados</a>:</p>
+        <ul>
+            <li>Árboles AVL</li>
+            <li>Árboles rojo-negro</li>
+            <li>Splay trees</li>
+            <li>...</li>
+        </ul>
     </section>
 </section>
 
