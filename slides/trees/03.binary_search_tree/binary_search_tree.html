@@ -4,11 +4,51 @@
     <section>
         <h2>Definición</h2>
     </section>
+
+    <section>
+        <h4>Árbol binario de búsqueda (árbol BB)</h4>
+        <p>
+            Un <span class="red">árbol binario de búsqueda</span> (árbol BB) es un <span class="blue">árbol binario</span> cuyos elementos
+            almacenan datos comparables y todo nodo cumple la <span class="blue">propiedad de ordenación</span>.
+        </p>
+    </section>
+
+    <section>
+        <h4>Propiedad de ordenación</h4>
+        <p>
+            Todo nodo es mayor que los nodos de su subárbol izquierdo y menor que los nodos de su subárbol derecho.
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/03.binary_search_tree/binary_search_tree_example-schema.dot.png" />
+        <p><small>Todos los nodos del subárbol izquierdo son menores que <code>x</code>, los del subárbol derecho mayores que <code>x</code>.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/03.binary_search_tree/binary_search_tree_example.dot.png" />
+        <p><small>Ejemplo de árbol BB.</small></p>
+    </section>
 </section>
 
 <section data-transition="convex">
     <section>
         <h2>Propiedades</h2>
+    </section>
+
+    <section>
+        <h4>Recorrido inorden</h4>
+        <p>El recorrido inorden por el árbol recorre los elementos de menor a mayor.</p>
+    </section>
+
+    <section>
+        <h4>Elemento mínimo</h4>
+        <p>El elemento mínimo es el primer nodo sin hijo izquierdo que encontramos si descendemos por los hijos izquierdos desde la raíz.</p>
+    </section>
+
+    <section>
+        <h4>Elemento máximo</h4>
+        <p>El elemento máximo es el primer nodo sin hijo derecho que encontramos si descendemos por los hijos derechos desde la raíz.</p>
     </section>
 </section>
 
@@ -16,16 +56,356 @@
     <section>
         <h2>Operaciones</h2>
     </section>
-</section>
 
-<section data-transition="convex">
     <section>
-        <h2>Acceso por índice</h2>
+        <h4>Búsqueda de un elemento</h4>
+        <p>Se parte de la ráiz y se desciende por el subárbol izquierdo si el valor buscado es menor que el del nodo o el subárbol derecho si es mayor (es una búsqueda informada).</p>
+    </section>
+
+    <section>
+        <h4>Inserción de un elemento</h4>
+        <p>Se realiza una búsqueda de dicho elemento en el árbol y se inserta en el punto donde debería encontrarse.</p>
+    </section>
+
+    <section>
+        <h4>Borrado de un elemento (1/2)</h4>
+        <p>Si el elemento tiene <span class="blue">cero o un hijo</span>, simplemente se borra y se adaptan los punteros.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/03.binary_search_tree/binary_search_tree-remove0-izq.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/03.binary_search_tree/binary_search_tree-remove0-der.dot.png" />
+                </td>
+            </tr>
+        </table>
+        <p><small>Borrado de un elemento con <span class="red">cero hijos</span>.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/03.binary_search_tree/binary_search_tree-remove1-izq.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/03.binary_search_tree/binary_search_tree-remove1-der.dot.png" />
+                </td>
+            </tr>
+        </table>
+        <p><small>Borrado de un elemento con <span class="red">un hijo</span>.</small></p>
+    </section>
+
+    <section>
+        <h4>Borrado de un elemento (2/2)</h4>
+        <p>Si el elemento tiene <span class="blue">dos hijos</span>, se intercambio con el máximo de su subárbol izquierdo y se borra la posición que ocupaba ese máximo.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/03.binary_search_tree/binary_search_tree-remove2-izq.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/03.binary_search_tree/binary_search_tree-remove2-der.dot.png" />
+                </td>
+            </tr>
+        </table>
+        <p><small>Borrado de un elemento con <span class="red">dos hijos</span>.</small></p>
     </section>
 </section>
 
+
 <section data-transition="convex">
     <section>
-        <h2>Equilibrado</h2>
+        <h2>Implementación</h2>
+        <h4>Árboles BB con C++</h4>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-structs.dot.png"/>
+        <p><small>Idéntico a un árbol binario.</small></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `ElementoArbolBinario.h`
+
+Cada elemento contiene datos y punteros a los hijos izquierdo y derecho
+
+```cpp
+class ElementoArbolBinario {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementoArbolBinario> left = nullptr;
+        std::shared_ptr<ElementoArbolBinario> right = nullptr;
+    public:
+        // Constructor 
+        ElementoArbolBinario(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementoArbolBinario.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinarySearchTree.h`
+
+El árbol es el puntero al nodo raíz y las operaciones que pueden realizarse con él.
+
+```cpp[3,6-7|9-11|13-18|20-23]
+class BinarySearchTree {
+    protected:
+        std::shared_ptr<ElementoArbolBinario> root = nullptr;
+
+    public:
+        BinarySearchTree();  // Creates empty tree
+        BinarySearchTree(const TipoDato& dato);  // Creates tree with root node
+
+        // Same as BinaryTree
+        int height() const;
+        int size() const; // Number of nodes
+
+        // Get data
+        const TipoDato& min() const;
+        const TipoDato& max() const;
+
+        // Traverse the tree
+        void dfs_preorder(std::function<void (const TipoDato&)> action) const;
+
+        // Operations
+        bool find(const TipoDato&) const;
+        void push(const TipoDato&);
+        void remove(const TipoDato&);
+}
+```
+<!-- .element: class="r-stretch" -->
+<small>`BinarySearchTree.h`</small>
+        </script>
+    </section>
+
+    <section>
+        <p>Muchas funciones son idénticas a las del <code>BinaryTree</code>.</p>
+        <div class="footnote">Vuelve por aquí cuando aprendas sobre <span class="blue">herencia de clases</span>. Será aún más sencillo que hacer copy/paste.</div>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinarySearchTree::min`
+
+Acceso al mínimo
+
+```cpp
+const TipoDato& _min(std::shared_ptr<ElementoArbolBinario> element) {
+    if (element->left != nullptr) {
+        return _min(element->left);
+    }
+    else {
+        return element->dato;
+    }
+}
+
+const TipoDato& BinarySearchTree::min() const {
+    return _min(root);
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+
+🚨 Si el árbol está vacío el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinarySearchTree::max`
+
+Acceso al máximo
+
+```cpp
+const TipoDato& _max(std::shared_ptr<ElementoArbolBinario> element) {
+    if (element->right != nullptr) {
+        return _max(element->right);
+    }
+    else {
+        return element->dato;
+    }
+}
+
+const TipoDato& BinarySearchTree::max() const {
+    return _max(root);
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+
+🚨 Si el árbol está vacío el comportamiento será indeterminado (undefined behavior).  <!-- .element: class="footnote" -->
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### BinarySearchTree::find (recursivo) <!-- .element: class="caps-preserve" -->
+
+Búsqueda de un elemento
+
+```cpp[20-22|1-18]
+bool _find(std::shared_ptr<ElementoArbolBinario> element, 
+           const TipoDato& dato) {
+    // Handle corner case
+    if (element == nullptr) {
+        return false;
+    }
+
+    // Do actual work
+    if (element->dato > dato) {
+        return _find(element->left, dato);
+    }
+    else if (element->dato < dato) {
+        return _find(element->right, dato);
+    }
+    else {
+        return element->dato == dato;
+    }
+}
+
+bool BinarySearchTree::find(const TipoDato& dato) const {
+    return _find(root, dato);
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### BinarySearchTree::find (iterativo) <!-- .element: class="caps-preserve" -->
+
+Todo lo recursivo puede expresarse como iterativo
+
+```cpp
+bool BinarySearchTree::find(const TipoDato& dato) const {
+    auto elem = root;
+    while (elem != nullptr) {
+        if (elem->dato == dato) {
+            break;
+        }
+        else {
+            elem = (dato < elem->dato) ? elem->left : elem->right;  // This is called ternary operator
+        }
+    }
+    return elem != nullptr;
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinarySearchTree::push`
+
+```cpp[20-22|1-18]
+void _push(std::shared_ptr<ElementoArbolBinario>& element, // Note the reference
+           const TipoDato& dato) {
+    // Handle corner case
+    if (element == nullptr) {
+        element = std::make_shared<ElementoArbolBinario>(dato);
+        return;
+    }
+
+    // Do actual work
+    if (element->dato > dato) {
+        _push(element->left, dato);
+    }
+    else if (element->dato < dato) {
+        _push(element->right, dato);
+    }
+    else {
+        // It is a duplicated element! Do nothing, raise exception,...
+    }
+}
+
+void BinarySearchTree::push(const TipoDato& dato) {
+    return _push(root, dato);
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinarySearchTree::remove`
+
+Eliminar un elemento
+
+```cpp[1-11|13-16|18-29|31-43]
+void BinarySearchTree::remove(const TipoDato& dato) {
+    // Find the element (keep a reference to its parent)
+    auto elem = root;
+    auto parent = nullptr;
+    while (elem != nullptr) {
+        if (elem->dato == dato) {
+            break;
+        }
+        parent = elem;
+        elem = (dato < elem->dato) ? elem->left : elem->right;
+    }
+
+    // If not found, nothing to do
+    if (elem == nullptr) {
+        return;
+    }
+
+    // If it has two childs, replace with the max element in the subtree
+    if (elem->left != nullptr && elem->right != nullptr) {
+        elem->dato = _max(elem->left);
+
+        // Now the element to remove is the one at that max position
+        parent = elem
+        elem = elem->left;
+        while (elem->right != nullptr) {
+            parent = elem;
+            elem = elem->right;
+        }
+    }
+
+    // Now the node to remove only has 1 or 0 childs
+    auto next = (elem->left != nullptr) ? elem->left : elem->right;
+    if (parent == nullptr) {
+        root = next;
+    }
+    else {
+        if (parent->left == elem) {
+            parent->left = next;
+        }
+        else {
+            parent->right = next;
+        }
+    }
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+        </script>
+    </section>
+
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Complejidad algorítmica</h2>
+    </section>
+
+    <section>
+        <p>
+            
+        </p>
     </section>
 </section>

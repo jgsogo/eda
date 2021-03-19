@@ -1,0 +1,31 @@
+digraph {
+    rankdir=TB;
+
+    a0 -> a1;
+    a0 -> a12 [weight=10 style=invis]
+    a0 -> a2
+
+    a0 [label=20]
+    a1 [label=15]
+    a12 [width=.1 style=invis]
+    a2 [label=59]
+
+    xid [width=.1 style=invis]
+
+    b0 [label=98 color=red]
+    b1 [style=invis]
+    b12 [width=.1 style=invis]
+    b2 [label=102]
+
+    b0 -> b1 [style=invis]
+    b0 -> b12 [weight=10 style=invis]
+    b0 -> b2
+
+    x -> a0
+    x -> xid [weight=10 style=invis];
+    x -> b0
+
+    x [label=70]
+
+    {rank=same xid }
+}
