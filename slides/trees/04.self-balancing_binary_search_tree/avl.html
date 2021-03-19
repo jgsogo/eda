@@ -1,30 +1,189 @@
-
 <section data-transition="convex">
-    <section>
+    <section data-state="darken"
+        data-background="slides/trees/04.self-balancing_binary_search_tree/background-avl.jpeg">
         <h2>Árboles AVL</h2>
+        <h4>(Adelson-Velskii y Landis)</h4>
     </section>
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken"
+        data-background="slides/trees/04.self-balancing_binary_search_tree/background-avl.jpeg">
         <h2>Propiedades</h2>
+        <h4>(Árboles AVL)</h4>
+    </section>
+
+    <section>
+        <p>
+            Los <span class="red">árboles AVL</span> son árboles BB donde todo nodo cumple la propiedad de <span
+                class="red">equilibrado AVL</span>.
+        </p>
+    </section>
+
+    <section>
+        <h4>Equilibrado AVL</h4>
+        <p>
+            La altura del subárbol izquierdo y del subárbol derecho no se diferencian en más de una unidad.
+        </p>
+    </section>
+
+
+    <section>
+        <h4>Factor de equilibrio</h4>
+        <p>
+            Definimos <span class="red">factor de equilibrio</span> a la diferencia entre la altura del subárbol derecho
+            y el surárbol izquierdo:
+        </p>
+        <p><code>Fe(nodo) = h(derecho) - h(izquierdo)</code></p>
+    </section>
+
+    <section>
+        <p>En un árbol AVL el factor de equilibrio de todo nodo será -1, 0 o +1</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/04.self-balancing_binary_search_tree/avl-example.dot.png" />
+        <p><small>Ejemplo árbol AVL (el factor de equilibrado se indica en cada nodo)</small></p>
+    </section>
+
+    <section>
+        <p>Tras la inserción o borrado de un elemento los <span>ascendientes</span> del nodo pueden sufrir cambios en su
+            factor de equilibrio.</p>
+        <p class="fragment">Estos cambios, como mucho, serán de una unidad.</p>
+        <p class="fragment">El reequilibrado se realiza mediante <span class="red">rotaciones</span>.</p>
     </section>
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken"
+        data-background="slides/trees/04.self-balancing_binary_search_tree/background-avl.jpeg">
         <h2>Operaciones</h2>
+        <h4>(Árboles AVL)</h4>
+    </section>
+
+    <section>
+        <h4>Operaciones de acceso</h4>
+        <p>Las <span class="blue">operaciones de acceso</span> (altura, tamaño, búsqueda, recorrido) son idénticas a las
+            de un árbol BB.</p>
+    </section>
+
+    <section>
+        <h4>Inserción y borrado</h4>
+        <p>Estas operaciones se realizan igual que en un árbol BB, pero se añade una etapa posterior de <span
+                class="red">reequilibrado</span>.</p>
+    </section>
+
+    <section>
+        <h4>Reequilibrado</h4>
+        <p>
+            El <span class="red">reequilibrado</span> recorre los ascendientes del nodo que ha sufrido modificación,
+            recalcula sus factores de equilibrio y aplica las <span class="red">rotaciones</span> adecuadas cuando
+            sea necesario.
+        </p>
+        <p>
+            El recorrido se detiene en el <span class="blue">nodo raíz</span> o bien cuando el nodo actual no
+            haya sufrido <span class="red">cambios en altura</span>.
+        </p>
     </section>
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken"
+        data-background="slides/trees/04.self-balancing_binary_search_tree/background-avl.jpeg">
         <h2>Cambios en altura</h2>
+        <h4>(Árboles AVL)</h4>
+    </section>
+
+    <section>
+        <h4>Al insertar un nodo</h4>
+        <p>
+            Un nodo con <span class="blue">factor de equilibrio -1 ó 0</span> incrementará su altura
+            si su <span class="blue">hijo izquierdo</span> incrementa su altura.
+        </p>
+        <hr />
+        <p>
+            Si el <span class="blue">factor de equilibrio es 0 ó +1</span> incrementará su altura cuando lo haga su
+            <span class="blue">hijo derecho</span>.
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Cambios en altura al insertar un nodo</p>
+        <img class="r-stretch" src="slides/trees/04.self-balancing_binary_search_tree/avl-height-inc.png" />
+    </section>
+
+    <section>
+        <h4>Al eliminar un nodo</h4>
+        <p>
+            Un nodo con <span class="blue">factor de equilibrio -1</span> decrementará su altura
+            si su <span class="blue">hijo izquierdo</span> decrementa su altura.
+        </p>
+        <hr />
+        <p>
+            Si el <span class="blue">factor de equilibrio es +1</span> decrementará su altura cuando lo haga su <span
+                class="blue">hijo derecho</span>.
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Cambios en altura al eliminar un nodo</p>
+        <img class="r-stretch" src="slides/trees/04.self-balancing_binary_search_tree/avl-height-dec.png" />
     </section>
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken"
+        data-background="slides/trees/04.self-balancing_binary_search_tree/background-avl.jpeg">
         <h2>Rotaciones</h2>
+        <h4>(Árboles AVL)</h4>
+    </section>
+
+    <section>
+        <p>
+            Una <span class="red">rotación</span> es una reestructuración local de un subárbol BB que mantiene la
+            propiedad de ordenación.
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-example1-izq.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-example1-der.dot.png" />
+                </td>
+            </tr>
+        </table>
+        <p><small>Ejemplo de rotación. A, B, C representan subárboles.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-example2-izq.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-example2-mid.dot.png" />
+                </td>
+            </tr>
+        </table>
+        <p><small>Ejemplo de rotación. A, B, C, D representan subárboles.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-example2-mid.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-example2-der.dot.png" />
+                </td>
+            </tr>
+        </table>
+        <p><small>Ejemplo de rotación. A, B, C, D representan subárboles.</small></p>
     </section>
 </section>

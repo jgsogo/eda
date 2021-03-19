@@ -1,14 +1,13 @@
-
-
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/03.binary_search_tree/background-bst.png">
         <h2>Definición</h2>
     </section>
 
     <section>
         <h4>Árbol binario de búsqueda (árbol BB)</h4>
         <p>
-            Un <span class="red">árbol binario de búsqueda</span> (árbol BB) es un <span class="blue">árbol binario</span> cuyos elementos
+            Un <span class="red">árbol binario de búsqueda</span> (árbol BB) es un <span class="blue">árbol
+                binario</span> cuyos elementos
             almacenan datos comparables y todo nodo cumple la <span class="blue">propiedad de ordenación</span>.
         </p>
     </section>
@@ -22,7 +21,8 @@
 
     <section data-background-color="rgb(255, 255, 255)">
         <img class="r-stretch" src="slides/trees/03.binary_search_tree/binary_search_tree_example-schema.dot.png" />
-        <p><small>Todos los nodos del subárbol izquierdo son menores que <code>x</code>, los del subárbol derecho mayores que <code>x</code>.</small></p>
+        <p><small>Todos los nodos del subárbol izquierdo son menores que <code>x</code>, los del subárbol derecho
+                mayores que <code>x</code>.</small></p>
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
@@ -32,7 +32,7 @@
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/03.binary_search_tree/background-bst.png">
         <h2>Propiedades</h2>
     </section>
 
@@ -43,23 +43,26 @@
 
     <section>
         <h4>Elemento mínimo</h4>
-        <p>El elemento mínimo es el primer nodo sin hijo izquierdo que encontramos si descendemos por los hijos izquierdos desde la raíz.</p>
+        <p>El elemento mínimo es el primer nodo sin hijo izquierdo que encontramos si descendemos por los hijos
+            izquierdos desde la raíz.</p>
     </section>
 
     <section>
         <h4>Elemento máximo</h4>
-        <p>El elemento máximo es el primer nodo sin hijo derecho que encontramos si descendemos por los hijos derechos desde la raíz.</p>
+        <p>El elemento máximo es el primer nodo sin hijo derecho que encontramos si descendemos por los hijos derechos
+            desde la raíz.</p>
     </section>
 </section>
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/03.binary_search_tree/background-bst.png">
         <h2>Operaciones</h2>
     </section>
 
     <section>
         <h4>Búsqueda de un elemento</h4>
-        <p>Se parte de la ráiz y se desciende por el subárbol izquierdo si el valor buscado es menor que el del nodo o el subárbol derecho si es mayor (es una búsqueda informada).</p>
+        <p>Se parte de la ráiz y se desciende por el subárbol izquierdo si el valor buscado es menor que el del nodo o
+            el subárbol derecho si es mayor (es una búsqueda informada).</p>
     </section>
 
     <section>
@@ -69,7 +72,8 @@
 
     <section>
         <h4>Borrado de un elemento (1/2)</h4>
-        <p>Si el elemento tiene <span class="blue">cero o un hijo</span>, simplemente se borra y se adaptan los punteros.</p>
+        <p>Si el elemento tiene <span class="blue">cero o un hijo</span>, simplemente se borra y se adaptan los
+            punteros.</p>
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
@@ -102,7 +106,8 @@
 
     <section>
         <h4>Borrado de un elemento (2/2)</h4>
-        <p>Si el elemento tiene <span class="blue">dos hijos</span>, se intercambio con el máximo de su subárbol izquierdo y se borra la posición que ocupaba ese máximo.</p>
+        <p>Si el elemento tiene <span class="blue">dos hijos</span>, se intercambio con el máximo de su subárbol
+            izquierdo y se borra la posición que ocupaba ese máximo.</p>
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
@@ -122,13 +127,13 @@
 
 
 <section data-transition="convex">
-    <section>
+    <section data-state="darken" data-background="slides/trees/03.binary_search_tree/background-bst.png">
         <h2>Implementación</h2>
         <h4>Árboles BB con C++</h4>
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
-        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-structs.dot.png"/>
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-structs.dot.png" />
         <p><small>Idéntico a un árbol binario.</small></p>
     </section>
 
@@ -193,7 +198,8 @@ class BinarySearchTree {
 
     <section>
         <p>Muchas funciones son idénticas a las del <code>BinaryTree</code>.</p>
-        <div class="footnote">Vuelve por aquí cuando aprendas sobre <span class="blue">herencia de clases</span>. Será aún más sencillo que hacer copy/paste.</div>
+        <div class="footnote">Vuelve por aquí cuando aprendas sobre <span class="blue">herencia de clases</span>. Será
+            aún más sencillo que hacer copy/paste.</div>
     </section>
 
     <section data-markdown>
@@ -397,15 +403,74 @@ void BinarySearchTree::remove(const TipoDato& dato) {
 
 </section>
 
-
 <section data-transition="convex">
+    <section data-state="darken" data-background="slides/trees/03.binary_search_tree/background-bst.png">
+        <h2>Utilidad</h2>
+    </section>
+
     <section>
-        <h2>Complejidad algorítmica</h2>
+        <h4>Complejidad algorítmica (altura <code>h</code>)</h4>
+        <ul>
+            <li>Acceso por valor (búsqueda): <code>O(h)</code></li>
+            <li>Inserción por valor: <code>O(h)</code></li>
+            <li>Borrado por valor: <code>O(h)</code></li>
+        </ul>
     </section>
 
     <section>
         <p>
-            
+            Parece una estructura de datos adecuada para implementar
+            <span class="blue">diccionarios</span>, <span class="blue">mapas</span>
+            o <span class="blue">listas ordenadas</span>.
         </p>
+    </section>
+
+    <section>
+        <h4>Equilibrado</h4>
+        <p>
+            Las medidas de eficiencia son función de <code>h</code> (altura del árbol), pero sólo
+            en los <span class="red">árboles equilibrados</span> se cumple <code>h ~ log(n)</code>
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Que un árbol BB esté equilibrado o no depende de la secuencia de inserciones. El
+            peor caso es la inserción de los elementos en orden. Todas las operaciones se
+            convierten en <code>O(n)</code>.
+        </p>
+        <img class="r-stretch" src="slides/trees/03.binary_search_tree/binary_search_tree-insert-order.dot.png" />
+        <p><small>Se conoce como árbol BB degenerado (es una lista).</small></p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-background="images/background-actividades.png">
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: binary_search_trye</h4>
+        <p>Reune el código relacionado con los árboles BB en tu ordenador, junto al de otros TAD</p>
+    </section>
+
+    <section>
+        <p>Necesitarás añadir:</p>
+        <ul>
+            <li><code>BinarySearchTree.h</code></li>
+            <li><code>BinarySearchTree.cpp</code></li>
+        </ul>
+    </section>
+
+    <section>
+        <p>Haz ejemplos con esta clase, asegúrate de que sus métodos funcionan para todos los escenarios posibles.</p>
+    </section>
+
+    <section>
+        <p>Prueba a implementar los métodos de manera recursiva y también de manera iterativa.</p>
+    </section>
+
+    <section>
+        <p>Implementa una clase para un árbol BB que admita nodos con <span class="blue">valores duplicados</span>.</p>
     </section>
 </section>
