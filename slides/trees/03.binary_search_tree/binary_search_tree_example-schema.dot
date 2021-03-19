@@ -1,0 +1,48 @@
+digraph {
+    rankdir=TB;
+
+    subgraph cluster_0 {
+		style=filled;
+		color=lightgrey;
+		node [color=white, label=""];
+		a0 -> a1;
+        a0 -> a12 [weight=10 style=invis]
+        a0 -> a2
+
+        a12 [width=.1 style=invis]
+		label = "< x";
+	}
+
+    xid [width=.1 style=invis]
+
+    subgraph cluster_1 {
+		color=lightgrey;
+		node [color=black, label=""];
+		b0 -> b1;
+        b0 -> b12 [weight=10 style=invis];
+        b0 -> b2;
+
+        b1 -> b3;
+        b1 -> b34 [weight=10 style=invis];
+        b1 -> b4 [style=invis];
+
+        b2 -> b5 [style=invis];
+        b2 -> b56 [weight=10 style=invis];
+        b2 -> b6 [style=invis];
+
+        b12 [width=.1 style=invis]
+        b34 [width=.1 style=invis]
+        b4 [style=invis]
+        b5 [style=invis]
+        b56 [width=.1 style=invis]
+        b6 [style=invis]
+
+        {rank=same b3 b34 b4 b12 b5 b56 b6 }
+		label = "> x";
+	}
+
+    x -> a0
+    x -> xid [weight=10 style=invis];
+    x -> b0
+
+}
