@@ -21,11 +21,11 @@ digraph {
     c2 -> d34 [style=invis weight=10];
     c2 -> d4 [style=invis]
 
-    a1 [label="z"];
-    b1 [label="y"];
+    a1 [label="z" xlabel=-2];
+    b1 [label="y" xlabel=-1];
     b2 [label="D" shape=rect];
     
-    c1 [label="x"];
+    c1 [label="x" xlabel=0];
     c2 [label="C" shape=rect];
 
     d1 [label="A" shape=rect];

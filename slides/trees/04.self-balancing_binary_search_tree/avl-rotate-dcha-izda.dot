@@ -7,11 +7,13 @@ digraph {
     a1 -> b12 [style=invis weight=10];
     a1 -> b2;
 
-    {rank = same; b1 b2 }
-
     b1 -> c1;
     b1 -> c12 [style=invis weight=10];
     b1 -> c2;
+
+    b2 -> c3 [style=invis]
+    b2 -> c34 [style=invis weight=10];
+    b2 -> c4 [style=invis]
 
     c1 -> d1 [style=invis]
     c1 -> d12 [style=invis weight=10];
@@ -21,22 +23,37 @@ digraph {
     c2 -> d34 [style=invis weight=10];
     c2 -> d4
 
-    a1 [label="z" xlabel=-2];
-    b1 [label="x" xlabel=1];
-    b2 [label="D" shape=rect];
-    
-    c1 [label="A" shape=rect];
-    c2 [label="y" xlabel=0];
+    c3 -> d5 [style=invis]
+    c3 -> d56 [style=invis weight=10];
+    c3 -> d6 [style=invis]
 
+    c4 -> d7 [style=invis]
+    c4 -> d78 [style=invis weight=10];
+    c4 -> d8 [style=invis]
+
+    a1 [label="x" xlabel=-2];
+    b1 [label="y" xlabel=1];
+    b2 [label="D" shape=rect];
+    c1 [label="A" shape=rect];
+    c2 [label="z"];
+    c3 [style=invis];
+    c4 [style=invis];
     d1 [style=invis];
     d2 [style=invis];
     d3 [label="B" shape=rect];
     d4 [label="C" shape=rect];
+    d5 [style=invis];
+    d6 [style=invis];
+    d7 [style=invis];
+    d8 [style=invis];
 
     b12 [label="" width=.1 style=invis];
     c12 [label="" width=.1 style=invis];
+    c34 [label="" width=.1 style=invis];
     d12 [label="" width=.1 style=invis];
     d34 [label="" width=.1 style=invis];
+    d56 [label="" width=.1 style=invis];
+    d78 [label="" width=.1 style=invis];
 
-    {rank = same; d12 c12 d34 b12 }
+    {rank = same; d12 c12 d34 b12 d56 c34 d78 }
 }

@@ -15,9 +15,9 @@ digraph {
     b2 -> c34 [style=invis weight=10];
     b2 -> c4
 
-    a1 [label="x"];
+    a1 [label="x" xlabel=1];
     b1 [label="A" shape=rect];
-    b2 [label="y"];
+    b2 [label="y" xlabel=0];
     c1 [style=invis];
     c2 [style=invis];
     c3 [label="B" shape=rect];
