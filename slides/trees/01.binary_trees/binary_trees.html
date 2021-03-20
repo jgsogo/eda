@@ -151,7 +151,7 @@ Tamaño
 
 ```cpp
 int _size(std::shared_ptr<ElementoArbolBinario> element) {
-    if (element->root == nullptr) {
+    if (element == nullptr) {
         return 0;
     }
     else {

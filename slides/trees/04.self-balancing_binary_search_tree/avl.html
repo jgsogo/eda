@@ -146,6 +146,7 @@
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
+        <p>Rotación izquierda</p>
         <table>
             <tr>
                 <td>
@@ -156,10 +157,11 @@
                 </td>
             </tr>
         </table>
-        <p><small>Ejemplo de rotación. A, B, C representan subárboles.</small></p>
+        <p><small>Ejemplo de rotación. A, B, C representan subárboles equilibrados de altura h.</small></p>
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
+        <p>Rotación izquierda</p>
         <table>
             <tr>
                 <td>
@@ -170,7 +172,7 @@
                 </td>
             </tr>
         </table>
-        <p><small>Ejemplo de rotación. A, B, C, D representan subárboles.</small></p>
+        <p><small>Ejemplo de rotación. A, B, C, D representan subárboles equilibrados de altura h.</small></p>
     </section>
 
     <section data-background-color="rgb(255, 255, 255)">
@@ -184,6 +186,277 @@
                 </td>
             </tr>
         </table>
-        <p><small>Ejemplo de rotación. A, B, C, D representan subárboles.</small></p>
+        <p><small>Ejemplo de rotación. A, B, C, D representan subárboles equilibrados de altura h.</small></p>
+    </section>
+
+    <section>
+        <h4>Objetivo</h4>
+        <p>
+            El objetivo de las rotaciones siempre es reequilibrar un subárbol que se ha desequilibrado al añadir
+            o al eliminar un nodo.
+        </p>
+    </section>
+
+    <section>
+        <h4>Rotación izquierda</h4>
+        <h6>-2|-1 &nbsp;&nbsp;&nbsp; -2|0</h6>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Aplicamos una <span class="blue">rotación izquierda</span> cuando encontramos una de estas situaciones
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda1.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda2.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small>A incrementó su altura o C disminuyó su altura</small>
+                </td>
+                <td>
+                    <small>C disminuyó su altura</small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Caso 1) Tras la <span class="blue">rotación izquierda</span> hay un cambio de altura en este subárbol
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda1.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda1-fix.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small><small>
+                        <code>h(x) = h(A) + 2</code><br/>
+                        <code>h(A) = h(B) + 1</code><br/>
+                        <code>h(C) = h(B)</code><br/>
+                    </small></small>
+                </td>
+                <td>
+                    <small><small>
+                        <code>h(y) = 1 + max(h(A), 1 + max(h(B), h(C)))</code><br/>
+                        <code>h(y) = 1 + max(h(A), 1 + h(B))</code><br/>
+                        <code>h(y) = 1 + h(A)</code><br/>
+                    </small></small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Caso 2) Tras la <span class="blue">rotación izquierda</span> el subárbol mantiene su altura
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda2.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda2-fix.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small><small>
+                        <code>h(x) = h(A) + 2</code><br/>
+                        <code>h(B) = h(A)</code><br/>
+                        <code>h(C) = h(A) - 1</code><br/>
+                    </small></small>
+                </td>
+                <td>
+                    <small><small>
+                        <code>h(y) = 1 + max(h(A), 1 + max(h(B), h(C)))</code><br/>
+                        <code>h(y) = 1 + max(h(A), 1 + h(B))</code><br/>
+                        <code>h(y) = 1 + max(h(A), 1 + h(A))</code><br/>
+                        <code>h(y) = 2 + h(A)</code><br/>
+                    </small></small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+
+    <section>
+        <h4>Rotación derecha</h4>
+        <h6>2|1 &nbsp;&nbsp;&nbsp; 2|0</h6>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Aplicamos una <span class="blue">rotación derecha</span> cuando encontramos una de estas situaciones
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha1.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha2.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small>A decrementó su altura o C incrementó su altura</small>
+                </td>
+                <td>
+                    <small>A disminuyó su altura</small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Caso 1) Tras la <span class="blue">rotación derecha</span> hay un cambio de altura en este subárbol
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha1.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha1-fix.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small><small>
+                        <code>h(x) = h(C) + 2</code><br/>
+                        <code>h(B) = h(C) - 1</code><br/>
+                        <code>h(A) = h(C) - 1</code><br/>
+                    </small></small>
+                </td>
+                <td>
+                    <small><small>
+                        <code>h(y) = 1 + max(1 + max(h(A), h(B)), h(C))</code><br/>
+                        <code>h(y) = 1 + max(1 + h(A), h(C))</code><br/>
+                        <code>h(y) = 1 + h(C)</code><br/>
+                    </small></small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Caso 2) Tras la <span class="blue">rotación derecha</span> el subárbol mantiene su altura
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha2.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha2-fix.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small><small>
+                        <code>h(x) = h(C) + 2</code><br/>
+                        <code>h(B) = h(C)</code><br/>
+                        <code>h(A) = h(C) - 1</code><br/>
+                    </small></small>
+                </td>
+                <td>
+                    <small><small>
+                        <code>h(y) = 1 + max(1 + max(h(A), h(B)), h(C))</code><br/>
+                        <code>h(y) = 1 + max(1 + h(B), h(C))</code><br/>
+                        <code>h(y) = 2 + h(C)<code><br/>
+                    </small></small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h4>Rotación derecha-izquierda</h4>
+        <h6>-2|1</h6>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Aplicamos una <span class="blue">rotación derecha-izquierda</span> cuando encontramos esta situación</p>
+        <img class="r-stretch" src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha-izda.dot.png" />
+        <p><small>Causas: borrado en D o inserción en B ó C incrementando la altura de <code>z</code>.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Paso 1) <span class="blue">rotación derecha</span> en los nodos <code>y</code> y <code>z</code>
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha-izda.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha-izda-fix1.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small><small>
+                        <code>--h(x) = h(C) + 2</code><br/>
+                        <code>--h(B) = h(C)</code><br/>
+                        <code>--h(A) = h(C) - 1</code><br/>
+                    </small></small>
+                </td>
+                <td>
+                    <small><small>
+                        <code>--h(y) = 1 + max(1 + max(h(A), h(B)), h(C))</code><br/>
+                        <code>--h(y) = 1 + max(1 + h(B), h(C))</code><br/>
+                        <code>--h(y) = 2 + h(C)<code><br/>
+                    </small></small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Paso 2) <span class="blue">rotación izquierda</span> en los nodos <code>x</code> y <code>z</code>
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha-izda-fix1.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha-izda-fix2.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small><small>
+                        <code>--h(x) = h(C) + 2</code><br/>
+                        <code>--h(B) = h(C)</code><br/>
+                        <code>--h(A) = h(C) - 1</code><br/>
+                    </small></small>
+                </td>
+                <td>
+                    <small><small>
+                        <code>--h(y) = 1 + max(1 + max(h(A), h(B)), h(C))</code><br/>
+                        <code>--h(y) = 1 + max(1 + h(B), h(C))</code><br/>
+                        <code>--h(y) = 2 + h(C)<code><br/>
+                    </small></small>
+                </td>
+            </tr>
+        </table>
     </section>
 </section>

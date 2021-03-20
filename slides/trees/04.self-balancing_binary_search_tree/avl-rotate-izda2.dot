@@ -11,18 +11,17 @@ digraph {
     b1 -> c12 [style=invis weight=10];
     b1 -> c2;
 
-    b2 -> c3
+    b2 -> c3 [style=invis]
     b2 -> c34 [style=invis weight=10];
-    b2 -> c4
+    b2 -> c4 [style=invis]
 
-    a1 [label="y" xlabel=0];
-    b1 [label="x" xlabel=0];
-    b2 [label="z" xlabel=0];
-    
+    a1 [label="x" xlabel=-2];
+    b1 [label="y" xlabel=0];
+    b2 [label="C" shape=rect];
     c1 [label="A" shape=rect];
     c2 [label="B" shape=rect];
-    c3 [label="C" shape=rect];
-    c4 [label="D" shape=rect];
+    c3 [style=invis];
+    c4 [style=invis];
 
     b12 [label="" width=.1 style=invis];
     c12 [label="" width=.1 style=invis];
