@@ -30,15 +30,15 @@ add_executable(main4 main4.cpp)
 target_link_libraries(main4 PUBLIC practica2)
 
 
-#find_package(Catch2)
+find_package(Catch2)
 
 #
 # Create a target for executing the Catch unit tests.
 #
-#file(GLOB TEST_FILES tests/test_*.cpp)
-#add_executable(unit_tests
-#	tests/main.cpp
-#	${TEST_FILES}
-#)
-#target_include_directories(unit_tests PUBLIC test/)
-#target_link_libraries(unit_tests PUBLIC Catch2::Catch2 practica1)
+file(GLOB TEST_FILES tests/test_*.cpp)
+add_executable(unit_tests
+	tests/main.cpp
+	${TEST_FILES}
+)
+target_include_directories(unit_tests PUBLIC test/)
+target_link_libraries(unit_tests PUBLIC Catch2::Catch2 practica2)
