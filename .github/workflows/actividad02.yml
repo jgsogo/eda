@@ -1,9 +1,9 @@
-name: Validate Actividad 00
+name: Validate Actividad 02
 
 on:
   pull_request:
     paths:
-      - 'actividad00/**'
+      - 'actividad02/**'
 
 jobs:
   ubuntu-build:
@@ -11,8 +11,9 @@ jobs:
     steps:
     - uses: actions-ecosystem/action-add-labels@v1
       with:
-          labels: actividad 00
+          labels: actividad 02
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          
     - name: Checkout
       uses: actions/checkout@v2.0.0
 
@@ -35,8 +36,8 @@ jobs:
     - name: Compile
       run: |
         mkdir _build && cd _build
-        conan install ../actividad00/conanfile.txt -s build_type=Release
-        cmake ../actividad00 -DCMAKE_MODULE_PATH=$(pwd)
+        conan install ../actividad02/conanfile.txt -s build_type=Release
+        cmake ../actividad02 -DCMAKE_MODULE_PATH=$(pwd)
         cmake --build .
 
     - name: Run tests

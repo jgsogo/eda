@@ -1,0 +1,4 @@
+
+struct TipoDato {
+    int num;
+};

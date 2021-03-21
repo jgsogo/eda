@@ -1,2 +1,4 @@
 _virtualenv/
 _build/
+build/
+.vscode/
