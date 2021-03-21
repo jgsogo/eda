@@ -4,10 +4,10 @@
 #include "ElementoListaDoble.h"
 
 
-TEST_CASE( "ElementoListaDoble")
+TEST_CASE( "ElementListaDoble")
 {
     Persona persona("nombre", "dni", 1);
-    ElementoListaDoble e1{persona};
+    ElementListaDoble e1{persona};
 
     REQUIRE( e1.dato == persona );
     REQUIRE( e1.next == nullptr );
