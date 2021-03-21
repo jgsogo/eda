@@ -12,7 +12,6 @@ jobs:
     - uses: actions-ecosystem/action-add-labels@v1
       with:
           labels: 2021.practica2
-      env:
           github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Checkout
       uses: actions/checkout@v2.0.0
