@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(Actividad LANGUAGES CXX)
+project(Practica LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,10 +8,26 @@ include(CTest)
 enable_testing()
 
 add_library(practica2
-	src/practica1.cpp
-	src/practica1.h
+	src/ElementoListaDoble.cpp
+	src/Persona.cpp
+    src/Queue.cpp
+    src/Police.cpp
+    src/Wardrobe.cpp
+    src/NameCounter.cpp
 )
 target_include_directories(practica2 PUBLIC src)
+
+add_executable(main1 main1.cpp)
+target_link_libraries(main1 PUBLIC practica2)
+
+add_executable(main2 main2.cpp)
+target_link_libraries(main2 PUBLIC practica2)
+
+add_executable(main3 main3.cpp)
+target_link_libraries(main3 PUBLIC practica2)
+
+add_executable(main4 main4.cpp)
+target_link_libraries(main4 PUBLIC practica2)
 
 
 find_package(Catch2)
