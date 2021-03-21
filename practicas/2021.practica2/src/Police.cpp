@@ -1,5 +1,7 @@
 #include "Police.h"
 
+#include <algorithm>
+
 Queue police_raid(Queue joy_slava, const std::vector<std::string>& dnis) {
     Queue ret;
     while (!joy_slava.empty()) {
