@@ -29,7 +29,27 @@ void NameCounter::add_name(const std::string& name) {
 }
 
 void NameCounter::sort() {
+    if (front == nullptr) {
+        return;
+    }
 
+    // The function to compare two NameCount
+    auto lt_action = [](const NameCount& lhs, const NameCount& rhs) -> bool {
+        return lhs.repeats > rhs.repeats;
+    };
+
+    // Use bubble sort
+    auto it1 = front;
+    while (it1->next != nullptr) {
+        auto it2 = front;
+        while (it2->next != nullptr) {
+            if (!lt_action(it2->dato, it2->next->dato)) {
+                std::swap(it2->dato, it2->next->dato);
+            }
+            it2 = it2->next;
+        }
+        it1 = it1->next;
+    }
 }
 
 void NameCounter::for_each(std::function<void (const NameCount&)> action) const {
