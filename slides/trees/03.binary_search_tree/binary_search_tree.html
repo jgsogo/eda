@@ -183,13 +183,13 @@ class BinarySearchTree {
         const TipoDato& max() const;
 
         // Traverse the tree
-        void dfs_preorder(std::function<void (const TipoDato&)> action) const;
+        void dfs_inorder(std::function<void (const TipoDato&)> action) const;
 
         // Operations
         bool find(const TipoDato&) const;
         void push(const TipoDato&);
         void remove(const TipoDato&);
-}
+};
 ```
 <!-- .element: class="r-stretch" -->
 <small>`BinarySearchTree.h`</small>
@@ -355,7 +355,7 @@ Eliminar un elemento
 void BinarySearchTree::remove(const TipoDato& dato) {
     // Find the element (keep a reference to its parent)
     auto elem = root;
-    auto parent = nullptr;
+    std::shared_ptr<ElementoArbolBinario> parent = nullptr;
     while (elem != nullptr) {
         if (elem->dato == dato) {
             break;
@@ -374,7 +374,7 @@ void BinarySearchTree::remove(const TipoDato& dato) {
         elem->dato = _max(elem->left);
 
         // Now the element to remove is the one at that max position
-        parent = elem
+        parent = elem;
         elem = elem->left;
         while (elem->right != nullptr) {
             parent = elem;
