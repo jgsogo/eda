@@ -110,6 +110,19 @@ SCENARIO( "quick_sort - Vectors with more elements", "[test_quick_sort.cpp]" )
     }
 }
 
+SCENARIO( "quick_sort - Issue #12", "[test_quick_sort.cpp]" )
+{
+    std::vector<float> input_data{1.2, 4.5, 7.8, 9.7, 4.2};
+
+    std::vector<float> expected(input_data.size());
+    std::partial_sort_copy(std::begin(input_data), std::end(input_data), std::begin(expected), std::end(expected));
+
+    SECTION( "random input" ) {
+        quick_sort(input_data, 0, input_data.size()-1);
+        REQUIRE( input_data == expected );
+    }
+}
+
 SCENARIO( "quick_sort - Half lower vector", "[test_quick_sort.cpp]" )
 {
     std::uniform_real_distribution<float> distribution(0.0, 1.0);
