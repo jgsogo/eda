@@ -714,5 +714,83 @@ int rotate_right(std::shared_ptr<ElementoArbolBinario>& element) { // Note the r
         </script>
     </section>
 
+    <section>
+        <h4><code>AVLTree::rebalance</code> (optimización)</h4>
+        <p>
+            Todos los rebalanceos (si existen) ocurren en los <span class="blue">ascendientes</span> del nodo que se acaba de
+            insertar o de borrar.
+        </p>
+        <hr/>
+        <p class="fragment">
+            En vez de realizar un recorrido DFS post-order podríamos almacenar en cada nodo el puntero al padre y utilizarlo
+            para recorrer los ascendientes.
+        </p>
+    </section>
+</section>
 
+
+<section data-transition="convex">
+    <section data-background="images/background-actividades.png">
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: avl_tree</h4>
+        <p>Reune el código relacionado con los árboles BB en tu ordenador, junto al de otros TAD</p>
+    </section>
+
+    <section>
+        <p>Necesitarás añadir:</p>
+        <ul>
+            <li><code>AVLTree.h</code></li>
+            <li><code>AVLTree.cpp</code></li>
+        </ul>
+    </section>
+
+    <section>
+        <p>Haz ejemplos con esta clase, asegúrate de que sus métodos funcionan para todos los escenarios posibles.</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementa una función para realizar el recorrido DFS postorder en el `AVLTree` que acepte nodos del árbol en su función _lambda_
+
+```cpp
+class AVLTree {
+    public:
+        AVLTree();
+
+        // ...
+        
+    private:
+        void dfs_postorder(std::function<void (std::shared_ptr<ElementoArbolBinario>&)> action) const;
+};
+```
+<small>`AVLTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementa el método `AVLTree::rebalance` utilizando la función `AVLTree::dfs_postorder` anterior:
+
+```cpp
+void AVLTree::rebalance() {
+    // This is the action we will execute on every node
+    std::function<void (std::shared_ptr<ElementoArbolBinario>&)> action = [](std::shared_ptr<ElementoArbolBinario>& elem) {
+        if (factor_equilibrio(elem) == -2) {
+            // TODO
+        }
+        else if (factor_equilibrio(elem) == 2) {
+            // TODO
+        }
+    };
+
+    // Traverse the tree using DFS post-order strategy
+    dfs_postorder(action);
+}
+```
+<small>`AVLTree.cpp`</small>
+        </script>
+    </section>
 </section>
