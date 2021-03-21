@@ -4,6 +4,10 @@ on:
   pull_request:
     paths:
       - 'practicas/2021.practica1/**'
+  workflow_run:
+    workflows: ["Reset labels"]
+    types: 
+      - completed
 
 jobs:
   ubuntu-build:
