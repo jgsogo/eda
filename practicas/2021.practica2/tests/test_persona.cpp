@@ -20,11 +20,11 @@ TEST_CASE( "Persona - operator==")
     REQUIRE( persona == persona );
 
     Persona other1("nombre", "dni", 0);
-    REQUIRE( persona != other1 );
+    REQUIRE( !(persona == other1) );
 
     Persona other2("nombre", "other", 1);
-    REQUIRE( persona != other2 );
+    REQUIRE( !(persona == other2) );
 
     Persona other3("other", "dni", 1);
-    REQUIRE( persona != other3 );
+    REQUIRE( !(persona == other3) );
 }
