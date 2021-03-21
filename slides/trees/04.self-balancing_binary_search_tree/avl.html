@@ -523,3 +523,196 @@
         </table>
     </section>
 </section>
+
+<section data-transition="convex">
+    <section data-state="darken"
+        data-background="slides/trees/04.self-balancing_binary_search_tree/background-avl.jpeg">
+        <h2>Implementación C++</h2>
+        <h4>(Árboles AVL)</h4>
+    </section>
+
+    <section>
+        <p>
+            En lo fundamental la implementación es igual que en un <code>BinarySearchTree</code>, añadiendo
+            lo necesario para la operación de reequilibrado (factor de equilibrio, rotaciones,...).
+        </p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `AVLTree.h`
+
+```cpp
+class AVLTree {
+    public:
+        AVLTree();
+
+        // ... same as BinarySearchTree
+        
+    private:
+        void rebalance(); // Function to call after every insertion/removal
+};
+```
+<small>`AVLTree.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `AVLTree::push`
+
+Después de insertar el elemento, rebalanceamos
+
+```cpp
+void AVLTree::push(const TipoDato& dato) {
+    _push(root, dato);
+    rebalance();
+}
+```
+<small>`AVLTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `AVLTree::remove`
+
+Después de eliminar el elemento, rebalanceamos
+
+```cpp
+void AVLTree::remove(const TipoDato& dato) {
+    // ... same as BinarySearchTree::remove
+
+    // After everything is done, rebalance
+    rebalance();
+}
+```
+<small>`AVLTree.cpp`</small>
+        </script>
+    </section>
+
+    <section>
+        <h4><code>AVLTree::rebalance</code></h4>
+        <p>
+            ⚠️ La implementación que se muestra a continuación para el <span class="blue">rebalanceo</span> 
+            no es la mejor ni la más eficiente, se ha primado la simplicidad.
+        </p>
+    </section>
+
+    <section>
+        <p>Estrategia:</p>
+        <ul>
+            <li>Primero hijos, luego padres: <code>dfs_postorder</code>.</li>
+            <li>Actuamos cuando el fator de equilibrio es -2 ó 2.</li>
+        </ul>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+`AVLTree::rebalance`
+
+Después de eliminar el elemento, rebalanceamos
+
+```cpp[26-30|1-8|10-23]
+void _rebalance(std::shared_ptr<ElementoArbolBinario>& element) { // Note the reference
+    // DFS post-order strategy:
+    if (element->left) {
+        _rebalance(element->left);
+    }
+    else if (element->right) {
+        _rebalance(element->right);
+    }
+
+    if (factor_equilibrio(element) == -2) {
+        if (factor_equilibrio(element->left) == 1) {
+            // First, rotate the child right
+            rotate_right(elem->left);
+        }
+        rotate_left(elem);
+    }
+    else if (factor_equilibrio(element) == 2) {
+        if (factor_equilibrio(element->right) == -1) {
+            // First, rotate the child left
+            rotate_left(elem->right);
+        }
+        rotate_right(elem);
+    }
+}
+
+void AVLTree::rebalance() {
+    if (root != nullptr) {
+        _rebalance(root);
+    }
+}
+```
+<small>`AVLTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Función auxiliar `factor_equilibrio`:
+
+```cpp
+int factor_equilibrio(std::shared_ptr<ElementoArbolBinario> element) {
+    return _height(element->right) - _height(element->left);
+}
+```
+<small>`AVLTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Función auxiliar `rotate_left`:
+
+```cpp
+int rotate_left(std::shared_ptr<ElementoArbolBinario>& element) { // Note the reference
+    auto old_parent = element;
+    element = element->left;
+    old_parent->left = element->right;
+    element->right = old_parent;
+}
+```
+<small>`AVLTree.cpp`</small>
+<table>
+    <tr>
+        <td>
+            <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda1.dot.png" />
+        </td>
+        <td>
+            <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda1-fix.dot.png" />
+        </td>
+    </tr>
+</table>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Función auxiliar `rotate_right`:
+
+```cpp
+int rotate_right(std::shared_ptr<ElementoArbolBinario>& element) { // Note the reference
+    auto old_parent = element;
+    element = element->right;
+    old_parent->right = element->left;
+    element->left = old_parent;
+}
+```
+<small>`AVLTree.cpp`</small>
+<table>
+    <tr>
+        <td>
+            <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha1.dot.png" />
+        </td>
+        <td>
+            <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-dcha1-fix.dot.png" />
+        </td>
+    </tr>
+</table>
+        </script>
+    </section>
+
+
+</section>
