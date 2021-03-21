@@ -626,16 +626,16 @@ void _rebalance(std::shared_ptr<ElementoArbolBinario>& element) { // Note the re
     if (factor_equilibrio(element) == -2) {
         if (factor_equilibrio(element->left) == 1) {
             // First, rotate the child right
-            rotate_right(elem->left);
+            rotate_right(element->left);
         }
-        rotate_left(elem);
+        rotate_left(element);
     }
     else if (factor_equilibrio(element) == 2) {
         if (factor_equilibrio(element->right) == -1) {
             // First, rotate the child left
-            rotate_left(elem->right);
+            rotate_left(element->right);
         }
-        rotate_right(elem);
+        rotate_right(element);
     }
 }
 
@@ -667,7 +667,7 @@ int factor_equilibrio(std::shared_ptr<ElementoArbolBinario> element) {
 Función auxiliar `rotate_left`:
 
 ```cpp
-int rotate_left(std::shared_ptr<ElementoArbolBinario>& element) { // Note the reference
+void rotate_left(std::shared_ptr<ElementoArbolBinario>& element) { // Note the reference
     auto old_parent = element;
     element = element->left;
     old_parent->left = element->right;
@@ -693,7 +693,7 @@ int rotate_left(std::shared_ptr<ElementoArbolBinario>& element) { // Note the re
 Función auxiliar `rotate_right`:
 
 ```cpp
-int rotate_right(std::shared_ptr<ElementoArbolBinario>& element) { // Note the reference
+void rotate_right(std::shared_ptr<ElementoArbolBinario>& element) { // Note the reference
     auto old_parent = element;
     element = element->right;
     old_parent->right = element->left;
