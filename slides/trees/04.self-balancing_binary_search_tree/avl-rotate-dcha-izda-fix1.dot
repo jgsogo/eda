@@ -15,13 +15,13 @@ digraph {
     b2 -> c34 [style=invis weight=10];
     b2 -> c4 [style=invis]
 
-    c1 -> d1 [style=invis]
+    c1 -> d1
     c1 -> d12 [style=invis weight=10];
-    c1 -> d2 [style=invis]
+    c1 -> d2
 
-    c2 -> d3
+    c2 -> d3 [style=invis]
     c2 -> d34 [style=invis weight=10];
-    c2 -> d4
+    c2 -> d4 [style=invis]
 
     c3 -> d5 [style=invis]
     c3 -> d56 [style=invis weight=10];
@@ -32,16 +32,16 @@ digraph {
     c4 -> d8 [style=invis]
 
     a1 [label="x" xlabel=-2];
-    b1 [label="y" xlabel=1];
+    b1 [label="z" xlabel=-1];
     b2 [label="D" shape=rect];
-    c1 [label="A" shape=rect];
-    c2 [label="z" xlabel="-1 / 0 / 1"];
+    c1 [label="y" xlabel="-1 / 0"];
+    c2 [label="C" shape=rect];
     c3 [style=invis];
     c4 [style=invis];
-    d1 [style=invis];
-    d2 [style=invis];
-    d3 [label="B" shape=rect];
-    d4 [label="C" shape=rect];
+    d1 [label="A" shape=rect];
+    d2 [label="B" shape=rect];
+    d3 [style=invis];
+    d4 [style=invis];
     d5 [style=invis];
     d6 [style=invis];
     d7 [style=invis];

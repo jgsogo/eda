@@ -412,16 +412,14 @@
             <tr>
                 <td>
                     <small><small>
-                        <code>--h(x) = h(C) + 2</code><br/>
-                        <code>--h(B) = h(C)</code><br/>
-                        <code>--h(A) = h(C) - 1</code><br/>
+                        <code>h(x) = 3 + max(h(B), h(C))</code><br/>
+                        <code>h(A) = max(h(B), h(C))</code><br/>
+                        <code>h(D) = max(h(B), h(C))</code><br/>
                     </small></small>
                 </td>
                 <td>
                     <small><small>
-                        <code>--h(y) = 1 + max(1 + max(h(A), h(B)), h(C))</code><br/>
-                        <code>--h(y) = 1 + max(1 + h(B), h(C))</code><br/>
-                        <code>--h(y) = 2 + h(C)<code><br/>
+                        <code>h(x) = 3 + max(h(A), h(B))</code><br/>
                     </small></small>
                 </td>
             </tr>
@@ -444,16 +442,81 @@
             <tr>
                 <td>
                     <small><small>
-                        <code>--h(x) = h(C) + 2</code><br/>
-                        <code>--h(B) = h(C)</code><br/>
-                        <code>--h(A) = h(C) - 1</code><br/>
+                        <code>h(x) = 3 + max(h(A), h(B))</code><br/>
                     </small></small>
                 </td>
                 <td>
                     <small><small>
-                        <code>--h(y) = 1 + max(1 + max(h(A), h(B)), h(C))</code><br/>
-                        <code>--h(y) = 1 + max(1 + h(B), h(C))</code><br/>
-                        <code>--h(y) = 2 + h(C)<code><br/>
+                        <code>h(z) = 2 + max(h(A), h(B), h(C), h(D))</code><br/>
+                    </small></small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h4>Rotación izquierda-derecha</h4>
+        <h6>2|-1</h6>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Aplicamos una <span class="blue">rotación izquierda-derecha</span> cuando encontramos esta situación</p>
+        <img class="r-stretch" src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda-dcha.dot.png" />
+        <p><small>Causas: borrado en A o inserción en B ó C incrementando la altura de <code>z</code>.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Paso 1) <span class="blue">rotación izquierda</span> en los nodos <code>y</code> y <code>z</code>
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda-dcha.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda-dcha-fix1.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small><small>
+                        <code>h(x) = 3 + max(h(B), h(C))</code><br/>
+                        <code>h(A) = max(h(B), h(C))</code><br/>
+                        <code>h(D) = max(h(B), h(C))</code><br/>
+                    </small></small>
+                </td>
+                <td>
+                    <small><small>
+                        <code>h(x) = 3 + max(h(C), h(D))</code><br/>
+                    </small></small>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>
+            Paso 2) <span class="blue">rotación derecha</span> en los nodos <code>x</code> y <code>z</code>
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda-dcha-fix1.dot.png" />
+                </td>
+                <td>
+                    <img src="slides/trees/04.self-balancing_binary_search_tree/avl-rotate-izda-dcha-fix2.dot.png" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <small><small>
+                        <code>h(x) = 3 + max(h(C), h(D))</code><br/>
+                    </small></small>
+                </td>
+                <td>
+                    <small><small>
+                        <code>h(z) = 2 + max(h(A), h(B), h(C), h(D))</code><br/>
                     </small></small>
                 </td>
             </tr>
