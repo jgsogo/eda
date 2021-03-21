@@ -28,4 +28,3 @@ TEST_CASE( "Persona - operator==")
     Persona other3("other", "dni", 1);
     REQUIRE( !(persona == other3) );
 }
-
