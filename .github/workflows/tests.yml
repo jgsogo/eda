@@ -175,7 +175,7 @@ jobs:
         ./unit_tests
 
   post_dog:
-    needs: actividades
+    needs: [actividades, practicas]
     runs-on: ubuntu-latest
     steps:
     - name: Doggoes as an Action
