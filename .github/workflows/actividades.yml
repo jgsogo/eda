@@ -5,6 +5,9 @@ on:
     paths:
       - 'actividad*/**'
 
+env:
+  ACTIVIDADES: ["actividad00", "actividad01", "actividad02", "actividad03", "actividad04", "actividad08", "actividad10", "actividad14"]
+
 jobs:
   # JOB to run change detection
   changes:
@@ -47,7 +50,7 @@ jobs:
     needs: changes
     strategy:
       matrix:
-        actividad: ["actividad00", "actividad01", "actividad02", "actividad03", "actividad04", "actividad08", "actividad10", "actividad14"]
+        actividad: ${{ env.ACTIVIDADES }}
     #if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
     runs-on: ubuntu-latest
     steps:
@@ -97,3 +100,12 @@ jobs:
       working-directory: _build
       run: |
         ./unit_tests
+
+#  post_dog:
+#    needs: actividades
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Doggoes as an Action
+#      uses: stanleynguyen/action-dogs@v1
+#      with:
+#        github-token: ${{ secrets.GITHUB_TOKEN }}
