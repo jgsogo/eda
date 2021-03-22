@@ -174,11 +174,11 @@ jobs:
       run: |
         ./unit_tests
 
-#  post_dog:
-#    needs: actividades
-#    runs-on: ubuntu-latest
-#    steps:
-#    - name: Doggoes as an Action
-#      uses: stanleynguyen/action-dogs@v1
-#      with:
-#        github-token: ${{ secrets.GITHUB_TOKEN }}
+  post_dog:
+    needs: actividades
+    runs-on: ubuntu-latest
+    steps:
+    - name: Doggoes as an Action
+      uses: stanleynguyen/action-dogs@v1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
