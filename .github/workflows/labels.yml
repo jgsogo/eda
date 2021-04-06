@@ -3,7 +3,6 @@ name: Apply labels EDA
 on:
   workflow_run:
     workflows: ["Tests EDA"]
-    branches: [actividades]
     types: 
       - completed
       - requested
