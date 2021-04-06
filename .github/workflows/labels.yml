@@ -3,8 +3,9 @@ name: Apply labels EDA
 on:
   workflow_run:
     workflows: ["Tests EDA"]
-    types:
+    types: 
       - completed
+      - requested
 
 jobs:
   apply_labels:
