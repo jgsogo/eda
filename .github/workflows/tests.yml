@@ -63,25 +63,82 @@ jobs:
           practica6:
             - 'practicas/2021.practica6/**'
 
+  labels:
+    runs-on: ubuntu-latest
+    needs: changes
+    steps:
+    - name: Save PR number
+      run: |
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/labels.txt
+
+    - if: ${{ needs.changes.outputs['actividad00'] == 'true' }}
+      run: |
+        echo actividad00 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad01'] == 'true' }}
+      run: |
+        echo actividad01 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad02'] == 'true' }}
+      run: |
+        echo actividad02 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad03'] == 'true' }}
+      run: |
+        echo actividad03 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad04'] == 'true' }}
+      run: |
+        echo actividad04 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad08'] == 'true' }}
+      run: |
+        echo actividad08 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad10'] == 'true' }}
+      run: |
+        echo actividad10 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad14'] == 'true' }}
+      run: |
+        echo actividad14 >> ./pr/labels.txt
+
+    - if: ${{ needs.changes.outputs['practica1'] == 'true' }}
+      run: |
+        echo practica1 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica2'] == 'true' }}
+      run: |
+        echo practica2 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica3'] == 'true' }}
+      run: |
+        echo practica3 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica4'] == 'true' }}
+      run: |
+        echo practica4 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica5'] == 'true' }}
+      run: |
+        echo practica5 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica6'] == 'true' }}
+      run: |
+        echo practica6 >> ./pr/labels.txt
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pr
+        path: pr/
+
   actividades:
     name: ${{ matrix.actividad }}
     needs: changes
     strategy:
       matrix:
         actividad: ["actividad00", "actividad01", "actividad02", "actividad03", "actividad04", "actividad08", "actividad10", "actividad14"]
-    #if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions-ecosystem/action-remove-labels@v1
-      with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          labels: ${{ matrix.actividad }}
-
-    - uses: actions-ecosystem/action-add-labels@v1
-      if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
-      with:
-          labels: ${{ matrix.actividad }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+    # - uses: actions-ecosystem/action-remove-labels@v1
+    #   with:
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
+    #       labels: ${{ matrix.actividad }}
+    # 
+    # - uses: actions-ecosystem/action-add-labels@v1
+    #   if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
+    #   with:
+    #       labels: ${{ matrix.actividad }}
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -125,7 +182,6 @@ jobs:
     strategy:
       matrix:
         practica: ["practica1", "practica2", "practica3", "practica4", "practica5", "practica6"]
-    #if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions-ecosystem/action-remove-labels@v1

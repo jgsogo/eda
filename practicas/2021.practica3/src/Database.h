@@ -22,7 +22,7 @@ class BinarySearchTree {
     public:
         BinarySearchTree();  // Creates empty tree
 
-        void push(const Empleado&);
+        void push(const Empleado&);  // Inserts new employee
 
         int size() const; // Number of nodes
         void for_each(std::function<void (Empleado&)> action) const;  // Visit all the nodes
