@@ -64,6 +64,8 @@ jobs:
             - 'practicas/2021.practica6/**'
 
   labels:
+    runs-on: ubuntu-latest
+    steps:
     - name: Save PR number
       run: |
         mkdir -p ./pr
