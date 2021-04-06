@@ -63,6 +63,31 @@ jobs:
           practica6:
             - 'practicas/2021.practica6/**'
 
+  labels:
+    - name: Save PR number
+      run: |
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/NR
+        echo ${{ needs.changes.outputs["actividad00"] }} > ./pr/NR
+        echo ${{ needs.changes.outputs["actividad01"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["actividad02"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["actividad03"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["actividad04"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["actividad08"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["actividad10"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["actividad14"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["practica1"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["practica2"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["practica3"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["practica4"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["practica5"] }} >> ./pr/NR
+        echo ${{ needs.changes.outputs["practica6"] }} >> ./pr/NR
+        cat ./pr/NR
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pr
+        path: pr/
+
   actividades:
     name: ${{ matrix.actividad }}
     needs: changes
