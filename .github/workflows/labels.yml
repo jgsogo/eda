@@ -32,10 +32,13 @@ jobs:
             var fs = require('fs');
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
+      
       - name: 'Label PR'
         uses: actions/github-script@v3
+        id: issue_number
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
           script: |
             var fs = require('fs');
             var issue_number = Number(fs.readFileSync('./number.txt'));
@@ -53,12 +56,11 @@ jobs:
               repo: context.repo.repo,
               labels: labels
             })
+            return 'issue_number'
 
-  post_dog:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
-    steps:
-    - name: Doggoes as an Action
-      uses: stanleynguyen/action-dogs@v1
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        - name: Doggoes
+          if: ${{ github.event.workflow_run.conclusion == 'success' }}
+          uses: jgsogo/action-dogs@v2
+          with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            issue_number: ${{ steps.issue_number.outputs.result }}
