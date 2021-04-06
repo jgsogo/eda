@@ -230,12 +230,3 @@ jobs:
       working-directory: _build
       run: |
         ./unit_tests
-
-  post_dog:
-    needs: [actividades, practicas]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Doggoes as an Action
-      uses: stanleynguyen/action-dogs@v1
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
