@@ -63,4 +63,4 @@ jobs:
         uses: jgsogo/action-dogs@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          issue_number: ${{ steps.issue_number.outputs.result }}
+          issue-number: ${{ steps.issue_number.outputs.result }}
