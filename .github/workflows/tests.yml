@@ -184,17 +184,6 @@ jobs:
         practica: ["practica1", "practica2", "practica3", "practica4", "practica5", "practica6"]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions-ecosystem/action-remove-labels@v1
-      with:
-          labels: 2021.${{ matrix.practica }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-    - uses: actions-ecosystem/action-add-labels@v1
-      if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
-      with:
-          labels: 2021.${{ matrix.practica }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Checkout
       uses: actions/checkout@v2.0.0
       if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
@@ -230,12 +219,3 @@ jobs:
       working-directory: _build
       run: |
         ./unit_tests
-
-  post_dog:
-    needs: [actividades, practicas]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Doggoes as an Action
-      uses: stanleynguyen/action-dogs@v1
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}

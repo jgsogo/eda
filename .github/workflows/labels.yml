@@ -40,11 +40,21 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             var fs = require('fs');
-            var content = Number(fs.readFileSync('./labels.txt'));
-
+            var content = fs.readFileSync('./labels.txt');
+            var lines = content.split('\n')
+            var issue_number = Number(lines[0])
             await github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
               body: 'Everything is OK. Thank you for the PR!'
             });
+
+  post_dog:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - name: Doggoes as an Action
+      uses: stanleynguyen/action-dogs@v1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
