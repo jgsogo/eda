@@ -46,7 +46,7 @@ jobs:
               body: 'Everything is OK. Thank you for the PR!'
             });
 
-            var labels = fs.readFileSync('./labels.txt');
+            var labels = Text(fs.readFileSync('./labels.txt'));
             github.issues.addLabels({
               issue_number: issue_number,
               owner: context.repo.owner,
