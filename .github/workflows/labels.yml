@@ -38,15 +38,21 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             var fs = require('fs');
-            var content = fs.readFileSync('./labels.txt');
-            var lines = content.split('\n')
-            var issue_number = Number(lines[0])
+            var issue_number = Number(fs.readFileSync('./number.txt'));
             await github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
               body: 'Everything is OK. Thank you for the PR!'
             });
+
+            var labels = fs.readFileSync('./labels.txt');
+            github.issues.addLabels({
+              issue_number: issue_number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: labels
+            })
 
   post_dog:
     runs-on: ubuntu-latest
