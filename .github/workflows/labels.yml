@@ -56,11 +56,11 @@ jobs:
               repo: context.repo.repo,
               labels: labels
             })
-            return 'issue_number'
+            return issue_number
 
-        - name: Doggoes
-          if: ${{ github.event.workflow_run.conclusion == 'success' }}
-          uses: jgsogo/action-dogs@v2
-          with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
-            issue_number: ${{ steps.issue_number.outputs.result }}
+      - name: Doggoes
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        uses: jgsogo/action-dogs@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          issue_number: ${{ steps.issue_number.outputs.result }}
