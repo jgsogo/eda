@@ -70,11 +70,11 @@ jobs:
     - name: Save PR number
       run: |
         mkdir -p ./pr
-        echo ${{ github.event.number }} > ./pr/labels.txt
+        echo ${{ github.event.number }} > ./pr/number.txt
 
     - if: ${{ needs.changes.outputs['actividad00'] == 'true' }}
       run: |
-        echo actividad00 >> ./pr/labels.txt
+        echo actividad00 > ./pr/labels.txt
     - if: ${{ needs.changes.outputs['actividad01'] == 'true' }}
       run: |
         echo actividad01 >> ./pr/labels.txt
