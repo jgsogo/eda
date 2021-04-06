@@ -127,19 +127,18 @@ jobs:
     strategy:
       matrix:
         actividad: ["actividad00", "actividad01", "actividad02", "actividad03", "actividad04", "actividad08", "actividad10", "actividad14"]
-    #if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions-ecosystem/action-remove-labels@v1
-      with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          labels: ${{ matrix.actividad }}
-
-    - uses: actions-ecosystem/action-add-labels@v1
-      if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
-      with:
-          labels: ${{ matrix.actividad }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+    # - uses: actions-ecosystem/action-remove-labels@v1
+    #   with:
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
+    #       labels: ${{ matrix.actividad }}
+    # 
+    # - uses: actions-ecosystem/action-add-labels@v1
+    #   if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
+    #   with:
+    #       labels: ${{ matrix.actividad }}
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -183,7 +182,6 @@ jobs:
     strategy:
       matrix:
         practica: ["practica1", "practica2", "practica3", "practica4", "practica5", "practica6"]
-    #if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions-ecosystem/action-remove-labels@v1
