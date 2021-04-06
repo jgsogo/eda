@@ -70,22 +70,52 @@ jobs:
     - name: Save PR number
       run: |
         mkdir -p ./pr
-        echo ${{ github.event.number }} > ./pr/NR
-        echo ${{ needs.changes.outputs['actividad00'] }} > ./pr/NR
-        echo ${{ needs.changes.outputs['actividad01'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['actividad02'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['actividad03'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['actividad04'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['actividad08'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['actividad10'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['actividad14'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['practica1'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['practica2'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['practica3'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['practica4'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['practica5'] }} >> ./pr/NR
-        echo ${{ needs.changes.outputs['practica6'] }} >> ./pr/NR
-        cat ./pr/NR
+        echo ${{ github.event.number }} > ./pr/labels.txt
+
+    - if: ${{ needs.changes.outputs['actividad00'] == 'true' }}
+      run: |
+        echo actividad00 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad01'] == 'true' }}
+      run: |
+        echo actividad01 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad02'] == 'true' }}
+      run: |
+        echo actividad02 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad03'] == 'true' }}
+      run: |
+        echo actividad03 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad04'] == 'true' }}
+      run: |
+        echo actividad04 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad08'] == 'true' }}
+      run: |
+        echo actividad08 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad10'] == 'true' }}
+      run: |
+        echo actividad10 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad14'] == 'true' }}
+      run: |
+        echo actividad14 >> ./pr/labels.txt
+
+    - if: ${{ needs.changes.outputs['practica1'] == 'true' }}
+      run: |
+        echo practica1 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica2'] == 'true' }}
+      run: |
+        echo practica2 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica3'] == 'true' }}
+      run: |
+        echo practica3 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica4'] == 'true' }}
+      run: |
+        echo practica4 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica5'] == 'true' }}
+      run: |
+        echo practica5 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica6'] == 'true' }}
+      run: |
+        echo practica6 >> ./pr/labels.txt
+
     - uses: actions/upload-artifact@v2
       with:
         name: pr
