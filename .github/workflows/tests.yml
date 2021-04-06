@@ -1,0 +1,221 @@
+name: Tests EDA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'actividad*/**'
+      - 'practicas/2021.practica*/**'
+
+jobs:
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      actividad00: ${{ steps.filter.outputs.actividad00 }}
+      actividad01: ${{ steps.filter.outputs.actividad01 }}
+      actividad02: ${{ steps.filter.outputs.actividad02 }}
+      actividad03: ${{ steps.filter.outputs.actividad03 }}
+      actividad04: ${{ steps.filter.outputs.actividad04 }}
+      actividad08: ${{ steps.filter.outputs.actividad08 }}
+      actividad10: ${{ steps.filter.outputs.actividad10 }}
+      actividad14: ${{ steps.filter.outputs.actividad14 }}
+      
+      practica1: ${{ steps.filter.outputs.practica1 }}
+      practica2: ${{ steps.filter.outputs.practica2 }}
+      practica3: ${{ steps.filter.outputs.practica3 }}
+      practica4: ${{ steps.filter.outputs.practica4 }}
+      practica5: ${{ steps.filter.outputs.practica5 }}
+      practica6: ${{ steps.filter.outputs.practica6 }}
+    steps:
+    # For pull requests it's not necessary to checkout the code
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          actividad00:
+            - 'actividad00/**'
+          actividad01:
+            - 'actividad01/**'
+          actividad02:
+            - 'actividad02/**'
+          actividad03:
+            - 'actividad03/**'
+          actividad04:
+            - 'actividad04/**'
+          actividad08:
+            - 'actividad08/**'
+          actividad10:
+            - 'actividad10/**'
+          actividad14:
+            - 'actividad14/**'
+          practica1:
+            - 'practicas/2021.practica1/**'
+          practica2:
+            - 'practicas/2021.practica2/**'
+          practica3:
+            - 'practicas/2021.practica3/**'
+          practica4:
+            - 'practicas/2021.practica4/**'
+          practica5:
+            - 'practicas/2021.practica5/**'
+          practica6:
+            - 'practicas/2021.practica6/**'
+
+  labels:
+    runs-on: ubuntu-latest
+    needs: changes
+    steps:
+    - name: Save PR number
+      run: |
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/labels.txt
+
+    - if: ${{ needs.changes.outputs['actividad00'] == 'true' }}
+      run: |
+        echo actividad00 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad01'] == 'true' }}
+      run: |
+        echo actividad01 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad02'] == 'true' }}
+      run: |
+        echo actividad02 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad03'] == 'true' }}
+      run: |
+        echo actividad03 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad04'] == 'true' }}
+      run: |
+        echo actividad04 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad08'] == 'true' }}
+      run: |
+        echo actividad08 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad10'] == 'true' }}
+      run: |
+        echo actividad10 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['actividad14'] == 'true' }}
+      run: |
+        echo actividad14 >> ./pr/labels.txt
+
+    - if: ${{ needs.changes.outputs['practica1'] == 'true' }}
+      run: |
+        echo practica1 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica2'] == 'true' }}
+      run: |
+        echo practica2 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica3'] == 'true' }}
+      run: |
+        echo practica3 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica4'] == 'true' }}
+      run: |
+        echo practica4 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica5'] == 'true' }}
+      run: |
+        echo practica5 >> ./pr/labels.txt
+    - if: ${{ needs.changes.outputs['practica6'] == 'true' }}
+      run: |
+        echo practica6 >> ./pr/labels.txt
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pr
+        path: pr/
+
+  actividades:
+    name: ${{ matrix.actividad }}
+    needs: changes
+    strategy:
+      matrix:
+        actividad: ["actividad00", "actividad01", "actividad02", "actividad03", "actividad04", "actividad08", "actividad10", "actividad14"]
+    runs-on: ubuntu-latest
+    steps:
+    # - uses: actions-ecosystem/action-remove-labels@v1
+    #   with:
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
+    #       labels: ${{ matrix.actividad }}
+    # 
+    # - uses: actions-ecosystem/action-add-labels@v1
+    #   if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
+    #   with:
+    #       labels: ${{ matrix.actividad }}
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+      if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
+      with:
+        python-version: '3.x'
+
+    - name: Install tools
+      if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
+      run: |
+        cmake --version
+        python --version
+        python -m pip install --upgrade pip
+        python -m pip install conan
+        conan --version
+        conan config init
+        conan profile update settings.compiler.libcxx=libstdc++11 default
+        conan profile show default
+
+    - name: Compile
+      if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
+      run: |
+        mkdir _build && cd _build
+        conan install ../${{ matrix.actividad }}/conanfile.txt -s build_type=Release
+        cmake ../${{ matrix.actividad }} -DCMAKE_MODULE_PATH=$(pwd)
+        cmake --build .
+
+    - name: Run tests
+      if: ${{ needs.changes.outputs[matrix.actividad] == 'true' }}
+      working-directory: _build
+      run: |
+        ./unit_tests
+
+  practicas:
+    name: 2021 - ${{ matrix.practica }}
+    needs: changes
+    strategy:
+      matrix:
+        practica: ["practica1", "practica2", "practica3", "practica4", "practica5", "practica6"]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+      if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
+      with:
+        python-version: '3.x'
+
+    - name: Install tools
+      if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
+      run: |
+        cmake --version
+        python --version
+        python -m pip install --upgrade pip
+        python -m pip install conan
+        conan --version
+        conan config init
+        conan profile update settings.compiler.libcxx=libstdc++11 default
+        conan profile show default
+
+    - name: Compile
+      if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
+      run: |
+        mkdir _build && cd _build
+        conan install ../practicas/2021.${{ matrix.practica }}/conanfile.txt -s build_type=Release
+        cmake ../practicas/2021.${{ matrix.practica }} -DCMAKE_MODULE_PATH=$(pwd)
+        cmake --build .
+
+    - name: Run tests
+      if: ${{ needs.changes.outputs[matrix.practica] == 'true' }}
+      working-directory: _build
+      run: |
+        ./unit_tests
