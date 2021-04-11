@@ -1,0 +1,134 @@
+<section data-transition="convex">
+    <section>
+        <h2>TADs lineales</h2>
+        <h4>Listas, colas y pilas</h4>
+    </section>
+
+    <section>
+        <p>Hemos construídos los TADs lineales utilizando siempre tres clases, con diferentes responsabilidades:</p>
+        <p><code>TipoDato.h</code></p>
+        <p><code>ElementoListaXXXX.h</code></p>
+        <p><code>Lista.h</code> - <code>Queue.h</code> - <code>Stack.h</code></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Para enganchar los nodos de la lista
+
+```cpp
+class ElementListaSimple {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementListaSimple> next = nullptr;
+    public:
+        // Constructor 
+        ElementListaSimple(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementListaSimple.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Métodos disponibles para los consumidores/usuarios (**interfaz**):
+
+```cpp
+class LinkedList {
+    public:
+        LinkedList();
+
+        int size() const;
+        bool empty() const;
+
+        TipoDato& front() const;
+        TipoDato& back() const;
+        TipoDato& at(int pos) const;
+
+        void for_each(std::function<void (TipoDato&)> action) const;
+
+        void push_back(const TipoDato& dato);
+        void push_front(const TipoDato& dato);
+        void insert(const TipoDato& dato, int pos);
+
+        int find(const TipoDato& dato) const;
+    protected:
+        std::shared_ptr<ElementListaSimple> _front = nullptr;
+        std::shared_ptr<ElementListaSimple> _back = nullptr;
+};
+``` 
+<small>`LinkedList.h`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementación del método `find`:
+
+```cpp[|6]
+int LinkedList::find(const TipoDato& dato) const {
+    auto iterator = _front;
+    int idx = -1;
+    while (iterator != nullptr) {
+        idx++;
+        if (iterator->dato == dato) {
+            return idx;
+        }
+        iterator = iterator->next;
+    }
+    return idx;
+}
+``` 
+<small>`LinkedList.cpp`</small> 
+        </script>
+    </section>
+
+    <section>
+        <p>
+            Esta implementación de <code class="grey">LinkedList</code> exige que el 
+            <code class="grey">TipoDato</code> implemente el operador <code class="grey">operator==</code>.
+        </p>
+        <p class="footnote">Otras funciones podrán requerir más operadores</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Nuestro `TipoDato` (recuerda las prácticas):
+
+```cpp[|9]
+class TipoDato {  // Persona
+    public:
+        TipoDato(const std::string& name, const std::string& dni, int gender);
+
+        const std::string& get_name() const;
+        int get_gender() const;
+        const std::string& get_dni() const;
+        
+        bool operator==(const Persona& other) const;
+    private:
+        int gender; 
+        std::string name;
+        std::string dni;
+};
+``` 
+<small>`Persona.h`</small> 
+        </script>
+    </section>
+
+    <section>
+        <h4>División de responsabilidades</h4>
+        <p>
+            El <span class="blue">algoritmo</span> implementa <span class="blue">cómo</span> se 
+            realiza la ordenación y qué necesita.
+        </p>
+        <hr/>
+        <p>
+            El <span class="red">usuario</span> provee el <span class="red">tipo de dato</span> 
+            y la implementación de los <span class="red">operadores</span> que necesita el algoritmo.
+        </p>
+    </section>
+
+    <section data-menu-title="" data-background="slides/eda2.0/images/barney-dude.gif">
+    </section>
+</section>
