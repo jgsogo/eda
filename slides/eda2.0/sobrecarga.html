@@ -1,13 +1,6 @@
-
-<section data-transition="convex">
-    <section data-menu-title="" data-background="slides/eda2.0/images/backtothefutureII.jpg">
-        <h4 class="box-shadow-black">EDA 2.0</h4>
-    </section>
-</section>
-
 <section data-transition="convex">
     <section>
-        <h2>El problema</h2>
+        <h2>Introducción</h2>
     </section>
 
     <section>
@@ -543,5 +536,167 @@ ComplexNumber ComplexNumber::operator*(float coeficient) const {
         ¿Y si el primer operando es un tipo básico de datos? <span class="fragment">Nos queda la opción de la función libre y la declaración <code>friend</code>.</span>
     </section>
 
+    <section data-menu-title="" data-background="slides/eda2.0/images/barney-robin.gif">
+        <h4 class="box-shadow-white">Sobrecarga y funciones miembro</h4>
+    </section>
 </section>
+
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Operador <code>&#60;&#60;</code></h2>
+    </section>
+
+    <section>
+        El <span class="blue">operador <code>&#60;&#60;</code></span> se utiliza para enviar datos a un stream, típicamente a un
+        <code>std::ostream</code> y la mayoría de las veces a <code>std::cout</code>.
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Es un operador binario entre dos tipos de datos diferentes: el *stream* y el dato que se quiere mostrar:
+
+```cpp
+///hide
+#include <iostream>
+
+int main() {
+///unhide
+std::cout << "palabra"; // operator<<(ostream, std::string)
+///hide
+}
+///unhide
+```
+
+<hr/>
+
+```cpp
+2 + 3; // operator+(int, int)
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Su valor de retorno es un *stream*, y por eso **se puede concatenar**:
+
+```cpp
+///hide
+#include <iostream>
+
+int main() {
+///unhide
+(std::cout << "palabra") << "otra"; // ostream operator<<(ostream, std::string)
+///hide
+}
+///unhide
+```
+
+<hr/>
+
+```cpp
+(2 + 3) + 8; // int operator+(int, int)
+```
+        </script>
+    </section>
+
+    <section>
+        No es un operador conmutativo, el <code>std::ostream</code> es el operando izquierdo.
+        <span class="fragment">
+            <hr/>
+            Habría que añadir el operador sobrecargado a la clase <code>std::ostream</code>, pero no podemos.
+        </span>
+        <span class="fragment">
+            <hr/>
+            La solución es utilizar una función libre.
+        </span>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Operador `<<`
+
+```cpp[16-19]
+#include <iostream>
+
+class ComplexNumber {
+    private:
+        float real;
+        float im;
+
+    public:
+        ComplexNumber(): real{0}, im{0} {};
+        ComplexNumber(float real, float im) : real{real}, im{im} {};
+
+        float get_real() const { return real; }
+        float get_im() const { return im; }
+};
+
+std::ostream& operator<<(std::ostream& os, const ComplexNumber& number) {
+    os << number.get_real() << " + " << number.get_im() << "i";
+    return os;
+}
+
+int main() {
+    ComplexNumber a{10, 20};
+    std::cout << a << std::endl;
+}
+```
+<small>`ComplexNumber.h`</small>
+        </script>
+    </section>
+
+    <section>
+        🤔  ¿Realmente quiero exponer en mi clase <code>ComplexNumber</code> los métodos <code>get_real</code> y <code>get_im</code>? ¿Para qué los querría usar?
+        <span class="fragment"><hr/>¿Sólo para imprimir esa información?</span>
+        <span class="fragment"><hr/>Sería mejor que fueran privados</span>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Operador `<<` (`friend`)
+
+```cpp[3-13|12|15-18]
+#include <iostream>
+
+class ComplexNumber {
+    private:
+        float real;
+        float im;
+
+    public:
+        ComplexNumber(): real{0}, im{0} {};
+        ComplexNumber(float real, float im) : real{real}, im{im} {};
+
+        friend std::ostream& operator<<(std::ostream& os, const ComplexNumber& number);
+};
+
+std::ostream& operator<<(std::ostream& os, const ComplexNumber& number) {
+    os << number.real << " + " << number.im << "i";
+    return os;
+}
+
+int main() {
+    ComplexNumber a{10, 20};
+    std::cout << a << std::endl;
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4><code>friend</code> + encapsulamiento + sobrecarga</h4>
+        <img src="slides/eda2.0/images/friend-zone-icon.png" class="">
+    </section>
+</section>
+
+
+
+<section data-transition="convex">
+    <section data-menu-title="" data-background="slides/eda2.0/images/backtothefutureII.jpg">
+        <h4 class="box-shadow-black">EDA 2.0</h4>
+    </section>
+</section>
+
 
