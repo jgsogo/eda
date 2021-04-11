@@ -1,0 +1,463 @@
+<section data-transition="convex">
+    <section>
+        <h2>Algoritmos de ordenación</h2>
+    </section>
+
+    <section data-menu-title="Bubble sort" data-background="images/bubble-sort-background.jpg">
+        <div class="credit white">Imagen: <a
+                href="https://www.coindesk.com/bank-of-america-bitcoin-bubble-is-already-popping">Coinbase</a></div>
+        <h4>Método de la burbuja</h4>
+    </section>
+
+    <section data-markdown data-transition="none-out">
+        <script type="text/template">
+`std::vector<int>`
+```cpp
+///hide
+#include <iostream>
+#include <vector>
+
+///unhide
+void bubble_sort(std::vector<int>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+///hide
+int main() {
+    std::vector<int> elements{9, 8, 7, 6, 5, 4, 3, 2, 1};
+    bubble_sort(elements);
+    for (auto v: elements) {
+        std::cout << v << std::endl;
+    }
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+`std::vector<float>`
+```cpp
+///hide
+#include <iostream>
+#include <vector>
+
+///unhide
+void bubble_sort(std::vector<float>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+///hide
+int main() {
+    std::vector<float> elements{9.f, 8.f, 7.f, 6.f, 5.f, 4.f, 3.f, 2.f, 1.f};
+    bubble_sort(elements);
+    for (auto v: elements) {
+        std::cout << v << std::endl;
+    }
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section>
+        <p>
+            No hay que cambiar prácticamente nada para ordenar vectores de <code>float</code>, 
+            de <code>int</code>,... de <span class="red">tipos básicos de datos</span>.
+        </p>
+        <p>
+            El compilador ya sabe cómo se implementan los operadores básicos: <code>operator&#60;</code>, <code>operator&#62;</code>, <code>operator==</code>,...
+        </p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+            ¿Cómo se implementaría el <code>bubble_sort</code> para un vector de estructuras definidas por el usuario?
+
+```cpp
+struct Point {
+    float x;
+    float y;
+};
+
+void bubble_sort(std::vector<Point>& elements);
+```
+
+<div class="footnote">Recuerda un poco a un ejercicio de las prácticas.</div>
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-out">
+        <script type="text/template">
+`std::vector<int>`
+```cpp
+///hide
+#include <iostream>
+#include <vector>
+
+///unhide
+void bubble_sort(std::vector<int>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+///hide
+int main() {
+    std::vector<int> elements{9, 8, 7, 6, 5, 4, 3, 2, 1};
+    bubble_sort(elements);
+    for (auto v: elements) {
+        std::cout << v << std::endl;
+    }
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in none-out">
+        <script type="text/template">
+`std::vector<float>`
+```cpp
+///hide
+#include <iostream>
+#include <vector>
+
+///unhide
+void bubble_sort(std::vector<float>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+///hide
+int main() {
+    std::vector<float> elements{9.f, 8.f, 7.f, 6.f, 5.f, 4.f, 3.f, 2.f, 1.f};
+    bubble_sort(elements);
+    for (auto v: elements) {
+        std::cout << v << std::endl;
+    }
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+`std::vector<Point>`
+```cpp
+///hide
+#include <iostream>
+#include <vector>
+
+struct Point {
+    float x;
+    float y;
+};
+
+///unhide
+void bubble_sort(std::vector<Point>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+///hide
+int main() {
+    std::vector<Point> elements{Point{1, 0}, Point{2, 3}, Point{7, 8}, Point{0, 0}};
+    bubble_sort(elements);
+    for (auto v: elements) {
+        std::cout << v << std::endl;
+    }
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+El algoritmo es idéntico, sólo hay que proveer la definición para los
+operadores que se utilizan.
+
+```cpp
+///hide
+#include <iostream>
+#include <vector>
+
+struct Point {
+    float x;
+    float y;
+};
+
+///unhide
+bool operator>(const Point& lhs, const Point& rhs) {
+    // A point is greater than other if the distance to origin is bigger.
+    float lhs_mod = (lhs.x * lhs.x) + (lhs.y * lhs.y);
+    float rhs_mod = (rhs.x * rhs.x) + (rhs.y * rhs.y);
+    return lhs_mod > rhs_mod;
+}
+
+///hide
+std::ostream& operator<<(std::ostream& os, const Point& point) {
+    os << "(" << point.x << ", " << point.y << ")";
+    return os;
+}
+
+void bubble_sort(std::vector<Point>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+
+int main() {
+    std::vector<Point> elements{Point{1, 0}, Point{2, 3}, Point{7, 8}, Point{0, 0}};
+    bubble_sort(elements);
+    for (auto v: elements) {
+        std::cout << v << std::endl;
+    }
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+La alternativa es modificar la implementación del algoritmo para cada tipo de dato 😖 👎 😖 👎 
+
+```cpp
+void bubble_sort(std::vector<Point>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            float lhs_mod = (elements[k].x * elements[k].x) + (elements[k].y * elements[k].y);
+            float rhs_mod = (elements[k+1].x * elements[k+1].x) + (elements[k+1].y * elements[k+1].y);
+            if (lhs_mod > rhs_mod) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-state="darken" data-menu-title="Quicksort" data-background="images/quicksort-background.jpg">
+        <div class="credit white">Imagen: <a href="https://ctcgulf.com/product/recruitment-and-selection">CTC</a></div>
+        <h4>Quicksort</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+`std::vector<int>`
+
+
+```cpp[16-30|1-14|7-8]
+///hide
+#include <iostream>
+#include <vector>
+
+///unhide
+// A function to merge two ordered lists
+int partition(std::vector<int>& elements, int left_index, int right_index) {
+    auto pivot = elements.at(left_index);
+    int i = left_index, j = right_index;
+
+    while(true) {
+        while( elements.at(i) <= pivot && i < j ) ++i;
+        while( elements.at(j) > pivot ) --j;
+        if( i >= j ) break;
+        std::swap(elements.at(i), elements.at(j));
+    }
+    std::swap(elements.at(left_index), elements.at(j));
+    return j;
+}
+
+// Quick-sort algorithm
+void quick_sort(std::vector<int>& elements, int left_index, int right_index) {
+    // Check for base/trivial case
+    if (left_index >= right_index) {
+        return;
+    }
+    else {
+        // Compute the pivot
+        int pivot_index = partition(elements, left_index, right_index);
+
+        // Apply quick-sort to both sides (pivot is already in place)
+        quick_sort(elements, left_index, pivot_index-1);
+        quick_sort(elements, pivot_index+1, right_index);
+    }
+}
+///hide
+
+int main() {
+    std::vector<int> elements{9, 8, 7, 6, 5, 4, 3, 2, 1};
+    quick_sort(elements, 0, elements.size()-1);
+
+    for (auto v: elements) {
+        std::cout << v << std::endl;
+    }
+}
+///unhide
+``` 
+        </script>
+    </section>
+
+    <section>
+        <p>¿Qué hay que hacer para adaptar el algoritmo <code class="grey">quicksort</code> a nuestro <code class="grey">std::vector&#60;Point&#62;</code>?</p>
+        <p class="fragment">NADA</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+`std::vector<Point>`
+
+
+```cpp[16-30|1-14|7-8]
+///hide
+#include <iostream>
+#include <vector>
+
+struct Point {
+    float x;
+    float y;
+};
+
+bool operator<=(const Point& lhs, const Point& rhs) {
+    // A point is greater than other if the distance to origin is bigger.
+    float lhs_mod = (lhs.x * lhs.x) + (lhs.y * lhs.y);
+    float rhs_mod = (rhs.x * rhs.x) + (rhs.y * rhs.y);
+    return lhs_mod <= rhs_mod;
+}
+
+bool operator>(const Point& lhs, const Point& rhs) {
+    return !(lhs <= rhs);
+}
+
+std::ostream& operator<<(std::ostream& os, const Point& point) {
+    os << "(" << point.x << ", " << point.y << ")";
+    return os;
+}
+
+///unhide
+// A function to merge two ordered lists
+int partition(std::vector<Point>& elements, int left_index, int right_index) {
+    auto pivot = elements.at(left_index);
+    int i = left_index, j = right_index;
+
+    while(true) {
+        while( elements.at(i) <= pivot && i < j ) ++i;
+        while( elements.at(j) > pivot ) --j;
+        if( i >= j ) break;
+        std::swap(elements.at(i), elements.at(j));
+    }
+    std::swap(elements.at(left_index), elements.at(j));
+    return j;
+}
+
+// Quick-sort algorithm
+void quick_sort(std::vector<Point>& elements, int left_index, int right_index) {
+    // Check for base/trivial case
+    if (left_index >= right_index) {
+        return;
+    }
+    else {
+        // Compute the pivot
+        int pivot_index = partition(elements, left_index, right_index);
+
+        // Apply quick-sort to both sides (pivot is already in place)
+        quick_sort(elements, left_index, pivot_index-1);
+        quick_sort(elements, pivot_index+1, right_index);
+    }
+}
+///hide
+
+int main() {
+    std::vector<Point> elements{Point{1, 0}, Point{2, 3}, Point{7, 8}, Point{0, 0}};
+    quick_sort(elements, 0, elements.size()-1);
+
+    for (auto v: elements) {
+        std::cout << v << std::endl;
+    }
+}
+///unhide
+``` 
+
+El algoritmo es 100% idéntico
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Es quien provee el tipo de dato el que debe implementar las funciones que utiliza el algoritmo
+
+```cpp
+///hide
+struct Point {
+    float x;
+    float y;
+};
+
+///unhide
+bool operator<=(const Point& lhs, const Point& rhs) {
+    // A point is greater than other if the distance to origin is bigger.
+    float lhs_mod = (lhs.x * lhs.x) + (lhs.y * lhs.y);
+    float rhs_mod = (rhs.x * rhs.x) + (rhs.y * rhs.y);
+    return lhs_mod <= rhs_mod;
+}
+
+bool operator>(const Point& lhs, const Point& rhs) {
+    return !(lhs <= rhs);
+}
+///hide
+std::ostream& operator<<(std::ostream& os, const Point& point) {
+    os << "(" << point.x << ", " << point.y << ")";
+    return os;
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-menu-title="" data-background="slides/eda2.0/images/barney-dude.gif">
+    </section>
+
+    <section>
+        <h4>División de responsabilidades</h4>
+        <p>
+            El <span class="blue">algoritmo</span> implementa <span class="blue">cómo</span> se 
+            realiza la ordenación y qué necesita.
+        </p>
+        <hr/>
+        <p>
+            El <span class="red">usuario</span> provee el <span class="red">tipo de dato</span> 
+            y la implementación de los <span class="red">operadores</span> que necesita el algoritmo.
+        </p>
+    </section>
+
+</section>
