@@ -704,3 +704,53 @@ int main() {
 <section data-external-slide-replace="slides/eda2.0/sobrecarga-list.html"></section>
 <section data-external-slide-replace="slides/eda2.0/sobrecarga-tree.html"></section>
 <!--<section data-external-slide-replace="slides/eda2.0/sobrecarga-graph.html"></section>-->
+
+
+<section data-transition="convex" data-state="darken" data-background="images/algorithm-background.jpg">
+    <section>
+        <h2>Take aways</h2>
+    </section>
+    
+    <section>
+        <h4>División de responsabilidades</h4>
+        <p>
+            El <span class="blue">algoritmo</span> implementa <span class="blue">cómo</span> se 
+            realiza la ordenación y qué necesita.
+        </p>
+        <hr/>
+        <p>
+            El <span class="red">usuario</span> provee el <span class="red">tipo de dato</span> 
+            y la implementación de los <span class="red">operadores</span> que necesita el algoritmo.
+        </p>
+    </section>
+
+    <section>
+        <h4>Sobrecarga de operadores</h4>
+        <p>
+            Nos permite definir cómo se comportará nuestro <code class="grey">TipoDato</code>
+            con los operadores que están disponibles en la sintaxis del lenguaje.
+        </p>
+    </section>
+
+    <section>
+        <h4><code>friend</code> functions are evil!</h4>
+        <p>
+            Siempre que sea posible sobrecarga los operadores utilizando 
+            <span class="red">funciones miembro</span> (interfaz en el <code class="grey">.h</code>
+            de la clase y la implementación en el <code class="grey">.cpp</code>).
+        </p>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs y algoritmos</h4>
+        <p>
+            Los algoritmos y TADs siempre son iguales.
+        </p>
+        <p>
+            Sólo tienes que ir cambiando el <code class="grey">TipoDato</code>, hoy será 
+            un <code class="grey">Point</code> y mañana una <code class="grey">Empleado</code>, cada
+            uno tendrá su implementación de los diferentes operadores.
+        </p>
+    </section>
+
+</section>

@@ -3,4 +3,145 @@
         <h2>Árboles</h2>
     </section>
 
+    <section>
+        <p>Hemos construídos los árboles utilizando siempre tres clases, con diferentes responsabilidades:</p>
+        <p><code>TipoDato.h</code></p>
+        <p><code>ElementoArbolXXXX.h</code></p>
+        <p><code>BinarySearchTree.h</code> - <code>AVLTree.h</code> - ...</p> 
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Para enganchar los nodos del árbol
+
+```cpp
+class ElementoArbolBinario {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementoArbolBinario> left = nullptr;
+        std::shared_ptr<ElementoArbolBinario> right = nullptr;
+    public:
+        // Constructor 
+        ElementoArbolBinario(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementoArbolBinario.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Métodos disponibles para los consumidores/usuarios (**interfaz**):
+
+```cpp
+class BinarySearchTree {
+    public:
+        BinarySearchTree();
+
+        int height() const;
+        int size() const;
+
+        // Get data
+        const TipoDato& min() const;
+        const TipoDato& max() const;
+ 
+        // Traverse the tree
+        void dfs_inorder(std::function<void (const TipoDato&)> action) const;
+ 
+        // Operations
+        bool find(const TipoDato&) const;
+        void push(const TipoDato&);
+        void remove(const TipoDato&);
+
+    protected:
+        std::shared_ptr<ElementoArbolBinario> root = nullptr;
+};
+``` 
+<small>`BinarySearchTree.h`</small> 
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementación del método `find`:
+
+```cpp[|9,12,16]
+bool _find(std::shared_ptr<ElementoArbolBinario> element, 
+           const TipoDato& dato) {
+    // Handle corner case
+    if (element == nullptr) {
+        return false;
+    }
+
+    // Do actual work
+    if (element->dato > dato) {
+        return _find(element->left, dato);
+    }
+    else if (element->dato < dato) {
+        return _find(element->right, dato);
+    }
+    else {
+        return element->dato == dato;
+    }
+}
+
+bool BinarySearchTree::find(const TipoDato& dato) const {
+    return _find(root, dato);
+}
+``` 
+<small>`BinarySearchTree.cpp`</small> 
+        </script>
+    </section>
+
+    <section>
+        <p>
+            Esta implementación de <code class="grey">BinarySearchTree</code> exige que el 
+            <code class="grey">TipoDato</code> implemente el operador <code class="grey">operator&#62;</code>,
+            el operador <code class="grey">operator&#60;</code> y el operador <code class="grey">operator==</code>.
+        </p>
+        <p class="footnote">Otras funciones podrán requerir más operadores</p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Nuestro `TipoDato` (recuerda las prácticas):
+
+```cpp[|8-10]
+class TipoDato { // Empleado
+    public:
+        TipoDato(int id, bool is_boss);
+
+        int get_id() const;
+        bool is_boss() const;
+
+        bool operator>(const Empleado& other) const;
+        bool operator<(const Empleado& other) const;
+        bool operator==(const Empleado& other) const;
+
+    private:
+        int id_;
+        bool is_boss_;
+};
+``` 
+<small>`Empleado.h`</small> 
+        </script>
+    </section>
+
+    <section>
+        <h4>División de responsabilidades</h4>
+        <p>
+            El <span class="blue">algoritmo</span> implementa <span class="blue">cómo</span> se 
+            realiza la ordenación y qué necesita.
+        </p>
+        <hr/>
+        <p>
+            El <span class="red">usuario</span> provee el <span class="red">tipo de dato</span> 
+            y la implementación de los <span class="red">operadores</span> que necesita el algoritmo.
+        </p>
+    </section>
+
+    <section data-menu-title="" data-background="slides/eda2.0/images/barney-dude.gif">
+    </section>
+    
 </section>
