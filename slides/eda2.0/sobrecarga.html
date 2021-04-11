@@ -1,0 +1,547 @@
+
+<section data-transition="convex">
+    <section data-menu-title="" data-background="slides/eda2.0/images/backtothefutureII.jpg">
+        <h4 class="box-shadow-black">EDA 2.0</h4>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>El problema</h2>
+    </section>
+
+    <section>
+        <p>
+            Se trata de un mecanismo que permite aumentar las capacidades de un lenguaje de
+            programación con orientación a objetos.
+        </p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+#### Tipos nativos del lenguaje
+
+El lenguaje sabe operar con algunos <span class="blue">tipos nativos</span> como
+<code>int</code>, <code>float</code>,...
+
+```cpp
+#include <iostream>
+
+int main() {
+    int a = 20;
+    int b = 30;
+    int c = a + b;
+    std::cout << "a + b = " << c << std::endl;
+}
+```
+
+Sabe realizar las operaciones básicas
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+#### Programación orientada a objetos
+
+La <span class="blue">programación orientada a objetos</span> nos permite definir nuestros propios tipos de datos:
+
+```cpp
+#include <iostream>
+
+struct ComplexNumber {
+    float real;
+    float im;
+};
+
+int main() {
+    ComplexNumber a{10, 10};
+    ComplexNumber b{30, 30};
+    ComplexNumber c = a + b;
+    std::cout << "a + b = " << c << std::endl;
+}
+```
+
+Pero no sabe operar con ellos
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Usando funciones libres</h2>
+    </section>
+
+    <section>
+        <h4>Operadores aritméticos</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Cuando los datos miembro son públicos, se pueden utilizar funciones libres:
+
+```cpp[8-13]
+#include <iostream>
+
+struct ComplexNumber {
+    float real;
+    float im;
+};
+
+ComplexNumber operator+(const ComplexNumber& lhs, const ComplexNumber& rhs) {
+    ComplexNumber result;
+    result.real = lhs.real + rhs.real;
+    result.im = lhs.im + rhs.im;
+    return result;
+}
+
+int main() {
+    ComplexNumber a{10, 10};
+    ComplexNumber b{30, 30};
+    ComplexNumber c = a + b;
+    std::cout << "a + b = " << std::endl;
+    std::cout << "\tc.real = " << c.real << std::endl;
+    std::cout << "\tc.im = " << c.im << std::endl;
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Se pueden sobrecargar _todos_ los operadores:
+
+```cpp[29-37|8-13|15-20|22-27]
+#include <iostream>
+
+struct ComplexNumber {
+    float real;
+    float im;
+};
+
+ComplexNumber operator+(const ComplexNumber& lhs, const ComplexNumber& rhs) {
+    ComplexNumber result;
+    result.real = lhs.real + rhs.real;
+    result.im = lhs.im + rhs.im;
+    return result;
+}
+
+ComplexNumber operator-(const ComplexNumber& lhs, const ComplexNumber& rhs) {
+    ComplexNumber result;
+    result.real = lhs.real - rhs.real;
+    result.im = lhs.im - rhs.im;
+    return result;
+}
+
+ComplexNumber operator*(const ComplexNumber& lhs, const ComplexNumber& rhs) {
+    ComplexNumber result;
+    result.real = (lhs.real * rhs.real) - (lhs.im * rhs.im);
+    result.im = (lhs.real * rhs.im) + (lhs.im * rhs.real);
+    return result;
+}
+
+int main() {
+    ComplexNumber a{10, 10};
+    ComplexNumber b{30, 30};
+    ComplexNumber c = a + b;
+    ComplexNumber d = a - b;
+    ComplexNumber e = a * b;
+    // And more complicated expressions
+    (c + d) * (e - c);
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4>Operadores unarios</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+También se pueden sobrecargar operadores unarios:
+
+```cpp[15-20|8-13]
+#include <iostream>
+
+struct ComplexNumber {
+    float real;
+    float im;
+};
+
+ComplexNumber operator-(const ComplexNumber& lhs) {
+    ComplexNumber result;
+    result.real = -lhs.real;
+    result.im = -lhs.im;
+    return result;
+}
+
+int main() {
+    ComplexNumber a{10, 10};
+    ComplexNumber b = -a;
+    std::cout << "b.real: "<< b.real << std::endl;
+    std::cout << "b.im: "<< b.im << std::endl;
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4>Operadores con otros tipos de datos</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Operaciones con otros tipos de datos:
+
+```cpp[15-20|8-13]
+#include <iostream>
+
+struct ComplexNumber {
+    float real;
+    float im;
+};
+
+ComplexNumber operator*(float lhs, const ComplexNumber& rhs) {
+    ComplexNumber result;
+    result.real = lhs * rhs.real;
+    result.im = lhs * rhs.im;
+    return result;
+}
+
+int main() {
+    ComplexNumber a{10, 10};
+    ComplexNumber b = 20 * a;
+    std::cout << "b.real: "<< b.real << std::endl;
+    std::cout << "b.im: "<< b.im << std::endl;
+}
+```
+
+¡El **orden de los operandos** importa! 
+        </script>
+    </section>
+
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Sobrecarga y encapsulamiento</h2>
+    </section>
+
+    <section>
+        El encapsulamiento es <em>lo mejor</em> de la programación orientada a objetos, nos
+        permite esconder datos y comportamiento, y forzar a nuestros usuarios a utilizar la
+        interfaz que les ofrecemos.
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+#include <iostream>
+
+class ComplexNumber {
+    private:
+        float real;
+        float im;
+
+    public:
+        ComplexNumber(): real{0}, im{0} {};
+        ComplexNumber(float real, float im) : real{real}, im{im} {};
+
+        float get_real() const { return real; }
+        float get_im() const { return im; }
+};
+///hide
+ComplexNumber operator+(const ComplexNumber& lhs, const ComplexNumber& rhs) {
+    ComplexNumber result;
+    result.real = lhs.real + rhs.real;
+    result.im = lhs.im + rhs.im;
+    return result;
+}
+
+int main() {
+    ComplexNumber a{10, 10};
+    ComplexNumber b{30, 30};
+    ComplexNumber c = a + b;
+    std::cout << "a + b = " << std::endl;
+    std::cout << "\tc.real = " << c.get_real() << std::endl;
+    std::cout << "\tc.im = " << c.get_im() << std::endl;
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section>
+        Las funciones libres ya no pueden acceder a los miembros de la clase 😱 
+    </section>
+
+    <section>
+        <h4>Operadores amigos (<code>friend</code>)</h4>
+    </section>
+
+    <section>
+        Una clase puede declarar que otras funciones son <span class="blue"><em>amigas</em></span>
+        y esas funciones podrán acceder a sus datos privados.
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Las funciones `friend` se añaden a la declaración de la clase:
+
+```cpp[18-23|15]
+#include <iostream>
+
+class ComplexNumber {
+    private:
+        float real;
+        float im;
+
+    public:
+        ComplexNumber(): real{0}, im{0} {};
+        ComplexNumber(float real, float im) : real{real}, im{im} {};
+
+        float get_real() const { return real; }
+        float get_im() const { return im; }
+
+        friend ComplexNumber operator+(const ComplexNumber& lhs, const ComplexNumber& rhs);
+};
+
+ComplexNumber operator+(const ComplexNumber& lhs, const ComplexNumber& rhs) {
+    ComplexNumber result;
+    result.real = lhs.real + rhs.real;
+    result.im = lhs.im + rhs.im;
+    return result;
+}
+///hide
+int main() {
+    ComplexNumber a{10, 10};
+    ComplexNumber b{30, 30};
+    ComplexNumber c = a + b;
+    std::cout << "a + b = " << std::endl;
+    std::cout << "\tc.real = " << c.get_real() << std::endl;
+    std::cout << "\tc.im = " << c.get_im() << std::endl;
+}
+///unhide
+```
+        </script>
+    </section>
+
+    <section data-menu-title="" data-background="slides/eda2.0/images/barney-highfive.gif">
+        <h4 class="box-shadow-white">Encapsulamiento + sobrecarga</h4>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Sobrecarga y encapsulamiento (con funciones miembro)</h2>
+    </section>
+
+    <section>
+        <h4><code>friend</code> functions are evil!</h4>
+        <img src="slides/eda2.0/images/friend-zone-icon.png" class="">
+        <p>Evita usar <code>friend</code> siempre que sea posible</p>
+    </section>
+
+    <section>
+        <h4>Operadores aritméticos</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Sobrecarga de operadores con funciones miembro:
+
+```cpp[|15-17]
+#include <iostream>
+
+class ComplexNumber {
+    private:
+        float real;
+        float im;
+
+    public:
+        ComplexNumber(): real{0}, im{0} {};
+        ComplexNumber(float real, float im) : real{real}, im{im} {};
+
+        float get_real() const { return real; }
+        float get_im() const { return im; }
+
+        ComplexNumber operator+(const ComplexNumber& other) const;
+        ComplexNumber operator-(const ComplexNumber& other) const;
+        ComplexNumber operator*(const ComplexNumber& other) const;
+};
+```
+<small>`ComplexNumber.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Las funciones miembro tienen acceso a los miembros de la clase:
+
+```cpp
+#include "ComplexNumber.h"
+
+ComplexNumber ComplexNumber::operator+(const ComplexNumber& other) const {
+    ComplexNumber result;
+    result.real = this->real + other.real;
+    result.im = this->im + other.im;
+    return result;
+}
+
+ComplexNumber ComplexNumber::operator-(const ComplexNumber& other) const {
+    ComplexNumber result;
+    result.real = this->real - other.real;
+    result.im = this->im - other.im;
+    return result;
+}
+
+ComplexNumber ComplexNumber::operator*(const ComplexNumber& other) const {
+    // ...
+}
+
+```
+<small>`ComplexNumber.cpp`</small>
+        </script>
+    </section>
+
+    <section>
+        <h4>Operadores unarios</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Operadores con un único operando:
+
+```cpp[|13]
+///hide
+#include <iostream>
+
+///unhide
+class ComplexNumber {
+    private:
+        float real;
+        float im;
+
+    public:
+        ComplexNumber(): real{0}, im{0} {};
+        ComplexNumber(float real, float im) : real{real}, im{im} {};
+
+        float get_real() const { return real; }
+        float get_im() const { return im; }
+
+        ComplexNumber operator-() const;
+};
+///hide
+
+ComplexNumber ComplexNumber::operator-() const {
+    ComplexNumber result;
+    result.real = -this->real;
+    result.im = -this->im;
+    return result;
+}
+
+int main() {
+    ComplexNumber a{10, 20};
+    ComplexNumber b = -a;
+    std::cout << b.get_real() << " + " << b.get_im() << "i" << std::endl;
+}
+///unhide
+```
+<small>`ComplexNumber.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Las funciones miembro tienen acceso a los miembros de la clase:
+
+```cpp
+#include "ComplexNumber.h"
+
+ComplexNumber ComplexNumber::operator-() const {
+    ComplexNumber result;
+    result.real = -this->real;
+    result.im = -this->im;
+    return result;
+}
+```
+<small>`ComplexNumber.cpp`</small>
+        </script>
+    </section>
+
+    <section>
+        <h4>Operadores con otros tipos de datos</h4>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Operadores con otros tipos de datos:
+
+```cpp[13]
+///hide
+#include <iostream>
+
+///unhide
+class ComplexNumber {
+    private:
+        float real;
+        float im;
+
+    public:
+        ComplexNumber(): real{0}, im{0} {};
+        ComplexNumber(float real, float im) : real{real}, im{im} {};
+
+        float get_real() const { return real; }
+        float get_im() const { return im; }
+
+        ComplexNumber operator*(float coeficient) const;
+};
+///hide
+
+ComplexNumber ComplexNumber::operator*(float coeficient) const {
+    ComplexNumber result;
+    result.real = coeficient * this->real;
+    result.im = coeficient * this->im;
+    return result;
+}
+
+int main() {
+    ComplexNumber a{10, 20};
+    ComplexNumber b = a * 20;
+    std::cout << b.get_real() << " + " << b.get_im() << "i" << std::endl;
+}
+///unhide
+```
+<small>`ComplexNumber.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Las funciones miembro tienen acceso a los miembros de la clase:
+
+```cpp[|15-17]
+#include "ComplexNumber.h"
+
+ComplexNumber ComplexNumber::operator*(float coeficient) const {
+    ComplexNumber result;
+    result.real = this->real * coeficient;
+    result.im = this->im * coeficient;
+    return result;
+}
+```
+<small>`ComplexNumber.cpp`</small>
+        </script>
+    </section>
+
+    <section>
+        ¡Mucho cuidado cuando las operaciones no son conmutativas! Habrá que sobrecargar el operador en la clase correspondiente al primer operando.
+        <hr/>
+        ¿Y si el primer operando es un tipo básico de datos? <span class="fragment">Nos queda la opción de la función libre y la declaración <code>friend</code>.</span>
+    </section>
+
+</section>
+

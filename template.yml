@@ -53,6 +53,14 @@ toc:
     content_main: slides/trees/04.self-balancing_binary_search_tree/self-balancing_binary_search_tree.html
     title: "Árboles BB equilibrados"
 
+  - section: EDA 2.0
+  - url: eda2.0.sobrecarga.html
+    content_main: slides/eda2.0/sobrecarga.html
+    title: "Sobrecarga de operadores"
+  - url: eda2.0.templates.html
+    content_main: slides/eda2.0/templates.html
+    title: "Plantillas"
+
   - section: Grafos
   - content_main: slides/15.graphs.html
     title: "Grafos"
