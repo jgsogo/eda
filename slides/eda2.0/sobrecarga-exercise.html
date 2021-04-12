@@ -1,0 +1,257 @@
+<section data-transition="convex">
+    <section data-background="images/background-actividades.png">
+        <h2>Ejercicio</h2>
+        <h4>Árbol binario de búsqueda</h4>
+    </section>
+
+    <section>
+        1. Implementar un <code class="grey">BinarySearchTree</code> usando sobrecarga de
+        operadores para las operaciones que se realicen con objetos
+        <code class="grey">TipoDato</code>.
+        <hr/>
+        2. Sobrecar el operador <code class="grey">operator&#60;&#60;</code> para las clases
+        <code class="grey">TipoDato</code> y <code class="grey">BinarySearchTree</code> de
+        tal manera que sea posible utilizar <a href="https://graphviz.org/">graphviz</a> para 
+        visualizar el árbol.
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `TipoDato`
+
+Los nodos del árbol contendrán instancias de la siguiente clase que
+representa a una `Persona`:
+
+```cpp[]
+class TipoDato {  // Persona
+    public:
+        TipoDato(const std::string& name, const std::string& dni);
+        std::string get_id() const;
+
+        bool operator==(const TipoDato& other) const;
+        bool operator<(const TipoDato& other) const;
+        bool operator>(const TipoDato& other) const;
+
+        friend std::ostream& operator<<(std::ostream& os, const TipoDato& persona);
+    private:
+        std::string name;
+        std::string dni;
+};
+
+std::ostream& operator<<(std::ostream& os, const TipoDato& persona);
+``` 
+<small>`Persona.h`</small> 
+        </script>
+    </section>
+
+    <section>
+        Los operadores de comparación (<code class="grey">operator&#60;</code>, 
+        <code class="grey">operator&#62;</code> y <code class="grey">operator==</code>)
+        tendrán en cuenta únicamente el DNI.
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+El resto de métodos se implementarán como sigue: 
+
+```cpp[]
+std::string TipoDato::get_id() const {
+    return std::string{"_"} + dni;
+}
+
+std::ostream& operator<<(std::ostream& os, const TipoDato& persona) {
+    os << persona.get_id() << " [label=\"" << persona.name << "\"]";
+    return os;
+}
+``` 
+<small>`Persona.cpp`</small>
+
+<div class="footnote">Estamos imprimiendo en formato GraphViz.</div>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `TipoDato` - Checkpoint
+
+Comprueba que funciona
+
+```cpp[]
+#include <iostream>
+#include "Persona.h"
+
+int main() {
+    TipoDato p1{"Manuel", "12345"};
+    TipoDato p2{"Sara", "99999"};
+    if (p1 > p2) {
+        std::cout << p1 << std::endl;  
+    }
+    else {
+        std::cout << p2 << std::endl;
+    }
+}
+    
+``` 
+        </script>
+    </section>
+
+
+    <section data-markdown>
+        <script type="text/template">
+### `ElementoArbolBinario`
+
+Se trata de un `BinarySearchTree`, así que:
+
+```cpp
+class ElementoArbolBinario {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementoArbolBinario> left = nullptr;
+        std::shared_ptr<ElementoArbolBinario> right = nullptr;
+    public:
+        // Constructor 
+        ElementoArbolBinario(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementoArbolBinario.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### `BinarySearchTree`
+
+Se trata de un `BinarySearchTree`, al menos queremos implementar los siguientes métodos:
+
+```cpp[]
+class BinarySearchTree {
+    public:
+        BinarySearchTree();
+        
+        void dfs_inorder(std::function<void (const TipoDato&)> action) const;
+        BinarySearchTree& operator+(const TipoDato&); // Will replace the `push` method
+
+        friend std::ostream& operator<<(std::ostream& os, const BinarySearchTree& tree);
+    private:
+        std::shared_ptr<ElementoArbolBinario> root = nullptr;
+};
+
+std::ostream& operator<<(std::ostream& os, const BinarySearchTree& tree);
+```
+<small>`BinarySearchTree.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementamos un método para recorrer los nodos del árbol en un orden determinado
+
+```cpp[]
+void BinarySearchTree::dfs_inorder(std::function<void (const TipoDato&)> action) const {
+    // TODO: Implements DFS-inorder
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementamos el método `push` con un operador:
+
+```cpp[]
+BinarySearchTree& BinarySearchTree::operator+(const TipoDato&) {
+    // TODO: Same logic as BinarySearchTree::push
+    return *this;
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Implementamos el `operador<<`:
+
+```cpp[]
+void dump(std::ostream& os, const std::shared_ptr<ElementoArbolBinario>& node) {
+    if (node->left != nullptr) {
+      os << node->dato.get_id() << " -> " << node->left->dato.get_id() << " [label=left]" << std::endl;
+      dump(os, node->left); // recursion
+    }
+    if (node->right != nullptr) {
+      os << node->dato.get_id() << " -> " << node->right->dato.get_id() << " [label=right]" << std::endl;
+      dump(os, node->right); // recursion
+    }
+}
+
+std::ostream& operator<<(std::ostream& os, const BinarySearchTree& tree) {
+    os << "digraph {" << std::endl;
+    os << "rankdir=TB;" << std::endl;
+ 
+    os << std::endl << "// Iterate the nodes and print labels" << std::endl;
+    tree.dfs_inorder([&os](const TipoDato& dato) {
+        os << dato << std::endl;
+    });
+ 
+    os << std::endl << "// Print graph structure" << std::endl;
+    if (tree.root != nullptr) {
+        dump(os, tree.root);
+    }
+ 
+    os << "}" << std::endl;
+    return os;
+}
+```
+<small>`BinarySearchTree.cpp`</small>
+
+<div class="footnote">Estamos imprimiendo en formato GraphViz.</div>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Let's play!
+
+Juguemos con nuestra clase
+
+```cpp[]
+int main() {
+    BinarySearchTree tree;
+
+    // Create some people
+    TipoDato p1{"Patricia", "1"};
+    TipoDato p2{"Rodrigo", "2"};
+    TipoDato p3{"Marta", "3"};
+    TipoDato p4{"Susana", "4"};
+    TipoDato p5{"Lucía", "5"};
+    TipoDato p6{"Jesús", "6"};
+
+    // Use the `push` operator
+    tree + p1 + p2 + p3 + p4 + p5 + p6
+
+    // Now print
+    std::cout << tree << std::endl;
+}
+```
+<small>`main1.cpp`</small>
+        </script>
+    </section>
+
+    <section>
+        Ahora navega representa tu árbol online utilizando 
+        Graphviz (<a href="https://dreampuf.github.io/GraphvizOnline" target="_blank">link</a>)
+        <hr/>
+        Cambia el orden de inserción de los nodos y representa diferentes árboles.
+    </section>
+
+    <section>
+        <h4>Mejoras en la representación</h4>
+        <p>
+            Como es un árbol binario, los nodos son o hijos izquierdos, o hijos derechos, y eso debería
+            notarse en el dibujo. Vamos a representar _nodos invisibles_.
+        </p>
+    </section>
+
+</section>
