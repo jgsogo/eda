@@ -387,7 +387,7 @@ class Avion { // TipoDato
         bool operator<(const Avion& other) const;
         
         // Overloaded << operator to print information
-        std::ostream& operator<<(std::ostream& os) const;
+        friend std::ostream& operator<<(std::ostream& os, const Avion& dt);
     
     private:
         int hora_salida;
@@ -395,6 +395,8 @@ class Avion { // TipoDato
         bool is_transplante;
         bool is_jet;
 };
+
+std::ostream& operator<<(std::ostream& os, const Avion& dt);
 ```
         </script>
     </section>
