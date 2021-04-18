@@ -141,7 +141,7 @@ int main() {
 
 <section data-transition="convex">
     <section>
-        <h2>Plantillas con funciones</h2>
+        <h2>Funciones con plantillas</h2>
     </section>
 
     <section>
@@ -543,5 +543,270 @@ class LinkedList {
 ```
 <small>`LinkedList.h`</small>
         </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Hemos desacoplados los datos de los algoritmos:
+
+```cpp
+#include "LinkedList.h"
+
+struct Empleado {
+    int id;
+    bool is_boss
+};
+
+int main() {
+    LinkedList<Empleado> employees;
+    
+    Empleado e1{123, false};
+    Empleado e2{999, true};
+    employees.push_back(e1);
+    employees.push_back(e2);
+}
+```
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section data-background="slides/trees/03.binary_search_tree/background-bst.png">
+        <h4 class="box-shadow-black">Ej. Árbol binario de búsqueda</h4>
+    </section>
+
+    <section>
+        En 🙏 <em>Tu propia biblioteca de TADs</em> deberíais tener algunos ficheros como 
+        <code class="grey">BinarySearchTree.h</code> o <code class="grey">ElementoArbolBinario.h</code>
+        con el código correspondiente a las árboles binarios de búsqueda.
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/01.binary_trees/binary_tree-structs.dot.png" />
+        <p><small>Estructura de un árbol binario.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <img class="r-stretch" src="slides/trees/03.binary_search_tree/binary_search_tree_example-schema.dot.png" />
+        <p><small>Todos los nodos del subárbol izquierdo son menores que <code>x</code>, los del subárbol derecho
+                mayores que <code>x</code>.</small></p>
+    </section>
+
+    <section>
+        Podemos <em>generalizar</em> esta estructura de datos utilizando plantillas.
+    </section>
+
+    <section data-menu-title="ElementoArbolBinario.h" data-markdown data-transition="none-out">
+        <script type="text/template">
+`ElementoArbolBinario.h`
+
+```cpp
+
+class ElementoArbolBinario {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementoArbolBinario> left = nullptr;
+        std::shared_ptr<ElementoArbolBinario> right = nullptr;
+    public:
+        // Constructor 
+        ElementoArbolBinario(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementoArbolBinario.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+`ElementoArbolBinario.h` (final version)
+
+```cpp
+template <typename TipoDato>
+class ElementoArbolBinario {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementoArbolBinario<TipoDato>> left = nullptr;
+        std::shared_ptr<ElementoArbolBinario<TipoDato>> right = nullptr;
+    public:
+        // Constructor 
+        ElementoArbolBinario(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementoArbolBinario.h`</small>
+        </script>
+    </section>
+
+    <section data-menu-title="BinarySearchTree.h" data-markdown data-transition="none-out">
+        <script type="text/template">
+`BinarySearchTree.h`
+
+```cpp[]
+
+class BinarySearchTree {
+    protected:
+        std::shared_ptr<ElementoArbolBinario> root = nullptr;
+
+    public:
+        BinarySearchTree();  // Creates empty tree
+
+        // Same as BinaryTree
+        int height() const;
+        int size() const; // Number of nodes
+
+        // Get data
+        const TipoDato& min() const;
+        const TipoDato& max() const;
+
+        // Traverse the tree
+        void dfs_inorder(std::function<void (const TipoDato&)> action) const;
+
+        // Operations
+        bool find(const TipoDato&) const;
+        void push(const TipoDato&);
+        void remove(const TipoDato&);
+};
+```
+<small>`BinarySearchTree.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+`BinarySearchTree.h` (final version)
+
+```cpp[]
+template <typename TipoDato>
+class BinarySearchTree {
+    protected:
+        std::shared_ptr<ElementoArbolBinario<TipoDato>> root = nullptr;
+
+    public:
+        BinarySearchTree();  // Creates empty tree
+
+        // Same as BinaryTree
+        int height() const;
+        int size() const; // Number of nodes
+
+        // Get data
+        const TipoDato& min() const;
+        const TipoDato& max() const;
+
+        // Traverse the tree
+        void dfs_inorder(std::function<void (const TipoDato&)> action) const;
+
+        // Operations
+        bool find(const TipoDato&) const;
+        void push(const TipoDato&);
+        void remove(const TipoDato&);
+};
+```
+<small>`BinarySearchTree.h`</small>
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section data-background="slides/eda2.0/images/alice-rabbit-hole.jpg">
+        <h2>Down the rabbit hole</h2>
+        <h4>Algunas curiosidades</h4>
+        <div class="credit">Alice in wonderland (Tim Burton, 2010)</div>
+    </section>
+
+    <section>
+        <p>El compilador evalúa/traduce las plantillas en tiempo de compilación (antes de ejecutar el programa)</p>
+    </section>
+
+    <section data-menu-title="Operaciones" data-markdown data-transition="none-in">
+        <script type="text/template">
+Se pueden hacer operaciones utilizando plantillas
+
+```cpp[]
+#include <iostream>
+
+template <int N>
+struct AddOne {
+    enum { val = N + 1 };
+};
+
+int main()
+{
+    std::cout << AddOne<5>::val << "\n";
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+Se pueden hacer operaciones utilizando plantillas
+
+```cpp[]
+#include <iostream>
+
+template <int N1, int N2>
+struct Product {
+    enum { val = N1 * N2 };
+};
+
+int main()
+{
+    std::cout << Product<5, 3>::val << "\n";
+}
+```
+        </script>
+    </section>
+
+    <section data-menu-title="Recursividad" data-markdown data-transition="none-in">
+        <script type="text/template">
+Se pueden hacer recursividad con plantillas
+
+```cpp[]
+#include <iostream>
+
+template <int N> struct Factorial {
+    enum { val = Factorial<N-1>::val * N };
+};
+
+template<>
+struct Factorial<0> {
+    enum { val = 1 };
+};
+
+int main() {
+    std::cout << Factorial<4>::val << "\n";
+}
+```
+
+<small>¡El resultado se calcula en tiempo de compilación!</small>
+        </script>
+    </section>
+
+    <section>
+        <p>C++ templates are turing complete (Veldhuizen, 2003)</p>
+        <p><a href="https://rtraba.files.wordpress.com/2015/05/cppturing.pdf"></a></p>
+        <div class="footnote">Wikipedia: <a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing completeness</a></div>
+    </section>
+
+    <section>
+        <p>Se pueden resolver problemas en tiempo de compilación: Juego de la vida de Conway (<a href="https://github.com/engelmarkus/conway">link</a>)</p>
+        <hr/>
+        <p>El programa compilado (el ejecutable) sólo contiene una cadena de texto (el resultado) 🤯</p>
+    </section>
+
+    <section data-state="darken" data-background="slides/eda2.0/images/template-error.png">
+        <p>Templates are hard</p>
+    </section>
+
+    <section data-background="slides/eda2.0/images/template-error.png">
+        <p class="box-shadow-black white">Template errors are much harder</p>
+    </section>
+
+    <section>
+        <p>C++ template metaprogramming</p>
+        <img class="r-stretch" src="slides/eda2.0/images/gandalf.jpg" />
     </section>
 </section>
