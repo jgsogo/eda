@@ -1,10 +1,547 @@
 
 <section data-transition="convex">
     <section data-background="slides/eda2.0/images/backtothefutureIII.jpg">
+        <h4 class="fragment box-shadow-black">EDA 3.0</h4>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h2>Plantillas</h2>
+        <h4><span class="caps-preserve">aka</span> Templates</h4>
     </section>
 
     <section>
-        <h2>Definición</h2>
+        Las plantillas son una característica del lenguaje C++ que podemos utilizar
+        para generalizar nuestro código, para que las funciones y las clases trabajen
+        con tipos genéricos.
     </section>
 
+    <section data-markdown>
+        <script type="text/template">
+¡Ya las has estado utilizando!
+
+```cpp[5-6,9-10]
+#include <vector>
+
+int main() {
+    // A vector of integers
+    std::vector<int> numbers;
+    numbers.push_back(23);
+
+    // A vector of strings
+    std::vector<std::string> words;
+    words.push_back("palabra");
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <h4>Ejemplo</h4>
+        <p>Imprimir los valores contenidos en un <code class="grey">std::vector</code></p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp[4-8|17-21]
+#include <vector>
+#include <iostream>
+
+void print(const std::vector<int>& values) {
+    for (auto v: values) {
+        std::cout << v << std::endl;
+    }
+}
+
+int main() {
+    std::vector<int> numbers;
+    numbers.push_back(1);
+    numbers.push_back(2);
+    numbers.push_back(3);
+    print(numbers);
+
+    std::vector<std::string> words;
+    words.push_back("las");
+    words.push_back("plantillas");
+    words.push_back("son");
+    print(words); // 👎👎 Compile error
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp[4-8|17-21]
+#include <vector>
+#include <iostream>
+
+void print(const std::vector<std::string>& values) {
+    for (auto v: values) {
+        std::cout << v << std::endl;
+    }
+}
+
+int main() {
+    std::vector<std::string> words;
+    words.push_back("las");
+    words.push_back("plantillas");
+    words.push_back("son");
+    print(words);
+
+    std::vector<float> values;
+    values.push_back(1.23);
+    values.push_back(2.32);
+    values.push_back(5.45);
+    print(values); // 👎👎 Compile error
+}
+```
+        </script>
+    </section>
+
+    <section data-background="slides/eda2.0/images/stressed.jpg">
+        <p class="box-shadow-white black">¡Necesito una función para cada tipo de dato!</p>
+        <div class="credit white">Imagen: <a href="https://mediafocus.biz/5-stress-reducing-computer-tips/">Mediafocus</a></div>
+    </section>
+
+    <section data-state="darken" data-markdown data-background="slides/eda2.0/images/stressed.jpg">
+        <script type="text/template">
+Las plantillas nos permiten evitar el tener que escribir el mismo código una y otra vez
+
+```cpp[4-8|12-16,18-22]
+#include <vector>
+#include <iostream>
+
+template <typename T>
+void print(const std::vector<T>& values) {
+    for (auto v: values) {
+        std::cout << v << std::endl;
+    }
+}
+
+int main() {
+    std::vector<std::string> words;
+    words.push_back("las");
+    words.push_back("plantillas");
+    words.push_back("son");
+    print(words);
+
+    std::vector<float> values;
+    values.push_back(1.23);
+    values.push_back(2.32);
+    values.push_back(5.45);
+    print(values);
+}
+```
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Plantillas con funciones</h2>
+    </section>
+
+    <section>
+        <p>Podemos <em>generalizar</em> una función utilizando plantillas</p>
+    </section>
+
+    <section>
+        <h4>Algoritmos de ordenación</h4>
+    </section>
+
+    <section data-markdown data-transition="none-out">
+        <script type="text/template">
+Método de la burbuja (`std::vector<int>`)
+
+```cpp[]
+void bubble_sort(std::vector<int>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in none-out">
+        <script type="text/template">
+Método de la burbuja (`std::vector<float>`)
+
+```cpp[]
+void bubble_sort(std::vector<float>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in none-out">
+        <script type="text/template">
+Método de la burbuja (`std::vector<string>`)
+
+```cpp[]
+void bubble_sort(std::vector<std::string>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in none-out">
+        <script type="text/template">
+![alt text](slides/eda2.0/images/waitforit.gif) <!-- .element: class="r-stretch" -->
+
+```cpp[]
+///hide
+#include <vector>
+#include <iostream>
+
+template <typename T>
+void print(const std::vector<T>& values) {
+    for (auto v: values) {
+        std::cout << v << std::endl;
+    }
+}
+
+///unhide
+template <typename T>
+void bubble_sort(std::vector<T>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+///hide
+
+int main() {
+    std::vector<std::string> words;
+    words.push_back("las");
+    words.push_back("plantillas");
+    words.push_back("son");
+    bubble_sort(words);
+    print(words);
+
+    std::vector<float> values;
+    values.push_back(8.23);
+    values.push_back(2.32);
+    values.push_back(5.45);
+    bubble_sort(values);
+    print(values);
+}
+///unhide
+```
+<!-- .element: class="fragment" -->
+        </script>
+    </section>
+
+    <section>
+        <h4>Plantillas + sobrecarga de operadores</h4>
+    </section>
+
+    <section data-markdown data-transition="none-in none-out">
+        <script type="text/template">
+¿Y funciónará con mis tipos de datos?
+
+```cpp[|12]
+#include <iostream>
+
+class ComplexNumber {
+    private:
+        float real;
+        float im;
+
+    public:
+        ComplexNumber(): real{0}, im{0} {};
+        ComplexNumber(float real, float im) : real{real}, im{im} {};
+
+        bool operator<(const ComplexNumber& other) const;
+        friend std::ostream& operator<<(std::ostream& os, const ComplexNumber& number);
+};
+
+std::ostream& operator<<(std::ostream& os, const ComplexNumber& number) {
+    os << number.real << " + " << number.im << "i";
+    return os;
+}
+```
+<small>`ComplexNumber.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Método de la burbuja (final version)
+
+```cpp[]
+template <typename T>
+void bubble_sort(std::vector<T>& elements) {
+    for (int i=0; i<elements.size()-1; i++) {  // 'n-1' iterations
+        for (int k=0; k<elements.size()-1; k++) {  // 'n-1' iterations
+            if (elements[k] > elements[k+1]) { // compare adyacent values
+                std::swap(elements[k], elements[k+1]);
+            }
+        }
+    }
+}
+```
+<small>`bubble_sort.h`</small>
+        </script>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section>
+        <h2>Clases con plantillas</h2>
+    </section>
+
+    <section>
+        También se puede <em>generalizar</em> una clase utilizando plantillas
+    </section>
+
+    <section>
+        <h4>Ej. Montículos / Colas de prioridad</h4>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p class="caps"><strong>Montículo (de mínimos)</strong></p>
+        <p>Árbol binario completo en el que todo nodo es menor que sus descendientes</p>
+        <img class="r-stretch" src="slides/trees/02.heaps/heap-example.dot.png" />
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Podíamos almacenarlo en un 
+`std::vector` <!-- .element: class="grey" -->
+
+```cpp
+
+class PriorityQueue {
+    public:
+        PriorityQueue();
+
+        int size() const;
+        bool empty() const;
+
+        const TipoDato& top() const;
+        void push(const TipoDato& dato);
+        void pop();
+
+    protected:
+        std::vector<TipoDato> _data;
+};
+```
+<small>`PriorityQueue.h`</small>
+        </script>
+    </section>
+
+    <section>
+        Para implementar colas de prioridad de diferentes tipos de datos (aviones, empleados,...)
+        lo que hacíamos era implementar la clase <code class="grey">TipoDato</code> para
+        representar la abstracción correspondiente.
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Montículo (final version) 
+
+```cpp
+template <typename TipoDato>
+class PriorityQueue {
+    public:
+        PriorityQueue();
+
+        int size() const;
+        bool empty() const;
+
+        const TipoDato& top() const;
+        void push(const TipoDato& dato);
+        void pop();
+
+    protected:
+        std::vector<TipoDato> _data;
+};
+```
+<small>`PriorityQueue.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Al igual que hacemos con un
+`std::vector` <!-- .element: class="grey" -->
+podemos hacer ahora con nuestro
+`PriorityQueue` <!-- .element: class="grey" -->
+
+```cpp[|4]
+#include "PriorityQueue.h"
+
+int main() {
+    PriorityQueue<int> q1;
+    q1.push(8);
+    q1.push(5);
+    q1.push(3);
+    
+    while (!q1.empty()) {
+        auto dato = q1.top();
+        q1.pop();
+        std::cout << dato << std::endl;
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+¡Y funciona con nuestros tipos de datos! ([Actividad 14](12.heaps.html#/6))
+
+```cpp[|5]
+class Avion {
+    public:
+        Avion(int hora_salida, int minuto_salida, bool is_transplante, bool is_jet);
+
+        bool operator<(const Avion& other) const;
+    private:
+        /* ... atributtes not showing here... */
+};
+```
+
+```cpp[|2]
+int main() {
+    PriorityQueue<Avion> pista_despegue;
+    pista_despegue.push(Avion{10, 15, false, false});
+    pista_despegue.push(Avion{13, 30, true, false});
+    // ...
+};
+```
+
+<div class="footnote">Siempre que sobrecarguen los operadores que necesita el <code class="grey">PriorityQueue</code></div>
+        </script>
+    </section>
+
+    <section>
+        <h4>Plantillas + clases</h4>
+        <ul>
+            <li>💙  El algoritmo y el dato ahora SÍ son totalmente independientes</li>
+            <li>🤷‍♀️  La implementación de la clase no puede separarse en <code class="grey">.h</code> y <code class="grey">.cpp</code></li>
+        </ul>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section data-background="images/list-shopping-list.jpeg">
+        <h4 class="box-shadow-black">Ej. Listas</h4>
+    </section>
+
+    <section>
+        En 🙏 <em>Tu propia biblioteca de TADs</em> deberíais tener algunos ficheros como 
+        <code class="grey">LinkedList.h</code> o <code class="grey">ElementListaSimple.h</code>
+        con el código correspondiente a las listas.
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+class ElementListaSimple {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementListaSimple> next = nullptr;
+    public:
+        // Constructor 
+        ElementListaSimple(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementListaSimple.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+class LinkedList {
+    public:
+        LinkedList();
+        
+        int size() const;
+        void for_each(std::function<void (TipoDato&)> action) const;
+        void push_back(const TipoDato& dato);
+
+        /* ... more methods ... */
+    protected:
+        std::shared_ptr<ElementListaSimple> _front = nullptr;
+};
+```
+<small>`LinkedList.h`</small>
+        </script>
+    </section>
+
+    <section>
+        Podemos generalizar <code class="grey">LinkedList</code> (y también <code class="grey">ElementListaSimple</code>)
+        utilizando plantillas.
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+```cpp
+template <typename TipoDato>
+class ElementListaSimple {
+    public:
+        // Members
+        TipoDato dato;
+        std::shared_ptr<ElementListaSimple<TipoDato>> next = nullptr;
+    public:
+        // Constructor 
+        ElementListaSimple(const TipoDato& dato_) : dato{dato_} {};
+};
+```
+<small>`ElementListaSimple.h`</small>
+        </script>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+Lista simple enlazada (final version)
+
+```cpp
+template <typename TipoDato>
+class LinkedList {
+    public:
+        LinkedList();
+        
+        int size() const;
+        void for_each(std::function<void (TipoDato&)> action) const;
+        void push_back(const TipoDato& dato);
+
+        /* ... more methods ... */
+    protected:
+        std::shared_ptr<ElementListaSimple<TipoDato>> _front = nullptr;
+};
+```
+<small>`LinkedList.h`</small>
+        </script>
+    </section>
 </section>
