@@ -1,0 +1,100 @@
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Recorridos sobre grafos</h2>
+    </section>
+
+    <section>
+        <p>Se parte de un nodo dado y se visitan todos los vértices del grafo de manera ordenada y sistemática, moviéndose por las aristas.</p>
+        <hr/>
+        <p>Es una búsqueda no informada, muy similar a lo que se hace para árboles.</p>
+    </section>
+
+    <section>
+        <h4>Tipos de recorridos</h4>
+        <ul>
+            <li><strong>Recorrido en profundidad (DFS)</strong>: muy parecido a un recorrido DFS in-order de un árbol.</li>
+            <li><strong>Recorrido en anchura (BFS)</strong>: similar al recorrido BFS de un árbol</li>
+        </ul>
+    </section>
+
+    <section>
+        <p class="caps"><strong>Importante tener en cuenta:</strong></p>
+        <p>1) En los grafos pueden existir ciclos, por lo que habrá que ir anotando los nodos que ya se han visitado.</p>
+        <p>2) El recorrido será diferente según el nodo en el que se comience.</p>
+        <p>3) En grafos inconexos habrá que <em>comenzar</em> desde diferentes nodos para recorrer todos los componentes del grafo.</p>
+    </section>
+
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h4>Recorrido en profundidad (DFS)</h4>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-out">
+        <p class="caps"><strong>Recorrido en profundidad (DFS)</strong></p>
+        <img class="r-stretch" src="slides/graphs/02.recorridos/graph-dfs.dot.png"/>
+        <p><code>b, c, d, e, a, f</code></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in">
+        <p class="caps"><strong>Recorrido en profundidad (DFS)</strong></p>
+        <img class="r-stretch" src="slides/graphs/02.recorridos/graph-dfs2.dot.png"/>
+        <p><code>e, c, d, b, a, f</code></p>
+    </section>
+    <section>
+        <p class="caps"><strong>Recorrido en profundidad (DFS)</strong></p>
+        <p>Se <em>visita</em> un nodo y después se aplica DFS sobre cada uno de sus hijos recursivamente.</p>
+        <p>Su <span class="blue">implementación</span> la podremos hacer o bien mediante recursividad o bien utilizando una <span class="blue">pila/stack</span> (igual que en los árboles).</p>
+    </section>
+
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h4>Recorrido en anchura (BFS)</h4>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-out">
+        <p class="caps"><strong>Recorrido en anchura (BFS)</strong></p>
+        <img class="r-stretch" src="slides/graphs/02.recorridos/graph-bfs.dot.png"/>
+        <p><code>b, c, a, d, e, f</code></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in">
+        <p class="caps"><strong>Recorrido en anchura (BFS)</strong></p>
+        <img class="r-stretch" src="slides/graphs/02.recorridos/graph-bfs2.dot.png"/>
+        <p><code>e, a, c, f, b, d</code></p>
+    </section>
+    <section>
+        <p class="caps"><strong>Recorrido en anchura (BFS)</strong></p>
+        <p>Los nodos se visitan en orden según su distancia al nodo desde el que se ha comenzado.</p>
+        <p>Su <span class="blue">implementación</span> la haremos utilizando una <span class="blue">cola/queue</span> (igual que en los árboles).</p>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Minimum Spanning Tree (MST)</h2>
+        <h6 class="caps-preserve">Árbol recubridor, árbol de cobertura o árbol de expansión</h6>
+    </section>
+
+    <section>
+        <p>
+            Al recorrer un grafo (DFS o BFS) se visitan todos sus nodos utilizando algunas aristas.
+            El resultado es un árbol llamado <span class="red">árbol de cobertura</span>.
+        </p>
+        <hr/>
+        <p>
+            Un mismo grafo puede tener múltiples árboles de cobertura
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Recorrido BFS y árbol de cobertura correspondiente</p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/graphs/02.recorridos/graph-bfs2.dot.png" />
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                    <img src="slides/graphs/02.recorridos/graph-bfs2-tree.dot.png" />
+                </td>
+            </tr>
+        </table>
+        <p><small>Por supuesto, el recorrido BFS de ambos visitará los nodos en el mismo orden.</small></p>
+    </section>
+
+</section>

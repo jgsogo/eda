@@ -62,7 +62,8 @@ toc:
     title: "Plantillas"
 
   - section: Grafos
-  - content_main: slides/15.graphs.html
+  - url: 15.graphs.html
+    content_main: slides/graphs/_index.html
     title: "Grafos"
 
   - section: Esquemas algorítmicos

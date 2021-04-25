@@ -1,0 +1,14 @@
+digraph {
+    a [label=""]
+    b [label=""]
+    c [label=""]
+    d [label=""]
+    e [label=""]
+    f [label=""]
+
+    a -> b -> c -> d [arrowhead=none]
+    a -> e -> c [arrowhead=none]
+    e -> d [arrowhead=none]
+    e -> f -> d [arrowhead=none]
+    a -> f [arrowhead=none]
+}

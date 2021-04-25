@@ -14,7 +14,8 @@ def generate_graphviz(base_folder):
                 output_file = os.path.join(root, file + '.png')
                 print(f"{input_file} -> {output_file}")
                 # Fixed size for output image: https://stackoverflow.com/questions/14784405/how-to-set-the-output-size-in-graphviz-for-the-dot-format
-                os.system(f"dot -Tpng -Gsize=9,15\! -Gdpi=100 {input_file} > {output_file}")
+                # os.system(f"dot -Tpng -Gsize=9,15\! -Gdpi=100 {input_file} > {output_file}")
+                os.system(f"dot -Tpng -Gdpi=100 {input_file} > {output_file}")
 
 
 if __name__ == '__main__':
