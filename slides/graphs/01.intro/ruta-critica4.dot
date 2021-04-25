@@ -1,0 +1,26 @@
+digraph {
+    graph [pad="0.1", nodesep=".5", ranksep=".5"];
+    rankdir=LR
+    node [shape=record, width = .5];
+
+    p1 [label="{{0  | 1}  | { Licencia obras (6) }        | {6  | 7}}"]
+    p2 [label="{{6  | 7}  | { Aplanar terreno (3) }       | {9  | 10}}"]
+    p3 [label="{{9  | 10} | { Hacer camino (3) }          | {12 | 13}}"]
+    p4 [label="{{0  | 3}  | { Comprar piedras (2) }       | {2  | 5}}"]
+    p5 [label="{{5  | 5}  | { Cincelar piedras (8) }      | {13 | 13}}"]
+    p6 [label="{{13 | 13} | { Colocar piedras (9) }       | {22 | 22}}"]
+    p7 [label="{{22 | 22} | { Pintar pirámide (3) }       | {25 | 25}}"]
+    p8 [label="{{0  | 5}  | { Maquinaria asiria (2) }     | {2  | 7}}"]
+    p9 [label="{{0  | 0}  | { Contratar esclavos (5) }    | {5  | 5}}"]
+
+    p1 -> p2 -> p3
+    p4 -> p5
+    p1 -> p6
+    p3 -> p6
+    p5 -> p6
+    p6 -> p7
+    p3 -> p7
+    p8 -> p2
+    p9 -> p6
+    p9 -> p5
+}

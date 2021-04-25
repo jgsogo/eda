@@ -1,0 +1,134 @@
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Definiciones y propiedades</h2>
+    </section>
+
+    <section>
+        <h4>Grafo</h4>
+        <p>
+            Un <span class="blue">grafo</span> (<em>graph</em>) es un TAD no lineal que consta de un conjunto de <span class="red">nodos/vertices</span> (<em>node/vertex</em>)
+            conectados entre sí por un conjunto de <span class="red">aristas/arcos</span> (<em>edge/connection</em>).
+        </p>
+        <hr/>
+        <p>
+            Se dice que es un <span class="blue">grafo dirigido</span> cuando las aristas tienen dirección (origen y destino).
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Ejemplo de grafo (no dirigido)</p>
+        <img class="r-stretch" src="slides/graphs/01.intro/graph.dot.png"/>
+        <p><small>Las aristas se pueden recorrer en cualquier dirección.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Ejemplo de grafo (dirigido)</p>
+        <img class="r-stretch" src="slides/graphs/01.intro/digraph.dot.png"/>
+        <p><small>Las aristas sólo tienen una dirección.</small></p>
+    </section>
+
+    <section>
+        <h4>Grafo etiquetado</h4>
+        <p>Los grafos pueden contener información tanto en los nodos como en las aristas.</p>
+        <hr/>
+        <p>
+            Se llama <span class="red">grafo etiquetado</span> si cada arista tiene asociado un dato. Si estos
+            datos son de tipo numérico se llaman <span class="red">pesos</span> y se dirá que es un
+            <span class="red">grafo con pesos</span>.
+        </p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4 class="caps-preserve">Ej.: Grafo de carreteras</h4>
+        <img class="r-stretch" src="slides/graphs/01.intro/spain.png"/>
+        <p><small>Es un grafo no dirigido.</small></p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Ej.: Grafo de carreteras</p>
+        <ul>
+            <li>¿Cuál es el camino más corto entre dos ciudades?</li>
+            <li>¿Están conectadas todas las ciudades?</li>
+            <li>¿Qué ciudades son las más alejadas?</li>
+            <li>¿Cómo recorrer todas las ciudades recorriendo la menor distancia?</li>
+        </ul>
+    </section>
+
+    <section>
+        <h4>Terminología</h4>
+        <p>
+            Un grafo es una tupla <code class="grey">G=(V,A)</code> donde <code class="grey">V</code> es un conjunto no vacío
+            de vértices o nodos y <code class="grey">A</code> es un conjunto de aristas o arcos.
+        </p>
+        <hr/>
+        <p>
+            Cada arista es un par <code class="grey">(v,w)</code> donde <code class="grey">v,w &#8714; V</code>.
+        </p>
+        <hr/>
+        <p>
+            En un grafo dirigido las aristas no son pares ordenados: <code class="grey">(v,w)=(w,v)</code>.
+        </p>
+    </section>
+
+    <section>
+        <p class="caps"><strong>Caminos</strong></p>
+        <p>
+            Camino de un vértice <code class="grey">w_1</code> a <code class="grey">w_n</code> es la secuencia de nodos
+            <code class="grey">w_1..w_n &#8714; V</code> tal que todas las aristas <code class="grey">(w_i,w_j) &#8714; A</code>.
+        </p>
+        <p>
+            La longitud del camino es el número de aristas.
+        </p>
+    </section>
+    <section>
+        <p class="caps"><strong>Caminos</strong></p>
+        <p>
+            <span class="red">Camino simple</span>: aquel en el que todos los vértices son distintos (excepto el primero y el último que pueden ser iguales).
+        </p>
+        <p>
+            <span class="red">Ciclo</span>: camino en el cual el primer vértice y el último son iguales.
+        </p>
+    </section>
+
+    <section>
+        <p class="caps"><strong>Adyacencia</strong></p>
+        <p>
+            Dos vértices son adyacentes si existe un camino de longitud <code class="grey">1</code> entre ellos.
+        </p>
+    </section>
+
+    <section>
+        <p class="caps"><strong>Conectividad</strong></p>
+        <p>
+            Un <span class="blue">grafo no dirigido</span> se dice <span class="red">conexo/conectado</span> si existe un camino entre cualquier par de vértices del grafo.
+        </p>
+        <p>
+            Un <span class="blue">grafo dirigido</span> puede ser <span class="red">fuertemente conexo</span> si cumple la propiedad anterior o <span class="red">débilmente conexo</span>
+            si al considerarlo como no dirigido resulta ser conexo.
+        </p>
+    </section>
+
+    <section>
+        <p class="caps"><strong>Subgrafo</strong></p>
+        <p>
+            Un <span class="red">subgrafo</span> de <code class="grey">G=(V,A)</code> es un grafo <code class="grey">G'=(V',A')</code>
+            tal que <code class="grey">V'&#8838; V</code> y <code class="grey">A'&#8838; A</code>.
+        </p>
+        <hr/>
+        <p>
+            Una <span class="red">componente (fuertemente) conexa</span> de un grafo <code class="grey">G</code> es un subgrafo maximal (fuertemente) conexo.
+        </p>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Ejemplos</h2>
+    </section>
+    <section data-external-slide="slides/graphs/01.intro/ruta-critica.html"> </section>
+    <section data-external-slide="slides/graphs/01.intro/networkofthrones.html"> </section>
+</section>
+
+

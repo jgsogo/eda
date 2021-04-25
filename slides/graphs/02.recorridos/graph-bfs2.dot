@@ -1,0 +1,15 @@
+digraph {
+    a [label="a"]
+    b [label="b"]
+    c [label="c"]
+    d [label="d"]
+    e [label="e" color=green]
+    f [label="f"]
+
+    a -> b [arrowhead=none label=4]
+    b -> c [arrowhead=none color=grey]
+    c -> d [arrowhead=none label=5]
+    a -> e [arrowhead=none label=1]
+    e -> c [arrowhead=none label=2]
+    e -> f [arrowhead=none label=3]
+}
