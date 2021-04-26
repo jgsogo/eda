@@ -126,6 +126,7 @@ void PriorityQueue::pop() {
 
     // replace the root of the heap with the last element
     std::swap(data.at(0), data.at(_size-1));
+    _size = _size - 1;
 
     // call heapify-down on the root node
     heapify_down(0);
