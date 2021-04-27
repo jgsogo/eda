@@ -1,0 +1,58 @@
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Minimum Spanning Tree (MST)</h2>
+        <h6 class="caps-preserve">Árbol recubridor, árbol de cobertura o árbol de expansión</h6>
+    </section>
+
+    <section>
+        <p>
+            Al recorrer un grafo (DFS o BFS) se visitan todos sus nodos utilizando algunas aristas.
+            El resultado es un árbol llamado <span class="red">árbol de cobertura</span>.
+        </p>
+        <hr/>
+        <p>
+            Un mismo grafo puede tener múltiples árboles de cobertura.
+        </p>
+        <p class="footnote">Nota.- En grafos inconexos al recorrer todos los nodos se generarán varios árboles, hablaremos entonces de <span class="blue">bosque recubridor</span>.</p>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <p>Recorrido BFS y árbol de cobertura correspondiente</p>
+        <table>
+            <tr>
+                <td>
+                    <img src="slides/graphs/02.recorridos/graph-bfs2.dot.png" />
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                    <img src="slides/graphs/02.recorridos/graph-bfs2-tree.dot.png" />
+                </td>
+            </tr>
+        </table>
+        <p><small>Por supuesto, el recorrido BFS de ambos visitará los nodos en el mismo orden.</small></p>
+    </section>
+
+    <section>
+        <h4>Definición</h4>
+        <p>
+            Un <em>minimum spanning tree</em> de un grafo <code class="grey">G=(V,A)</code> no dirigido y conexo 
+            es un subgrafo <code class="grey">G'=(V,A')</code> conexo y sin ciclos.
+        </p>
+        <p class="footnote">Recuerda que un árbol es un grafo conexo y sin ciclos.</p>
+    </section>
+
+    <section>
+        <h4>Minimum weight spanning tree</h4>
+        <p>
+            El <span class="red">árbol recubridor mínimo</span> en un <span class="blue">grafo con pesos</span> es
+            el árbol recubridor con menor peso de todos los posibles (la suma de los pesos de sus aristas es mínimo).
+        </p>
+        <p class="footnote">Nota.- En grafos inconexos se hablará de <span class="blue">bosque recubridor mínimo</span>.</p>
+    </section>
+
+    <section>
+        <h4>Aplicación en infrastructuras</h4>
+        <img class="r-stretch" src="slides/graphs/01.intro/spain.png"/>
+        <p><small>Redes de telecomunicaciones: la mínima longitud de cable/fibra óptica/... que debe utilizarse para conectar el país.</small></p>
+    </section>
+</section>
