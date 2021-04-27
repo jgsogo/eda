@@ -1,0 +1,65 @@
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Implementación - Listas de adyacencia</h2>
+    </section>
+
+    <section>
+        <p>
+            Asociado a cada vertice se crea una lista con los vertices adyacentes a él (a los que se puede llegar). 
+        </p>
+    </section>
+
+    <section>
+        <h4>Ventajas e inconvenientes</h4>
+        <ul>
+            <li>👍 <span class="fragment">Uso eficiente de memoria</span></li>
+            <li>👎 <span class="fragment">Es muy costoso obtener los vértices desde los cuales se puede llegar a uno dado</span></li>
+        </ul>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Ejemplo</h4>
+        <div class="left">
+            <img src="slides/graphs/04.implementation/graph-directed-example.neato.dot.png" />
+        </div>
+        <div class="right">
+            Listas de adyacencia:
+            <code><pre>
+A: B, C
+B: C, E
+C: A, D, E
+D: 
+E: D</pre></code>
+        </div>
+    </section>
+    
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+### Ej. Implementación C++
+
+Grafo no etiquetado. Identificamos los nodos por su posición (índice en un array)
+
+```cpp[]
+template <int N>
+class GraphLists {
+    public:
+        GraphLists() {};
+
+        void add_edge(int origin, int target) {
+            adj_lists[origin].insert(target);
+        }
+
+        void remove_edge(int origin, int target) {
+            adj_lists[origin].remove(target);
+        }
+
+    private:
+        std::array<std::set<int>, N> adj_lists;
+};
+```
+
+<small>Y el grafo tiene un tamaño fijo</small>
+        </script>
+    </section>
+
+</section>

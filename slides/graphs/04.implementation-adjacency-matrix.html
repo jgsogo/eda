@@ -1,0 +1,149 @@
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Implementación - Matriz de adyacencia</h2>
+    </section>
+
+    <section>
+        <p>
+            La matriz de adyacencia es una matriz en la que se indican las conexiones existentes entre
+            los vértices del grafo. Para grafos no dirigidos, la matriz será simétrica.
+        </p>
+    </section>
+
+    <section>
+        <h4>Ventajas e inconvenientes</h4>
+        <ul>
+            <li>👍 <span class="fragment">Acceso en tiempo constante a todos los elementos de la matriz</span></li>
+            <li>👎 <span class="fragment">Uso poco eficiente de la memoria (matriz dispersa)</span></li>
+        </ul>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)">
+        <h4>Ejemplo</h4>
+        <div class="left">
+            <style type="text/css">
+                .tg {
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                }
+
+                .tg td {
+                    border-color: black;
+                    border-style: solid;
+                    border-width: 1px;
+                    font-family: Arial, sans-serif;
+                    font-size: 14px;
+                    overflow: hidden;
+                    padding: 10px 5px;
+                    word-break: normal;
+                }
+
+                .tg th {
+                    border-color: black;
+                    border-style: solid;
+                    border-width: 1px;
+                    font-family: Arial, sans-serif;
+                    font-size: 14px;
+                    font-weight: normal;
+                    overflow: hidden;
+                    padding: 10px 5px;
+                    word-break: normal;
+                }
+
+                .tg .tg-73oq {
+                    border-color: #000000;
+                    font-size: 25px;
+                    text-align: left;
+                    vertical-align: top
+                }
+            </style>
+            <table class="tg">
+                <thead>
+                    <tr>
+                        <th class="tg-73oq"></th>
+                        <th class="tg-73oq">A</th>
+                        <th class="tg-73oq">B</th>
+                        <th class="tg-73oq">C</th>
+                        <th class="tg-73oq">D</th>
+                        <th class="tg-73oq">E</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="tg-73oq">A</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">1</td>
+                        <td class="tg-73oq">1</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-73oq">B</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">1</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">1</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-73oq">C</td>
+                        <td class="tg-73oq">1</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">1</td>
+                        <td class="tg-73oq">1</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-73oq">D</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-73oq">E</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">0</td>
+                        <td class="tg-73oq">1</td>
+                        <td class="tg-73oq">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="right fragment">
+            <img src="slides/graphs/04.implementation/graph-directed-example.neato.dot.png" />
+        </div>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+### Ej. Implementación C++
+
+Grafo no etiquetado. Identificamos los nodos por su posición (índice en un array)
+
+```cpp[]
+template <int N>
+class Graph {
+    public:
+        Graph();
+
+        void add_edge(int origin, int target) {
+            edges[origin][target] = true;
+        }
+
+        void remove_edge(int origin, int target) {
+            edges[origin][target] = false;
+        }
+
+    private:
+        std::array<std::array<bool, N>, N> edges;
+};
+```
+
+<small>Y el grafo tiene un tamaño fijo</small>
+        </script>
+    </section>
+
+</section>
