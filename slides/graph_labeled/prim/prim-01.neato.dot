@@ -1,0 +1,24 @@
+digraph {
+    splines=true;
+    sep="+25,25";
+    overlap=scalexy;
+    nodesep=6.0;
+
+    a [color=red]
+
+    a -> b [label="3", dir=none, color=blue]
+    a -> c [label="1", dir=none, color=blue]
+    a -> d [label="5", dir=none, color=blue]
+
+    b -> c [label="2", dir=none]
+    c -> d [label="2", dir=none]
+
+    b -> e [label="6", dir=none]
+    c -> e [label="5", dir=none]
+
+    c -> f [label="4", dir=none]
+    d -> f [label="6", dir=none]
+
+    e -> f [label="3", dir=none]
+}
+

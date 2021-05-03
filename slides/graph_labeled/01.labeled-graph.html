@@ -1,0 +1,302 @@
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Grafo etiquetado</h2>
+    </section>
+
+    <section>
+        <p>
+            Un <span class="red">grafo etiquetado</span> es un grafo en el que los vértices y/o las
+            aristas tienen asignado algún tipo de nombre o propiedad.
+        </p>
+    </section>
+
+    <section>
+        <h4>Grafo ponderado</h4>
+        <p>
+            Un <span class="red">grafo ponderado</span> es un caso particular de <span class="blue">grafo etiquetado</span>
+            en el que las aristas tienen asociado un valor numérico.
+        </p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Implementación en C++</h2>
+        <h4>Ej. Grafo no dirigido</h4>
+    </section>
+
+    <section>
+        <p>
+            La implementación puede realizarse con matrices o listas de adyacencia, tal y como
+            se ha visto en el capítulo anterior.
+        </p>
+    </section>
+
+    <section>
+        <p>
+            Simplemente tenemos que añadir algún tipo de
+            almacenamiento para la información de los nodos y las aristas.
+        </p>
+        <p>
+            En este ejemplo, <strong>además</strong>, vamos a añadir y eliminar
+            nodos (aunque el tamaño máximo del grafo esté definido en tiempo de compilación).
+        </p>
+    </section>
+
+    <section data-menu-title="Interfaz" data-markdown data-transition="none-in">
+        <script type="text/template">
+Ej.: Grafo no dirigido (matriz de adyacencia)
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+class Graph {
+    public:
+        Graph();
+
+        void add_node(int node, const TipoNode& dato_node);
+        void remove_node(int node);
+
+        bool add_edge(int origin, int target, const TipoEdge& dato_edge);
+        void remove_edge(int origin, int target);
+
+    private:
+        std::array<std::shared_ptr<TipoNode>, N> nodes;
+        std::array<std::array<std::shared_ptr<TipoEdge>, N>, N> edges;
+};
+```
+<small>
+    1) El grafo de tamaño fijo.<br/>
+    2) Utilizamos punteros para indicar la existencia del nodo o la arista
+</small>
+        </script>
+    </section>
+
+    <section data-menu-title="Constructor" data-markdown data-transition="none-in">
+        <script type="text/template">
+### Constructor
+
+Inicializamos todos los miembros con `nullptr`.
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+Graph::Graph() {
+    // Nodes
+    for (int i=0; i<N; i++) {
+        nodes[i] = nullptr;
+    }
+
+    // Edges
+    for (int i=0; i<N; i++) {
+        for (int j=0; j<N; j++) {
+            edges[i][j] = nullptr;
+        }
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+### `Graph::add_node`
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+void Graph::add_node(int node, const TipoNode& dato_node) {
+    auto dato = std::make_shared<TipoNode>(dato_node);
+    nodes[node] = dato;
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+### `Graph::remove_node`
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+void Graph::remove_node(int node) {
+    nodes[node] = nullptr;
+    // Remove all the edges that use this node!
+    for (int i=0; i<N; i++) {
+        this->remove_edge(node, i); // It is undirected, no need to remove (i, node) as well.
+    }
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+### `Graph::add_edge`
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+bool Graph::add_edge(int origin, int target, const TipoEdge& dato_edge) {
+    // Check if nodes exists:
+    if (!nodes[origin] || !nodes[target]) {
+        return false;
+    }
+    auto edge = std::make_shared<TipoEdge>(dato_edge);
+    edges[origin][target] = edge;
+    edges[target][origin] = edge;
+    return true;
+}
+```
+        </script>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+### `Graph::remove_edge`
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+void Graph::remove_edge(int origin, int target) {
+    edges[origin][target] = nullptr;
+    edges[target][origin] = nullptr;
+}
+```
+        </script>
+    </section>
+
+    <section>
+        La implementación de los recorridos es idéntica a la de los grafos
+        no etiquetados.
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h4>Búsqueda y acceso a nodos</h4>
+        <p>
+            Puesto que los nodos contienen valores, tiene sentido hablar de
+            búsqueda y acceso a los mismos
+        </p>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+Búsqueda y acceso a nodos
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+class Graph {
+    public:
+        Graph();
+
+        /* ... more methods */
+
+        int find_node(const TipoNode& dato_node) const;
+        const TipoNode& get_node(int node) const;
+
+};
+```
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h4>Nodos adyacentes</h4>
+        <p>
+            Conjunto de nodos que son accesibles desde otro nodo dado
+        </p>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+Nodos adyacentes
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+class Graph {
+    public:
+        Graph();
+
+        /* ... more methods */
+
+        std::vector<int> adjacents(int node) const;
+};
+```
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section>
+        <h4>Acceso a aristas o arcos</h4>
+        <p>
+            Algunos algoritmos o problemas van a requerir acceder a la información
+            contenida en las aristas.
+        </p>
+    </section>
+
+    <section data-markdown data-transition="none-in">
+        <script type="text/template">
+Acceso a aristas
+
+```cpp[]
+template <typename TipoNode, typename TipoEdge, int N>
+class Graph {
+    public:
+        Graph();
+
+        /* ... more methods */
+
+        std::shared_ptr<TipoEdge> get_edge(int origin, int target) const;
+};
+```
+<small>Utilizamos un puntero porque podría no existir conexión entre esas aristas. También podrías añadir una función para comprobarlo primero.</small>
+        </script>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-background="images/background-actividades.png">
+        <h2>Ejercicios propuestos</h2>
+    </section>
+
+    <section>
+        <h4>🙏 Tu propia biblioteca de TADs: graph</h4>
+        <p>
+            Aunque cada problema concreto puede requerir una implementación del grafo diferente,
+            te será útil tener algunos a mano.
+        </p>
+    </section>
+
+    <section data-markdown>
+        <script type="text/template">
+### Mapa de carreteras
+
+Un mapa de carreteras utilizando un grafo etiquetado
+
+```cpp
+include "Graph.h"
+
+int main() {
+    // Map with 50 cities. The nodes will store the name of the city
+    //  and edges will store the distance between them.
+    Graph<std::string, int, 50> map;
+    map.add_node(0, "Madrid");
+    map.add_node(1, "Salamanca");
+    map.add_node(2, "Málaga");
+    map.add_node(3, "Zaragoza");
+
+    map.add_egde(0, 1, 200); // 200 km from Madrid to Salamanca
+    map.add_egde(0, 2, 500); // 500 km from Madrid to Málaga
+    // ...
+}
+```
+        </script>
+    </section>
+
+    <section>
+        <ul>
+            <li>Puedes construir el grafo a partir de información almacenada en un fichero</li>
+            <li>Busca qué ciudades no están conectadas por una carretera directa</li>
+            <li>Devuelve la distancia entre dos ciudades introducidas por el usuario</li>
+        </ul>
+    </section>
+</section>

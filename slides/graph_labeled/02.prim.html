@@ -1,0 +1,164 @@
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Algoritmo de Prim</h2>
+    </section>
+
+    <section>
+        <p>
+            El <span class="red">algoritmo de Prim</span> es un algoritmo para encontrar un <span class="blue">árbol recubridor mínimo</span>
+            en un grafo conexo, no dirigido y cuyas aristas están etiquetadas.
+        </p>
+    </section>
+
+    <section>
+        <h4>Condiciones de aplicación</h4>
+        <ul>
+            <li><strong>Grafo conexo</strong>: existe un camino entre cualquier par de vértices</li>
+            <li><strong>Grafo no</strong> dirigido</li>
+            <li><strong>Aristas etiquetadas</strong> con valores numéricos</li>
+        </ul>
+    </section>
+
+    <section>
+        <h4>[Re]Descubridores</h4>
+        <ul>
+            <li><strong>Vojtech Jarnik (1930)</strong></li>
+            <li><strong>Robert C. Prim (1957)</strong></li>
+            <li><strong>Dijkstra (1959)</strong></li>
+        </ul>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Descripción</h2>
+    </section>
+
+    <section>
+        <h4>Pasos</h4>
+        <ol>
+            <li>Se inicializa el árbol con un vértice elegido al azar</li>
+            <li>De entre todas las aristas que <em>salen</em> del árbol (conectan con un nodo que no pertenece al árbol) elegir la de menor peso</li>
+            <li>Repetir el paso anterior hasta que todos los vértices pertenezcan al árbol</li>
+        </ol>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-out">
+        <img src="slides/graph_labeled/prim/prim-00.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Prim).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/prim/prim-01.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Prim).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/prim/prim-02.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Prim).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/prim/prim-03.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Prim).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/prim/prim-04.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Prim).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/prim/prim-05.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Prim).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in">
+        <img src="slides/graph_labeled/prim/prim-06.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Prim).</small></p>
+    </section>
+</section>
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Implementación C++</h2>
+        <h4>Ejemplo</h4>
+    </section>
+
+    <section data-menu-title="Interfaz" data-markdown data-transition="none-in">
+        <script type="text/template">
+Ejemplo utilizando matriz de adyacencia
+
+```cpp[]
+template <int N>
+class Graph {
+    public:
+        Graph();
+        /* ... other methods... */ 
+        void add_edge(int origin, int target, int weigth);
+        std::vector<int> adjacents(int node) const;
+        Graph mst_prim() const;
+    private:
+        std::array<std::array<std::shared_ptr<int>, N>, N> edges;
+};
+```
+<small>
+    Grafo de tamaño fijo (no puedo añadir/quitar nodos)<br/>
+    Utilizo punteros en las aristas, `nullptr` indica que no existe.
+</small>
+        </script>
+    </section>
+
+    <section>
+        <strong>Nota.-</strong> Habrá que comprobar si el grafo es <span class="blue">conexo</span>,
+        para ello puedes utilizar cualquier recorrido y ver si se visitan todos los nodos.
+    </section>
+
+    <section data-menu-title="Interfaz" data-markdown data-transition="none-in">
+        <script type="text/template">
+
+```cpp[3-13|15|16-22|24-32|35-41]
+template <int N>
+Graph<N> Graph<N>::mst_prim() const {
+    // Distance from the MST already computed to the node indicated by the index
+    std::array<int, N> distances;
+    // Node inside the MST that is closer to node-at-index
+    std::array<int, N> origins;
+    std::array<bool, N> added;
+    // Initialize
+    for (int i = 0; i < N; i++) {
+        distances[i] = std::numeric_limits<int>::max();
+        origins[i] = -1;
+        added[i] = false;
+    }
+
+    distances[0] = 0; // We will start with this node (index 0)
+    // Algorithm runs until all nodes has been added
+    while(!std::all_of(added.begin(), added.end(), [](bool item){return item;})) {
+        // Search the node that is closer to the ones already in the graph
+        auto result = std::min_element(distances.begin(), distances.end());
+        auto idx = std::distance(distances.begin(), result);
+        added[idx] = true;
+        distances[idx] = std::numeric_limits<int>::max(); // Prevent it from being selected again
+
+        // Update distances for those that are not in the graph already
+        for (int i = 0; i < N; i++) {
+            if (!added[i] && adj[idx][i]!=nullptr) {
+                if (distances[i] > *adj[idx][i]) {
+                    distances[i] = *adj[idx][i];
+                    origins[i] = idx;
+                }
+            }
+        }
+    }
+
+    // Create the MST with the information
+    Graph<N> ret;
+    for (int i = 1; i < N; i++) {
+        auto origin = origins[i];
+        std::cout << origin << " -> " << i << std::endl;
+        ret.add_edge(origin, i, *adj[origin][i]);
+    }
+    return ret;
+}
+```
+<small>Implementación utilizando una cola de prioridad</small>
+        </script>
+    </section>
+
+</section>
