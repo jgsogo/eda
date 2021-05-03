@@ -1,0 +1,40 @@
+
+
+
+
+    <section data-menu-title="Interfaz" data-markdown data-transition="none-in">
+        <script type="text/template">
+
+```cpp[]
+struct Edge {
+    int origin;
+    int target;
+    int weight;
+};
+
+template <int N>
+Graph<N> Graph::mst_prim() const {
+    // 1) Añado todas las aristas a la cola de prioridad
+    std::priority_queue<int> q;
+    for (int i=0; i<N; i++) {
+        for (int j=0; j<N; j++) {
+            if (edges[i][j] != nullptr) {
+                q.push(Edge{i, j, *edges[i][j]});
+            }
+        }
+    }
+
+    // 2) Inicializo los objetos con los que voy a trabajar
+    std::array<bool, N> added;
+    for (int i=0; i<N; i++) {
+        added[i] = false;
+    }
+    Graph<N> ret;
+
+    // 3) Escojo un nodo al azar
+}
+```
+<small>Implementación utilizando una cola de prioridad</small>
+        </script>
+    </section>
+    

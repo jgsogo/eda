@@ -65,6 +65,18 @@ toc:
   - url: 15.graphs.html
     content_main: slides/graphs/_index.html
     title: "Grafos"
+  - url: 16.graphs-labeled.html
+    content_main: slides/graph_labeled/_index.html
+    title: "Ej. Grafos etiquetados"
+  - url: 17.graphs-prim.html
+    content_main: slides/graph_labeled/02.prim.html
+    title: "Algoritmo de Prim"
+  - url: 18.graphs-kruskal.html
+    content_main: slides/graph_labeled/03.kruskal.html
+    title: "Algoritmo de Kruskal"
+  - url: 19.graphs-dijkstra.html
+    content_main: slides/graph_labeled/04.dijkstra.html
+    title: "Algoritmo de Dijkstra"
 
   - section: Esquemas algorítmicos
 
