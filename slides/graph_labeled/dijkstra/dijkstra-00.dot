@@ -1,0 +1,43 @@
+digraph {
+    rankdir=LR
+    splines=true;
+    overlap=scalexy;
+    ranksep=2
+    nodesep=1
+
+    a -> b [label="16", dir=none]
+    a -> c [label="10", dir=none]
+    a -> d [label="5", dir=none]
+
+    b -> c [label="2", dir=none]
+    c -> d [label="4", dir=none]
+
+    b -> g [label="6", dir=none]
+    b -> f [label="4", dir=none]
+
+
+    c -> f [label="12", dir=none]
+    c -> e [label="10", dir=none]
+
+    d -> e [label="15", dir=none]
+
+    g -> f [label="8", dir=none]
+    f -> e [label="3", dir=none]
+
+    g -> z [label="7", dir=none]
+    f -> z [label="16", dir=none]
+    e -> z [label="5", dir=none]
+
+    {rank=same; b c d}
+    {rank=same; g f e}
+
+    a [color=black, label="a\ninf"]
+    b [color=black, label="b\ninf"]
+    c [color=black, label="c\ninf"]
+    d [color=black, label="d\ninf"]
+    e [color=black, label="e\ninf"]
+    f [color=black, label="f\ninf"]
+    g [color=black, label="g\ninf"]
+    z [color=black, label="z\ninf"]
+}
+

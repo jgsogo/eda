@@ -1,43 +1,162 @@
 
 
-<section>
-    Work in progress... 
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Algoritmo de Kruskal</h2>
+    </section>
+
+    <section>
+        <p>
+            El <span class="red">algoritmo de Kruskal</span> (Joseph Kruskal, 1956) es un algoritmo para encontrar un 
+            <span class="blue">árbol recubridor mínimo</span>
+            en un grafo conexo, no dirigido y cuyas aristas están etiquetadas.
+        </p>
+    </section>
+
+    <section>
+        <h4>Condiciones de aplicación</h4>
+        <ul>
+            <li><strong>Grafo conexo</strong>: existe un camino entre cualquier par de vértices</li>
+            <li><strong>Grafo no</strong> dirigido</li>
+            <li><strong>Aristas etiquetadas</strong> con valores numéricos</li>
+        </ul>
+    </section>
 </section>
 
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Descripción</h2>
+    </section>
+
+    <section>
+        <h4>Pasos</h4>
+        <ol>
+            <li>Se crea un bosque donde cada vértice del grafo es un árbol separado</li>
+            <li>Se escoge la arista de menor peso que una dos árboles diferentes</li>
+            <li>Repetir el paso anterior hasta que haya un único árbol</li>
+        </ol>
+    </section>
+
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-out">
+        <img src="slides/graph_labeled/kruskal/kruskal-00.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Kruskal).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/kruskal/kruskal-01.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Kruskal).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/kruskal/kruskal-02.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Kruskal).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/kruskal/kruskal-03.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Kruskal).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/kruskal/kruskal-04.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Kruskal).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in none-out">
+        <img src="slides/graph_labeled/kruskal/kruskal-05.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Kruskal).</small></p>
+    </section>
+    <section data-background-color="rgb(255, 255, 255)" data-transition="none-in">
+        <img src="slides/graph_labeled/kruskal/kruskal-06.neato.dot.png" />
+        <p><small>Árbol recubridor mínimo (algoritmo de Kruskal).</small></p>
+    </section>
+</section>
+
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Implementación C++</h2>
+        <h4>Ejemplo</h4>
+    </section>
+
+    <section data-menu-title="Interfaz" data-markdown data-transition="none-in">
+        <script type="text/template">
+Ejemplo utilizando matriz de adyacencia
+
+```cpp[]
+template <int N>
+class Graph {
+    public:
+        Graph();
+        /* ... other methods... */ 
+        void add_edge(int origin, int target, int weigth);
+        std::vector<int> adjacents(int node) const;
+        Graph<N> mst_kruskal() const;
+    private:
+        std::array<std::array<std::shared_ptr<int>, N>, N> adj;
+};
+```
+<small>
+    Grafo de tamaño fijo (no puedo añadir/quitar nodos)<br/>
+    Utilizo punteros en las aristas, `nullptr` indica que no existe.
+</small>
+        </script>
+    </section>
+
+    <section>
+        <strong>Nota.-</strong> Habrá que comprobar si el grafo es <span class="blue">conexo</span>,
+        para ello puedes utilizar cualquier recorrido y ver si se visitan todos los nodos.
+    </section>
 
     <section data-menu-title="Interfaz" data-markdown data-transition="none-in">
         <script type="text/template">
 
-```cpp[]
+```cpp[1-8|12-19|21-25|30-32|34-45]
 struct Edge {
-    int origin;
-    int target;
-    int weight;
+    int origin, target;
+    int weigth;
+  
+    bool operator<(const Edge& other) const {
+        return weigth > other.weigth;
+    }
 };
 
 template <int N>
-Graph<N> Graph::mst_kruskal() const {
-    // 1) Añado todas las aristas a la cola de prioridad
-    std::priority_queue<int> q;
+Graph<N> Graph<N>::mst_kruskal() const {
+    std::priority_queue<Edge> queue;
     for (int i=0; i<N; i++) {
-        for (int j=0; j<N; j++) {
-            if (edges[i][j] != nullptr) {
-                q.push(Edge{i, j, *edges[i][j]});
+        for (int j=i; j<N; j++) {
+            if (adj[i][j] != nullptr) {
+                queue.push(Edge{i, j, *adj[i][j]});
             }
         }
     }
 
-    // 2) Inicializo los objetos con los que voy a trabajar
-    std::array<bool, N> added;
+    // The forest
+    std::array<int, N> forest_tree;
     for (int i=0; i<N; i++) {
-        added[i] = false;
+        forest_tree[i] = i; // node -> tree identificator
     }
+
+    // Create the MST with the information
     Graph<N> ret;
 
-    // 3) Escojo un nodo al azar
+    while (!queue.empty()) {
+        // Next edge according to priority (less weigth)
+        auto edge = queue.top(); queue.pop();
+        
+        // If this edge connects two different trees
+        if (forest_tree[edge.origin] != forest_tree[edge.target]) {
+            ret.add_edge(edge.origin, edge.target, edge.weigth);
+            int origin_tree = forest_tree[edge.origin];
+            int target_tree = forest_tree[edge.target];
+            for (int i=0; i<N; i++) {
+                // Update forest mapping, now these two trees are the same
+                if (forest_tree[i] == target_tree) {
+                    forest_tree[i] = origin_tree;
+                }
+            }
+        }
+    }
+    return ret;
 }
 ```
-<small>Implementación utilizando una cola de prioridad</small>
         </script>
     </section>
-    
+
+</section>
