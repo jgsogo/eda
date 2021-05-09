@@ -72,3 +72,121 @@
         <p><small>Caminos mínimos (algoritmo de Dijkstra).</small></p>
     </section>
 </section>
+
+<section data-transition="convex">
+    <section data-state="darken" data-background="slides/graphs/images/graph-background.jpg">
+        <h2>Implementación C++</h2>
+        <h4>Ejemplo</h4>
+    </section>
+
+    <section data-menu-title="Interfaz" data-markdown data-transition="none-in">
+        <script type="text/template">
+Ejemplo utilizando matriz de adyacencia
+
+```cpp[]
+struct ShortestPathEdge {
+    int origin;
+    int distance;
+};
+
+template <int N>
+class Graph {
+    public:
+        Graph();
+        /* ... other methods... */ 
+        void add_edge(int origin, int target, int weigth);
+        std::vector<int> adjacents(int node) const;
+        std::array<ShortestPathEdge, N> dijkstra(int start) const;
+
+    private:
+        std::array<std::array<std::shared_ptr<int>, N>, N> adj;
+};
+```
+<small>
+    Grafo de tamaño fijo (no puedo añadir/quitar nodos)<br/>
+    Utilizo punteros en las aristas, `nullptr` indica que no existe.
+</small>
+        </script>
+    </section>
+
+    <section>
+        <strong>Nota.-</strong> Habrá que comprobar si el grafo es <span class="blue">conexo</span>,
+        para ello puedes utilizar cualquier recorrido y ver si se visitan todos los nodos.
+    </section>
+
+    <section data-menu-title="Dijkstra" data-markdown data-transition="none-in">
+        <script type="text/template">
+
+```cpp[16-24|26|27-31|1-12|27-31|33-40]
+template <int N>
+int _min_idx(std::array<bool, N> added, std::array<ShortestPathEdge, N> shortestPathEdges) {
+    int minimum = std::numeric_limits<int>::max();
+    int idx = -1;
+    for (int i=0; i<N; i++) {
+        if (!added[i] && shortestPathEdges[i].distance < minimum) {
+            minimum = shortestPathEdges[i].distance;
+            idx = i;
+        }
+    }
+    return idx;
+}
+
+template <int N>
+std::array<ShortestPathEdge, N> Graph<N>::dijkstra(int start) const {
+    // Distance to origin (shortest path) and previous node in the path
+    std::array<ShortestPathEdge, N> shortestPathEdges;
+    std::array<bool, N> added;
+    // Initialize
+    for (int i = 0; i < N; i++) {
+        shortestPathEdges[i].distance = std::numeric_limits<int>::max();
+        shortestPathEdges[i].origin = -1;
+        added[i] = false;
+    }
+
+    shortestPathEdges[start].distance = 0; // We will start with this node
+    // Algorithm runs until all nodes has been added
+    while(!std::all_of(added.begin(), added.end(), [](bool item){return item;})) {
+        // Search the node that is closer to the ones already in the graph
+        auto idx = _min_idx<N>(added, shortestPathEdges);
+        added[idx] = true;
+
+        // Update distances to adyacent nodes
+        for (int n: this->adjacents(idx)) {
+            int distance = shortestPathEdges[idx].distance + *adj[idx][n];
+            if (distance < shortestPathEdges[n].distance) {
+                shortestPathEdges[n].distance = distance;
+                shortestPathEdges[n].origin = idx;
+            }
+        }
+    }
+    return shortestPathEdges;
+}
+```
+        </script>
+    </section>
+
+    <section data-menu-title="Camino más corto" data-markdown data-transition="none-in">
+        <script type="text/template">
+El array `std::array<ShortestPathEdge, N>` me permite calcular el camino:
+
+```cpp
+template <int N>
+std::vector<int> Graph<N>::shortestPath(int start, int end) const {
+    auto shortestPathEdges = this->dijkstra(start);
+    std::vector<int> ret; 
+  
+    while (end != start) {
+      ret.push_back(end);
+      end = shortestPathEdges[end].origin;
+    }
+  
+    ret.push_back(end);
+    std::reverse(ret.begin(), ret.end());
+    return ret;
+}
+```
+        </script>
+    </section>
+
+</section>
+
