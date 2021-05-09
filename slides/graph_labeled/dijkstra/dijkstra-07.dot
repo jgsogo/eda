@@ -12,7 +12,7 @@ digraph {
     b -> c [label="2", dir=back, color=red]
     c -> d [label="4", dir=back, color=red]
 
-    b -> g [label="6", color=green]
+    b -> g [label="6", color=red]
     b -> f [label="4", color=red]
 
 
@@ -37,6 +37,6 @@ digraph {
     d [color=red, label="d\n5"]
     e [color=red, label="e\n18"]
     f [color=red, label="f\n15"]
-    g [color=green, label="g\n17"]
+    g [color=red, label="g\n17"]
     z [color=blue, label="z\n23"]
 }
