@@ -77,6 +77,9 @@ toc:
   - url: 19.graphs-dijkstra.html
     content_main: slides/graph_labeled/04.dijkstra.html
     title: "Algoritmo de Dijkstra"
+  - url: 20.graphs-A-star.html
+    content_main: slides/graph_labeled/05.a-star.html
+    title: "Algoritmo A*"
 
   - section: Esquemas algorítmicos
 
