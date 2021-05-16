@@ -1,0 +1,53 @@
+
+<section data-transition="convex">
+    <section>
+        <h2>Búsqueda con retroceso</h2>
+        <h4>(Backtracking)</h4>
+    </section>
+
+    <section>
+        <p>
+            Una <span class="red">búsqueda con retroceso</span> sirve para encontrar la solución óptima (o todas las
+            soluciones posibles) de un problema.
+        </p>
+    </section>
+
+    <section>
+        <h4>Esquema backtracking</h4> 
+        <ol>
+            <li>Se comienza con una solución vacía</li>
+            <li>En cada paso se selecciona <span class="blue">uno</span> de los candidatos</li>
+            <li>
+                Se comprueba si la solución es <span class="blue">completable</span> (si añadiendo más se podría llegar a la solución):
+                <ul>
+                    <li>No: se rechaza el candidato elegido</li>
+                    <li>Sí: se añade a esta solución</li>
+                </ul>
+            </li>
+            <li>
+                Si se ha llegado a <span class="blue">una solución</span>, se almacena la solución, se elimina el último 
+                candidato y se vuelve al paso 2
+            </li>
+        </ol>
+    </section>
+
+    <section>
+        <h4>Búsqueda con retroceso -vs- voraz</h4>
+        <p>
+            Para aplicar búsqueda voraz es necesario poder conocer en cada paso cuál es el mejor elemento.
+        </p>
+        <p>
+            La búsqueda con retroceso calcula todas las soluciones posibles. Después habrá que elegir la óptima o la mejor.
+        </p>
+    </section>
+
+    <section>
+        <h4>Ejemplos</h4>
+        <ul>
+            <li class="fragment">Problema de las ocho reinas</li>
+            <li class="fragment">Problema del caballo</li>
+            <li class="fragment">Atravesar un laberinto</li>
+            <li class="fragment">Árbol: cálculo de la altura de un árbol</li>
+        </ul>
+    </section>
+</section>

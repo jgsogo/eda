@@ -82,9 +82,12 @@ toc:
     title: "Algoritmo A*"
 
   - section: Esquemas algorítmicos
+  - url: 21.esquemas-algoritmicos.html
+    content_main: slides/algorithm-schemes/_index.html
+    title: "Esquemas algorítmicos"
 
-  - section: Random
-  - content_main: slides/2021.soluciones.html
-    title: "Soluciones ejercicios"
-  - content_main: slides/hello_world.html
-    title: "C++ en el mundo"
+#  - section: Random
+#  - content_main: slides/2021.soluciones.html
+#    title: "Soluciones ejercicios"
+#  - content_main: slides/hello_world.html
+#    title: "C++ en el mundo"
