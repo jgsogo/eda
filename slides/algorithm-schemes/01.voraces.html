@@ -1,0 +1,52 @@
+
+<section data-transition="convex">
+    <section>
+        <h2>Algoritmos voraces</h2>
+        <h4>(Greedy)</h4>
+    </section>
+
+    <section>
+        <p>
+            Un <span class="red">algoritmo voraz</span> elige en cada paso la solución óptima
+            con la seguridad de que la solución así construída permite encontrar una solución óptima global.
+        </p>
+    </section>
+
+    <section>
+        <h4>Esquema voraz</h4> 
+        <ol>
+            <li>Se comienza con una solución vacía</li>
+            <li>En cada paso se selecciona <span class="blue">el mejor</span> de los candidatos</li>
+            <li>
+                Se comprueba si la solución es <span class="blue">completable</span> (si añadiendo más se podría llegar a la solución):
+                <ul>
+                    <li>No: se rechaza el candidato elegido</li>
+                    <li>Sí: se añade a la solución (para siempre)</li>
+                </ul>
+            </li>
+            <li>Se comprueba si ya se ha resuelto el problema</li>
+        </ol>
+    </section>
+
+    <section>
+        <h4>Ejemplos</h4>
+        <ul>
+            <li class="fragment">Problema del cambio de monedas</li>
+            <li class="fragment">Problema de la mochila</li>
+            <li class="fragment">Árbol recubridor mínimo: <span class="fragment">Prim</span><span class="fragment">, Kruskal</span></li>
+            <li class="fragment">Caminos mínimos: <span class="fragment">Dijkstra</span></li>
+        </ul>
+    </section>
+
+    <section>
+        <h4>Solución subóptima</h4>
+        <p>
+            Cuando el coste computacional de calcular la solución óptima es muy alto, pueden utilizarse algoritmos voraces
+            para calcular soluciones subóptimas
+        </p>
+        <ul>
+            <li class="fragment">Coloreado de grafos</li>
+            <li class="fragment">Problema del viajante</li>
+        </ul>
+    </section>
+</section>
