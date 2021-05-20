@@ -10,6 +10,8 @@ class Empleado {
         bool is_boss() const;
 
         bool operator<(const Empleado& other) const;
+        bool operator>(const Empleado& other) const;
+        bool operator==(const Empleado& other) const;
         friend std::ostream& operator<<(std::ostream& os, const Empleado& empleado);
     private:
         int id_;
