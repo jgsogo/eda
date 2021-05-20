@@ -23,6 +23,7 @@ class Printer {
         int left(int index) const;
         int right(int index) const;
 
+        void insert(const PrintJob& dato);
     protected:
         std::vector<PrintJob> jobs;
         int maxNumJobs;

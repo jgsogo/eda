@@ -37,14 +37,26 @@ PrintJob Printer::next() {
     return top;
 }
 
-bool Printer::push(const PrintJob& dato, bool force) {
+void Printer::insert(const PrintJob& dato) {
     // Insert at the end:
     jobs.push_back(dato);
  
     // Get element index and call heapify-up procedure
     int index = jobs.size() - 1;
     heapify_up(index);
-    return true;
+}
+
+bool Printer::push(const PrintJob& dato, bool force) {
+    // Check if there is enought space for it
+    auto fits = !this->isFull() && (this->queuePages() + dato.getPages() <= maxNumPages);
+    if (fits) {
+        this->insert(dato);
+        return true;
+    }
+    else if (force) {
+        // We need to remove items until it fits
+    }
+    return false;
 }
 
 int Printer::parent(int index) const {
