@@ -1,0 +1,23 @@
+0 Coruña
+1 Oviedo
+2 Bilbao
+3 Vigo
+4 Valladolid
+5 Zaragoza
+6 Barcelona
+7 Gerona
+8 Madrid
+9 Badajoz
+10 Albacete
+11 Valencia
+12 Jaén
+13 Murcia
+14 Sevilla
+15 Granada
+16 Cádiz
+17 Palma de Mallorca
+18 Ceuta
+19 Santa Cruz de Tenerife
+20 Icod de los Vinos
+21 Los Cristianos
+22 Manacor
