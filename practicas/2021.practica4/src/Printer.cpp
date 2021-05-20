@@ -1,6 +1,15 @@
 #include "Printer.h"
 
 #include <numeric>
+#include <algorithm>
+
+namespace {
+    int countPages(const std::vector<PrintJob>& jobs) {
+        return std::accumulate(jobs.begin(), jobs.end(), 0, [](int lhs, const PrintJob& job){
+            return lhs + job.getPages();
+        });
+    }
+}
 
 
 Printer::Printer(int maxNumJobs, int maxNumPages) 
@@ -11,9 +20,7 @@ int Printer::queueLength() const {
 }
 
 int Printer::queuePages() const {
-    return std::accumulate(jobs.begin(), jobs.end(), 0, [](int lhs, const PrintJob& job){
-        return lhs + job.getPages();
-    });
+    return countPages(jobs);
 }
 
 bool Printer::isEmpty() const {
@@ -54,7 +61,25 @@ bool Printer::push(const PrintJob& dato, bool force) {
         return true;
     }
     else if (force) {
-        // We need to remove items until it fits
+        // - check if this job will ever fit in the printer
+        if (maxNumJobs >= 1 && maxNumPages >= dato.getPages()) {
+            // We need to remove items (with lowest priority) until it fits
+            // - order the jobs by inverse priority
+            std::vector<PrintJob> inverseOrder = jobs;
+            std::sort(inverseOrder.begin(), inverseOrder.end());
+            // - remove one by one until the new one fits
+            while(countPages(inverseOrder) + dato.getPages() > maxNumPages) {
+                inverseOrder.pop_back();
+            }
+            // - now clean all the jobs
+            jobs.clear();
+            // - insert the ones that remain and the new one
+            this->insert(dato);
+            for (auto& job: inverseOrder) {
+                this->insert(job);
+            }
+            return true;
+        }
     }
     return false;
 }

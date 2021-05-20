@@ -19,15 +19,20 @@ int main() {
             int pages = std::stoi(line.substr(found+1, found2));
 
             PrintJob job{timestamp, pages, line.substr(found2+1)};
-            bool inserted = printer.push(job);
+            bool inserted = printer.push(job, true);
             if (!inserted) {
                 std::cout << "Failed to insert " << line << std::endl;
             }
-            //std::cout << job;
         }
         input.close();
     }
     else {
         std::cout << "Unable to open file";
+    }
+
+    // Show me all the jobs
+    std::cout << "\n\nAll jobs:" << std::endl;
+    while (!printer.isEmpty()) {
+        std::cout << printer.next();
     }
 }
