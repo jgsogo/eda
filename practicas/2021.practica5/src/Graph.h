@@ -137,7 +137,9 @@ class Graph {
             while (!queue.empty()) {
                 auto edge = queue.top(); queue.pop();
                 if (forest_tree[edge.origin] != forest_tree[edge.target]) {
-                    //std::cout << edge.origin << " -> " << edge.target << std::endl;
+                    std::cout << edge.origin << " -> " << edge.target << std::endl;
+                    ret.add_node(edge.origin, *nodes[edge.origin]);
+                    ret.add_node(edge.target, *nodes[edge.target]);
                     ret.add_edge(edge.origin, edge.target, edge.weigth);
                     int origin_tree = forest_tree[edge.origin];
                     int target_tree = forest_tree[edge.target];
