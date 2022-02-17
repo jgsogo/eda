@@ -25,6 +25,10 @@ class NameCounter {
         void add_name(const std::string& name);
         void sort();
         void for_each(std::function<void (const NameCount&)> action) const;
+    private:
+	int size() const;
+        NameCount& at(int pos) const;
+        void push_back(const NameCount& dato);
     protected:
         std::shared_ptr<ElementListaSimple> front = nullptr;
 };
